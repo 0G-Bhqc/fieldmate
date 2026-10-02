@@ -586,6 +586,25 @@ def test_package_is_importable_from_any_working_directory(tmp_path):
     assert "ok" in r.stdout
 
 
+def test_cli_survives_non_utf8_output_pipe():
+    """回归：宿主 harness 在 Windows 上用 subprocess 捕获输出时，管道编码跟随
+    locale（中文系统 = GBK/cp936），而 CLI 输出含 ✔/✖/🟡/² 等字符 ——
+    main() 不做防护的话第一条 print 就 UnicodeEncodeError，退出码 1，
+    宿主只会看到 traceback，把「工具坏了」当成「校验失败」。
+    main() 必须把 stdout/stderr 固定为 UTF-8。用 ASCII 管道做最窄等价验证：
+    不防护时 `patterns` 的 ✔/✖ 必崩；防护后输出合法、退出码 0。
+    """
+    import subprocess
+    import sys as _sys
+    env = {**os.environ, "PYTHONIOENCODING": "ascii"}
+    env.pop("PYTHONUTF8", None)
+    r = subprocess.run([_sys.executable, "-m", "fieldmate", "patterns"],
+                       capture_output=True, env=env, cwd=str(ROOT), timeout=120)
+    assert r.returncode == 0, f"非 UTF-8 管道下崩了：\n{r.stderr.decode('utf-8', 'replace')[-800:]}"
+    assert b"UnicodeEncodeError" not in r.stderr
+    assert r.stdout, "patterns 应有输出"
+
+
 def test_conftest_puts_project_root_on_sys_path():
     """conftest.py 必须存在并真的把仓库根加进 sys.path，否则上面那条只是靠 PYTHONPATH。"""
     cf = ROOT / "conftest.py"

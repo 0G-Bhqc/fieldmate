@@ -558,6 +558,16 @@ def _cmd_sources(args) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Windows 的控制台/管道默认跟随 locale（中文系统是 GBK/cp936），而本 CLI 的
+    # 输出含 ✔/✖/🟡/² 等字符 —— 宿主 harness 用 subprocess 捕获输出时，第一条
+    # print 就会 UnicodeEncodeError，退出码 1 且只剩 traceback，看起来像
+    # 「校验失败」。这是「挂到任意 harness」的第一道门：stdout/stderr 强制
+    # UTF-8，编不出的字符替换掉，保证任何管道里都是合法输出。
+    for _stream in (sys.stdout, sys.stderr):
+        try:
+            _stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, OSError):    # 非 TextIO 包装（如测试捕获）或旧运行时
+            pass
     p = argparse.ArgumentParser(
         prog="fieldmate",
         description="fieldmate：跨论文横向对比 + 缺陷库匹配（harness 无关，纯 stdlib）")
