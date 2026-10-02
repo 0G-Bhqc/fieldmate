@@ -33,10 +33,10 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from rharness.sources.local import parse_pdf_cached          # noqa: E402
+from fieldmate.sources.local import parse_pdf_cached          # noqa: E402
 
 MF = Path("libraries/corpus_bulk.json")
-CACHE = Path(".rharness-cache/arxiv_pdfs")
+CACHE = Path(".fieldmate-cache/arxiv_pdfs")
 MIN_BYTES = 5000          # 与 fulltext._download / load_manifest 保持一致
 
 

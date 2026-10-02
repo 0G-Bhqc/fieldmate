@@ -111,7 +111,7 @@ implementation、ablation、datasets、benchmark、case study、preliminaries…
 
 ### 接法（已实施，默认关闭）
 
-- `RHARNESS_PYMUPDF4LLM=1` 环境变量，或 `enable_structured_backend()`；
+- `FIELDMATE_PYMUPDF4LLM=1` 环境变量，或 `enable_structured_backend()`；
 - 默认 **不注册**它 —— 零依赖是硬底线；
 - 缓存文件名按模式分开（`*.txt.txt` / `*.md.txt`），
   否则切换后端会读到上一次的产物，开关变成假开关；
@@ -188,7 +188,7 @@ inverse design **各 0 篇**，据此写下了「可微相场求解器这条线 
 - PETSc 出现在 `2509.06971` 的拓扑优化工作里；
 - 「可微求解器」这个方向**薄且没人给它命名立题**，但**不是空的**。
 
-### 因此建了 `rharness/audit/topics.py` —— 并且它**不给结论**
+### 因此建了 `fieldmate/audit/topics.py` —— 并且它**不给结论**
 
 教训不是「换个词再数一遍」，而是：**词频统计支撑不了任何结论。**
 能支撑的只有一件事：把候选篇目连同**原文片段**摆出来，让人几十秒分诊完。
@@ -231,7 +231,7 @@ arXiv 上本来就覆盖不到计算数学方向。
 | 1 | 补章节词表（ML/实验类词汇）—— 纯 stdlib | ✅ 已做，method 检出 3→8（20 篇样本） |
 | 2 | 接 pymupdf4llm 为**可选**后端 | ✅ 已做，默认关闭，4 个槽位 +5~10pp |
 | 3 | 给精进点加出处引用 | ✅ 已做（借鉴 OpenScholar） |
-| 4 | 给 `gaps` 加**主题空间**审计 | ✅ 已做（`rharness topics`），带共现要求 + 原文片段 |
+| 4 | 给 `gaps` 加**主题空间**审计 | ✅ 已做（`fieldmate topics`），带共现要求 + 原文片段 |
 | 5 | 真要碰可微相场，先读 JAX-PF 的四个 benchmark | ⬜ 未做（研究动作，非工程） |
 
 第 5 条的落点：**JAX-PF**（`SuperkakaSCU/JAX-PF`，GPL-3.0，arXiv 2601.06079）
@@ -240,6 +240,6 @@ arXiv 上本来就覆盖不到计算数学方向。
 这正是它在 arXiv 上给的那个 inverse design 演示所做的事。
 **他们已经把「哪些格式在什么量纲下稳定」这件事踩过坑了**，值得先读。
 
-按 `rharness topics` 的实测：语料里「可微求解器」只有 **1 篇**，
+按 `fieldmate topics` 的实测：语料里「可微求解器」只有 **1 篇**，
 「神经网络替代相场求解」有 **69 篇**。这个悬殊值得说，但它是**观察**，
 不是立项依据 —— 立项要去查期刊库，arXiv 本来就覆盖不到计算数学方向。

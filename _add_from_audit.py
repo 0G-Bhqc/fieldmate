@@ -2,7 +2,7 @@
 
 为什么值得专门做
 --------------
-`rharness topics` 报「可微求解器 1 篇」，而那 1 篇还不是可微**相场**求解器
+`fieldmate topics` 报「可微求解器 1 篇」，而那 1 篇还不是可微**相场**求解器
 （是 shape optimization + adjoint + gradient-based 的流固耦合）。
 按上一步调研，同方向最对口的公开实现是 JAX-PF（arXiv 2601.06079）——
 它自带 AC / CH / 耦合 AC-CH 四个 benchmark，显式+隐式两套时间积分。
@@ -20,9 +20,9 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from rharness.sources.arxiv import Paper, RateLimiter                 # noqa: E402
-from rharness.sources.fulltext import attach_fulltext, BULK_INTERVAL   # noqa: E402
-from rharness.sources.local import parse_pdf_cached                   # noqa: E402
+from fieldmate.sources.arxiv import Paper, RateLimiter                 # noqa: E402
+from fieldmate.sources.fulltext import attach_fulltext, BULK_INTERVAL   # noqa: E402
+from fieldmate.sources.local import parse_pdf_cached                   # noqa: E402
 
 MF = Path("libraries/corpus_bulk.json")
 

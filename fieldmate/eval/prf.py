@@ -53,7 +53,7 @@ def load_corpus(path: str | Path | None = None) -> dict[str, Any]:
     """
     p = Path(path) if path else Path(__file__).resolve().parents[2] / "libraries" / "corpus.json"
     if not p.exists():
-        return {"cache_dir": ".rharness-cache/arxiv_pdfs", "papers": {}, "arxiv_papers": []}
+        return {"cache_dir": ".fieldmate-cache/arxiv_pdfs", "papers": {}, "arxiv_papers": []}
     return json.loads(p.read_text(encoding="utf-8"))
 
 
@@ -69,7 +69,7 @@ def _load_texts(pdf_dir: str | Path | None = None,
             _CACHE[pid] = t or ""
         if pid in _CACHE:
             out[pid] = _CACHE[pid]
-    cache = Path(pdf_dir) if pdf_dir else Path(corpus.get("cache_dir", ".rharness-cache/arxiv_pdfs"))
+    cache = Path(pdf_dir) if pdf_dir else Path(corpus.get("cache_dir", ".fieldmate-cache/arxiv_pdfs"))
     if cache.is_dir():
         for f in sorted(cache.glob("*.pdf")):
             if f.stem in _CACHE:

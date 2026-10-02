@@ -2,7 +2,7 @@
 
 为什么是这两条
 --------------
-`rharness topics` 报「可微求解器 2 篇」，其中一篇是 JAX-PF（2601.06079，
+`fieldmate topics` 报「可微求解器 2 篇」，其中一篇是 JAX-PF（2601.06079，
 Jian Cao 组，Northwestern，GPL-3.0）。它自带 AC / CH / 耦合 AC-CH 四个 benchmark，
 显式 + 隐式两套时间积分。读它的正文，得到两条**本库此前没有**的坑：
 

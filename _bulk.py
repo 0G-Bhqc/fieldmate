@@ -5,8 +5,8 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from rharness.sources.arxiv import Paper, RateLimiter, collect      # noqa: E402
-from rharness.sources.fulltext import attach_fulltext, corpus_fingerprint  # noqa: E402
+from fieldmate.sources.arxiv import Paper, RateLimiter, collect      # noqa: E402
+from fieldmate.sources.fulltext import attach_fulltext, corpus_fingerprint  # noqa: E402
 
 # 覆盖导师各条研究线的检索式（用 PDE 社区专属词，避开 denoising 污染）
 QUERIES = [

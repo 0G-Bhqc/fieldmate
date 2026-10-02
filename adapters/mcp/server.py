@@ -1,7 +1,7 @@
 """MCP server —— 挂进任何支持 MCP 的 harness
 
 设计原则（docs/DESIGN.md §4）：
-* 核心判定全在 rharness 里，这个 server 只做参数转发与结果序列化。
+* 核心判定全在 fieldmate 里，这个 server 只做参数转发与结果序列化。
 * **不引入任何 LLM SDK**：框架不知道宿主有没有模型，也不关心。
 * 检索式允许含空格/引号——MCP 的 JSON 参数没有 shell 拆词问题，
   这正是 MCP 相对裸 CLI 的一个实际优势。
@@ -11,7 +11,7 @@
     python adapters/mcp/server.py          # stdio transport
 
 在宿主里注册（示例，MCP client 配置）：
-    {"mcpServers": {"research-harness": {"command": "python",
+    {"mcpServers": {"fieldmate": {"command": "python",
                                          "args": ["adapters/mcp/server.py"]}}}
 """
 
@@ -26,11 +26,11 @@ _ROOT = Path(__file__).resolve().parents[2]
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
-from rharness.compare.matrix import (build_matrix, defect_stats,  # noqa: E402
+from fieldmate.compare.matrix import (build_matrix, defect_stats,  # noqa: E402
                                     matrix_csv, matrix_json, matrix_markdown)
-from rharness.match.patterns import load_library, load_rules, match_all  # noqa: E402
-from rharness.sources.arxiv import collect  # noqa: E402
-from rharness.sources.local import load_paths  # noqa: E402
+from fieldmate.match.patterns import load_library, load_rules, match_all  # noqa: E402
+from fieldmate.sources.arxiv import collect  # noqa: E402
+from fieldmate.sources.local import load_paths  # noqa: E402
 
 
 def _gather(query: str | None, paths: list[str] | None, limit: int) -> list:
@@ -140,9 +140,9 @@ def mine_gaps_tool(corpus: str, paths: list[str] | None = None,
         min_n: 某族至少多少篇才纳入分析。
         fmt: markdown | json
     """
-    from rharness.compare.matrix import build_matrix, defect_stats
-    from rharness.gaps.mine import gaps_json, gaps_markdown, mine_gaps
-    from rharness.sources.fulltext import load_manifest
+    from fieldmate.compare.matrix import build_matrix, defect_stats
+    from fieldmate.gaps.mine import gaps_json, gaps_markdown, mine_gaps
+    from fieldmate.sources.fulltext import load_manifest
 
     lib = load_library()
     rules = load_rules()
@@ -186,8 +186,8 @@ def audit_coverage_tool(corpus: str, fmt: str = "markdown") -> str:
         fmt: markdown | json
     """
     import json as _json
-    from rharness.audit.coverage import audit_coverage, report_markdown
-    from rharness.sources.fulltext import load_manifest
+    from fieldmate.audit.coverage import audit_coverage, report_markdown
+    from fieldmate.sources.fulltext import load_manifest
     try:
         papers, _ = load_manifest(corpus)
     except FileNotFoundError as e:
@@ -206,8 +206,8 @@ def audit_topics_tool(corpus: str, show: int = 3) -> str:
         show: 每个主题列出前几篇的原文片段。
     """
     import json as _json
-    from rharness.audit.topics import audit_topics, report_markdown
-    from rharness.sources.fulltext import load_manifest
+    from fieldmate.audit.topics import audit_topics, report_markdown
+    from fieldmate.sources.fulltext import load_manifest
     try:
         papers, _ = load_manifest(corpus)
     except FileNotFoundError as e:
@@ -219,15 +219,15 @@ def verify_result_tool(prereg: str, results: str) -> str:
     """能力③：对照预注册核验结果，给出 SUPPORTED / REFUTED / INCONCLUSIVE 三态判定。
 
     Args:
-        prereg: 预注册 json 路径（先跑 `rharness prereg --init` 生成模板）。
+        prereg: 预注册 json 路径（先跑 `fieldmate prereg --init` 生成模板）。
         results: 结果 json 路径。
 
     差异落在分辨率噪声内时判 INCONCLUSIVE —— 此时**无法区分**「方法更差」
     与「设置不足」，工具拒绝替你下结论。
     """
     import json as _json
-    from rharness.exp.prereg import validate
-    from rharness.exp.verify import verify
+    from fieldmate.exp.prereg import validate
+    from fieldmate.exp.verify import verify
     p, r = Path(prereg), Path(results)
     for f, label in ((p, "prereg"), (r, "results")):
         if not f.exists():
@@ -254,7 +254,7 @@ def _serve() -> int:
     except ImportError:
         print("需要 MCP SDK：pip install -e \".[mcp]\"", file=sys.stderr)
         return 2
-    srv = FastMCP("research-harness")
+    srv = FastMCP("fieldmate")
 
     # 三项能力都要有入口，缺一项「可挂载」就只是句空话
     srv.tool()(compare_papers)          # 能力② 横向对比

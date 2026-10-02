@@ -1,4 +1,4 @@
-# research-harness —— 科研过程框架 · 规划文档
+# fieldmate —— 科研过程框架 · 规划文档
 
 > 版本 v0.1（规划阶段）
 > 定位：**作用于科研过程本身**的框架，可挂进 Agent Harness 使用。
@@ -251,7 +251,7 @@ Gap          作者自己承认的局限
 因此新增两层，且 **「LLM 是可选插件」成为硬约束**：
 
 ```
-任何 Harness ──调用 CLI（stdin/stdout JSON）──► 核心 rharness（纯确定性）
+任何 Harness ──调用 CLI（stdin/stdout JSON）──► 核心 fieldmate（纯确定性）
                                                       │
                             LLM 抽取？ ──是──► 通过 --llm-cmd 注入任意 harness 的 LLM
                                               └─否──► 纯规则降级（永远可用）
@@ -267,13 +267,13 @@ Gap          作者自己承认的局限
 | 任务 | 产出 | 验收 |
 |---|---|---|
 | T1 `contracts/detection_rules.json` | 把 17 条缺陷的 `detection` 变成**机器可执行**的检测规则 | 规则能被纯 Python 求值，无 LLM |
-| T2 `rharness/sources/arxiv.py` | arXiv Atom API 检索（分页、时间窗、去重、限速） | `all:"mesh denoising"` 取回 ≥20 篇 |
-| T3 `rharness/sources/local.py` | 本地 PDF/目录（pypdf 优先，fitz 兜底） | 能解析工作目录里的 PDF |
-| T4 `rharness/extract/metadata.py` | **L1 规则抽取**（title/abstract/venue/year/category） | 无 LLM 可跑，有单元测试 |
-| T5 `rharness/match/patterns.py` | 缺陷库加载 + 规则匹配 → 每篇的缺陷标签 | 对真实 arXiv 结果能标出若干条 |
-| T6 `rharness/compare/matrix.py` | **横向对比矩阵**（方法 × 维度） | 输出 Markdown 表 + JSON |
-| T7 `rharness/compare/report.py` | 缺陷统计报告（含「未报告某项」的分母统计） | 方法学论文的典型形态 |
-| T8 `rharness/llm/` | `LLMProvider` 协议 + `null` 降级 | `--llm none` 全流程可跑 |
+| T2 `fieldmate/sources/arxiv.py` | arXiv Atom API 检索（分页、时间窗、去重、限速） | `all:"mesh denoising"` 取回 ≥20 篇 |
+| T3 `fieldmate/sources/local.py` | 本地 PDF/目录（pypdf 优先，fitz 兜底） | 能解析工作目录里的 PDF |
+| T4 `fieldmate/extract/metadata.py` | **L1 规则抽取**（title/abstract/venue/year/category） | 无 LLM 可跑，有单元测试 |
+| T5 `fieldmate/match/patterns.py` | 缺陷库加载 + 规则匹配 → 每篇的缺陷标签 | 对真实 arXiv 结果能标出若干条 |
+| T6 `fieldmate/compare/matrix.py` | **横向对比矩阵**（方法 × 维度） | 输出 Markdown 表 + JSON |
+| T7 `fieldmate/compare/report.py` | 缺陷统计报告（含「未报告某项」的分母统计） | 方法学论文的典型形态 |
+| T8 `fieldmate/llm/` | `LLMProvider` 协议 + `null` 降级 | `--llm none` 全流程可跑 |
 | T9 `adapters/` | Skill / MCP server / 裸 CLI 三种挂载方式 | 至少 Skill + MCP 两个可用 |
 
 **Phase 1 明确不做：** L2 全文槽位抽取（依赖 LLM，二期）、concept_graph、刊物画像、

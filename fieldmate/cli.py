@@ -9,7 +9,7 @@ H3 可脱离 LLM：`--llm none` 是默认；全流程纯 stdlib 可跑
 H6 失败显式  ：数据源不可达、库缺失、schema 不符 → 抛错并给建议，不静默降级
 
 任何 harness 的接法都只是：
-    subprocess.run([...,'rharness','compare','--query','...','--format','json'])
+    subprocess.run([...,'fieldmate','compare','--query','...','--format','json'])
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 
 
 def _resolve_query(args) -> str:
-    """按优先级解析检索式：--query > --query-file > 环境变量 RHARNESS_QUERY。
+    """按优先级解析检索式：--query > --query-file > 环境变量 FIELDMATE_QUERY。
 
     为什么需要这么多入口：arXiv 检索式天然含空格与引号，而 shell、
     subprocess、各家 harness 的参数传递对它们的处理**都不一样**
@@ -40,7 +40,7 @@ def _resolve_query(args) -> str:
     qf = getattr(args, "query_file", None)
     if qf:
         return Path(qf).read_text(encoding="utf-8").strip()
-    return (os.environ.get("RHARNESS_QUERY") or "").strip()
+    return (os.environ.get("FIELDMATE_QUERY") or "").strip()
 
 
 def _cmd_compare(args) -> int:
@@ -169,7 +169,7 @@ def _cmd_harvest(args) -> int:
 def _cmd_list(args) -> int:
     """列出本包的实际内容：缺陷库、检测规则覆盖、语料来源。
 
-    注意：**求解器不在本包里**。research-harness 只做评测基础设施，
+    注意：**求解器不在本包里**。fieldmate 只做评测基础设施，
     被评测的求解器来自 pfdenoise（或任何外部实现）。
     读论文/横向对比/预注册核验才是本包的职责。
     """
@@ -559,8 +559,8 @@ def _cmd_sources(args) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
-        prog="rharness",
-        description="research-harness：跨论文横向对比 + 缺陷库匹配（harness 无关，纯 stdlib）")
+        prog="fieldmate",
+        description="fieldmate：跨论文横向对比 + 缺陷库匹配（harness 无关，纯 stdlib）")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     hv = sub.add_parser("harvest", help="自动语料构建：检索 + 相关性闸门 + 下载全文")
@@ -596,7 +596,7 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--fulltext", action="store_true",
                    help="下载并解析 arXiv 全文（强烈建议：只读摘要时信号基本不可用）")
     c.add_argument("--cache", default=None,
-                   help="PDF 缓存目录（默认 .rharness-cache/arxiv_pdfs）")
+                   help="PDF 缓存目录（默认 .fieldmate-cache/arxiv_pdfs）")
     c.set_defaults(func=_cmd_compare)
 
     g = sub.add_parser("gaps", help="从横向对比挖精进点（含证据强度分级）")
@@ -647,7 +647,7 @@ def main(argv: list[str] | None = None) -> int:
 
     e = sub.add_parser("evaluate", help="用人工标注 gold set 给检测规则做体检")
     e.add_argument("--gold", help="标注集 jsonl（默认 libraries/goldset.jsonl）")
-    e.add_argument("--cache", default=None, help="PDF 缓存目录（默认 .rharness-cache/arxiv_pdfs）")
+    e.add_argument("--cache", default=None, help="PDF 缓存目录（默认 .fieldmate-cache/arxiv_pdfs）")
     e.add_argument("--format", choices=["markdown", "json"], default="markdown")
     e.add_argument("--strict", action="store_true", help="缺全文时直接失败")
     e.set_defaults(func=_cmd_evaluate)

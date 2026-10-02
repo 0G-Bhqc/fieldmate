@@ -221,7 +221,7 @@
     "n_unparsable": 0,
     "total_chars": 16311755,
     "median_chars": 61543,
-    "cache_dir": ".rharness-cache/arxiv_pdfs",
+    "cache_dir": ".fieldmate-cache/arxiv_pdfs",
     "size_mb": 1156,
     "by_year": {
       "2024": 22,

@@ -13,9 +13,9 @@ from pathlib import Path
 
 import pytest
 
-from rharness.compare.matrix import REPORT_ITEMS, build_matrix, defect_stats, matrix_markdown
-from rharness.match.patterns import load_library, load_rules, match_paper
-from rharness.sources.arxiv import Paper
+from fieldmate.compare.matrix import REPORT_ITEMS, build_matrix, defect_stats, matrix_markdown
+from fieldmate.match.patterns import load_library, load_rules, match_paper
+from fieldmate.sources.arxiv import Paper
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -51,7 +51,7 @@ def test_alert_items_reference_known_gap_items():
     写错一个名字的后果很隐蔽：那条缺陷会静默地关联不上任何精进点，
     而报告里只是「关联缺陷」少了几条，没有任何报错。
     """
-    from rharness.gaps.mine import GENRE_SENSITIVITY
+    from fieldmate.gaps.mine import GENRE_SENSITIVITY
     known = set(GENRE_SENSITIVITY)
     for d in load_library():
         for it in d.get("alert_items", []) or []:
@@ -65,7 +65,7 @@ def test_gaps_actually_link_to_defect_library():
     两者之间那层连接如果不显式建模，就永远是空的 —— 报告里少了关键依据，
     却没有任何东西会报错。
     """
-    from rharness.gaps.mine import _related_defects, mine_gaps
+    from fieldmate.gaps.mine import _related_defects, mine_gaps
     lib = load_library()
     by_id = {d["id"]: d for d in lib}
     linked = {it: _related_defects(by_id, it) for it in
@@ -83,7 +83,7 @@ def test_gap_object_carries_related_defects_end_to_end():
     就把返回的 id 字符串当字典取下标，TypeError 一直漏到 CLI 才炸。
     单元测试停在它测的那一层，后面的接线错误它看不见。
     """
-    from rharness.gaps.mine import mine_gaps
+    from fieldmate.gaps.mine import mine_gaps
     rows = [_Row("时间分数阶", {"报时间步": False}) for _ in range(6)]
     g = mine_gaps(rows, {}, library=load_library(), min_n=5, min_rate=0.5)[0]
     assert g.item == "报时间步"
@@ -224,7 +224,7 @@ def test_matrix_marks_undecidable_separately():
                      abstract="Cahn-Hilliard for segmentation. Full text follows.",
                      fulltext="We report resolution and stability conditions; "
                               "code is on GitHub; the noise model is Gaussian.")]
-    from rharness.match.patterns import match_all
+    from fieldmate.match.patterns import match_all
     rows = build_matrix(papers, match_all(papers, lib, rules))
     a, b = rows[0], next(r for r in rows if r.paper_id == "b")
     assert a.undecidable, "无全文的论文应有无法判定项"
@@ -235,7 +235,7 @@ def test_report_includes_all_four_limitations():
     lib, rules = load_library(), load_rules()
     p = _paper(title="phase field denoising with Allen-Cahn equation",
                abstract="time step 0.05 h^2")
-    from rharness.match.patterns import match_all
+    from fieldmate.match.patterns import match_all
     rows = build_matrix([p], match_all([p], lib, rules))
     md = matrix_markdown(rows, defect_stats(rows, lib), "q", "arxiv", lib)
     for phrase in ("arXiv 覆盖不全", "未提及", "可核查性", "假阳性"):
@@ -246,7 +246,7 @@ def test_defect_stats_has_denominator():
     lib, rules = load_library(), load_rules()
     papers = [_paper(id=f"p{i}", title="phase field denoising Allen-Cahn",
                      abstract="time step 0.05 h^2") for i in range(3)]
-    from rharness.match.patterns import match_all
+    from fieldmate.match.patterns import match_all
     rows = build_matrix(papers, match_all(papers, lib, rules))
     st = defect_stats(rows, lib)
     assert st["n_papers"] == 3
@@ -263,8 +263,8 @@ def test_goldset_item_names_match_report_items():
     结果该项在体检里静默变成「0 样本 / 无用」，看起来像规则失效，
     其实是标注与代码对不上。静默错位是这类工具最难查的一类 bug。
     """
-    from rharness.compare.matrix import REPORT_ITEMS
-    from rharness.eval.prf import load_goldset
+    from fieldmate.compare.matrix import REPORT_ITEMS
+    from fieldmate.eval.prf import load_goldset
     names = {n for n, _, _ in REPORT_ITEMS}
     gold_items = {g["item"] for g in load_goldset()}
     assert gold_items <= names, f"gold set 出现未知 item：{gold_items - names}"
@@ -278,7 +278,7 @@ def test_all_report_item_regexes_compile():
     整个包直接 SyntaxError，所有子命令全挂。
     """
     import re as _re
-    from rharness.compare.matrix import REPORT_ITEMS
+    from fieldmate.compare.matrix import REPORT_ITEMS
     for name, pat, did in REPORT_ITEMS:
         _re.compile(pat, _re.IGNORECASE)          # 编译失败会直接抛
         assert did.startswith("D-"), f"{name} 关联缺陷 id 异常：{did}"
@@ -291,8 +291,8 @@ def test_domain_gate_rejects_pure_ml_paper():
     真实案例：MENO（神经算子）、flow boiling（latent diffusion）、
     crack growth（条件扩散）—— 它们都含 "phase field" 字样，纯关键词闸门拦不住。
     """
-    from rharness.sources.arxiv import Paper
-    from rharness.sources.corpus import DomainFilter
+    from fieldmate.sources.arxiv import Paper
+    from fieldmate.sources.corpus import DomainFilter
     p = Paper(id="x", title="MENO: MeanFlow-Enhanced Neural Operators for "
                              "Dynamical Systems", abstract="We study phase field "
                            "dynamics with neural operators and diffusion models.",
@@ -307,8 +307,8 @@ def test_domain_gate_rejects_weak_term_with_ml_flags():
     真实案例：Optical Fringe Patterns Filtering（CNN 光栅条纹滤波），
     之前靠 `spatial discretiz` 类的强词误放行过。
     """
-    from rharness.sources.arxiv import Paper
-    from rharness.sources.corpus import DomainFilter
+    from fieldmate.sources.arxiv import Paper
+    from fieldmate.sources.corpus import DomainFilter
     p = Paper(id="y", title="Optical Fringe Patterns Filtering Based on Multi-Stage "
                              "Convolution Network", abstract="We denoise fringe "
                            "patterns; the phase field of the fringe is estimated "
@@ -319,8 +319,8 @@ def test_domain_gate_rejects_weak_term_with_ml_flags():
 
 
 def test_domain_gate_accepts_real_phase_field_paper():
-    from rharness.sources.arxiv import Paper
-    from rharness.sources.corpus import DomainFilter
+    from fieldmate.sources.arxiv import Paper
+    from fieldmate.sources.corpus import DomainFilter
     p = Paper(id="z", title="Surface Reconstruction by the Phase-Field Model",
               abstract="We formulate a phase-field method for reconstructing a "
                         "surface from an unorganized point cloud.",
@@ -330,8 +330,8 @@ def test_domain_gate_accepts_real_phase_field_paper():
 
 
 def test_domain_gate_keeps_time_fractional_mathna():
-    from rharness.sources.arxiv import Paper
-    from rharness.sources.corpus import DomainFilter
+    from fieldmate.sources.arxiv import Paper
+    from fieldmate.sources.corpus import DomainFilter
     p = Paper(id="w", title="A stabilized scheme for the time-fractional Allen-Cahn "
                              "equation", abstract="We analyze convergence order.",
               categories=["math.NA", "math-ph"])
@@ -339,7 +339,7 @@ def test_domain_gate_keeps_time_fractional_mathna():
 
 
 def test_strong_and_weak_terms_are_disjoint():
-    from rharness.sources.corpus import STRONG_TERMS, WEAK_TERMS
+    from fieldmate.sources.corpus import STRONG_TERMS, WEAK_TERMS
     assert set(STRONG_TERMS) != set(WEAK_TERMS)
     # 裸 'phase[- ]field' 只能出现在弱术语里
     assert r"phase[- ]field" in WEAK_TERMS
@@ -350,11 +350,11 @@ def test_all_subcommands_are_registered():
     """守卫：每个子命令都必须真的挂到 parser 上。
 
     写这条是因为真的踩过：往 subparser 里插 `read` 时，
-    `list` 被整段替换掉了，而它只在 `python -m rharness list` 时才暴露。
+    `list` 被整段替换掉了，而它只在 `python -m fieldmate list` 时才暴露。
     """
     import io
     from contextlib import redirect_stdout
-    from rharness.cli import main
+    from fieldmate.cli import main
     for cmd in ("list", "patterns", "read", "gaps", "compare", "prereg",
                 "verify", "evaluate", "sources", "harvest"):
         buf = io.StringIO()
@@ -378,7 +378,7 @@ def test_all_subcommands_are_registered():
 # 所以探针提供两个防碰撞机制 + 必须附原文片段，**不给结论**。
 
 def _topic_paper(pid, title, body_lines, refs=None):
-    from rharness.sources.arxiv import Paper
+    from fieldmate.sources.arxiv import Paper
     ft = "\n".join(body_lines)
     if refs:
         ft += "\nReferences\n" + "\n".join(refs)
@@ -387,7 +387,7 @@ def _topic_paper(pid, title, body_lines, refs=None):
 
 def test_topic_probe_requires_all_groups_to_cooccur():
     """共现要求是消解术语碰撞的核心：`adjoint` 单独出现不算数。"""
-    from rharness.audit.topics import TopicProbe
+    from fieldmate.audit.topics import TopicProbe
     probe = TopicProbe("可微求解器", [["adjoint"], ["differentiable solver"]])
     assert probe.all_groups_hit("we use the adjoint method")[0] is False
     assert probe.all_groups_hit("we build a differentiable solver")[0] is False
@@ -398,7 +398,7 @@ def test_topic_probe_requires_all_groups_to_cooccur():
 
 def test_topic_probe_rejects_functional_analysis_adjoint():
     """回归：'Duality estimates' 这类纯分析论文不该被算作可微求解器工作。"""
-    from rharness.audit.topics import TopicProbe
+    from fieldmate.audit.topics import TopicProbe
     probe = TopicProbe("可微求解器",
                        [["adjoint"], ["differentiable solver", "gradient-based"]])
     analysis = ("we prove duality estimates for the adjoint operator under a "
@@ -407,7 +407,7 @@ def test_topic_probe_rejects_functional_analysis_adjoint():
 
 
 def test_topic_audit_counts_and_context_are_reported():
-    from rharness.audit.topics import TopicProbe, audit_topics
+    from fieldmate.audit.topics import TopicProbe, audit_topics
     probe = TopicProbe("X", [["adjoint"], ["gradient-based"]])
     papers = [_topic_paper(f"p{i}", "t",
                            ["we build a differentiable solver and its adjoint method "
@@ -422,7 +422,7 @@ def test_topic_audit_counts_and_context_are_reported():
 
 def test_topic_audit_does_not_multiply_untrimmable_by_probe_count():
     """回归：n_untrim 曾被累加在探针循环**内**，5 个探针把 22 篇报成 110 篇。"""
-    from rharness.audit.topics import TopicProbe, audit_topics
+    from fieldmate.audit.topics import TopicProbe, audit_topics
     probes = [TopicProbe(f"T{i}", [["alpha"], ["beta"]]) for i in range(5)]
     papers = [_topic_paper(f"p{i}", "t", [f"alpha beta line {j}" for j in range(120)])
               for i in range(3)]
@@ -433,7 +433,7 @@ def test_topic_audit_does_not_multiply_untrimmable_by_probe_count():
 
 def test_topic_report_states_the_disclaimer():
     """「词层面匹配，词义未核验」必须出现在输出里，否则读者会把计数当结论。"""
-    from rharness.audit.topics import TopicProbe, audit_topics, report_markdown
+    from fieldmate.audit.topics import TopicProbe, audit_topics, report_markdown
     probe = TopicProbe("X", [["alpha"], ["beta"]])
     au = audit_topics([_topic_paper("p", "t", ["alpha and beta here"] + ["pad"] * 130)],
                       [probe])
@@ -443,13 +443,13 @@ def test_topic_report_states_the_disclaimer():
 
 
 def test_topic_audit_reports_zero_hits_as_a_gap():
-    from rharness.audit.topics import TopicProbe, audit_topics
+    from fieldmate.audit.topics import TopicProbe, audit_topics
     probe = TopicProbe("空的", [["nonexistent-xyz"], ["also-missing"]])
     papers = [_topic_paper(f"p{i}", "t", [f"padding line {j}" for j in range(120)])
               for i in range(3)]
     au = audit_topics(papers, [probe])
     assert au.body_count("空的") == 0
-    from rharness.audit.topics import report_markdown
+    from fieldmate.audit.topics import report_markdown
     assert "语料缺口" in report_markdown(au)
 
 
@@ -460,7 +460,7 @@ def test_topic_audit_reports_zero_hits_as_a_gap():
 def _mcp_server():
     import importlib.util
     p = ROOT / "adapters" / "mcp" / "server.py"
-    spec = importlib.util.spec_from_file_location("rharness_mcp_adapter", p)
+    spec = importlib.util.spec_from_file_location("fieldmate_mcp_adapter", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -520,13 +520,13 @@ def test_skill_adapter_documents_the_three_capabilities():
 def test_every_subpackage_is_declared_for_packaging():
     """漏一个子包 -> 源码能跑、`pip install` 后 ModuleNotFoundError。
 
-    `rharness.audit` 曾漏在 pyproject 的 packages 列表里：本地一切正常，
-    打包后 `import rharness.audit` 直接失败。
+    `fieldmate.audit` 曾漏在 pyproject 的 packages 列表里：本地一切正常，
+    打包后 `import fieldmate.audit` 直接失败。
     """
     import tomllib
     pyproj = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     declared = set(pyproj["tool"]["setuptools"]["packages"])
-    on_disk = {f"rharness.{p.name}" for p in (ROOT / "rharness").iterdir()
+    on_disk = {f"fieldmate.{p.name}" for p in (ROOT / "fieldmate").iterdir()
                if p.is_dir() and (p / "__init__.py").exists()}
     missing = on_disk - declared
     assert not missing, f"这些子包没写进 [tool.setuptools].packages：{sorted(missing)}"
@@ -557,7 +557,7 @@ def test_pyproject_declares_no_hard_dependencies():
 
 def test_console_script_entry_point_is_importable():
     import importlib
-    mod, _, fn = "rharness.cli:main".partition(":")
+    mod, _, fn = "fieldmate.cli:main".partition(":")
     assert callable(getattr(importlib.import_module(mod), fn))
 
 
@@ -575,8 +575,8 @@ def test_package_is_importable_from_any_working_directory(tmp_path):
     import subprocess
     import sys as _sys
     code = (
-        "import rharness, rharness.audit, rharness.audit.topics;"
-        "from rharness.cli import main;"
+        "import fieldmate, fieldmate.audit, fieldmate.audit.topics;"
+        "from fieldmate.cli import main;"
         "print('ok')"
     )
     r = subprocess.run([_sys.executable, "-c", code],
@@ -618,7 +618,7 @@ _MD_LINES = [
 
 
 def test_markdown_headings_are_trusted_without_guessing():
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     assert _heading_at("## **Abstract**")[0] == "abstract"
     assert _heading_at("## **1. Introduction**")[0] == "intro"
     assert _heading_at("## 3. Numerical discretization for 3D reconstruction")[0] == "method"
@@ -629,7 +629,7 @@ def test_markdown_headings_are_trusted_without_guessing():
 
 def test_markdown_body_line_with_hash_is_not_a_heading():
     """`#` 必须在行首才算标记；正文里出现 # 不能被当标题。"""
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     assert _heading_at("this is a body line with a # in the middle") is None
 
 
@@ -639,21 +639,21 @@ def test_unrecognised_markdown_heading_is_not_forced_into_a_family():
     塞错族比漏掉更糟：会把「这节其实是实验」记成「这节是方法」，
     污染该节全部候选句的落点统计，而且没有任何东西会报错。
     """
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     for line in ("## Acknowledgment", "## _4.1. Parameter test_",
                  "# A paper title that is not a section heading"):
         assert _heading_at(line) is None, line
 
 
 def test_markdown_text_produces_real_sections():
-    from rharness.extract.slots import _sections
+    from fieldmate.extract.slots import _sections
     names = [n for n, _ in _sections("\n".join(_MD_LINES))]
     assert {"abstract", "intro", "method", "experiment"} <= set(names)
     assert "ref" not in names, "参考文献区不应作为章节返回"
 
 
 def test_markdown_sections_do_not_leak_references():
-    from rharness.extract.slots import _sections
+    from fieldmate.extract.slots import _sections
     body = " ".join(b for _, b in _sections("\n".join(_MD_LINES)))
     assert "Someone" not in body, "参考文献条目不能漏进正文段落"
 
@@ -661,7 +661,7 @@ def test_markdown_sections_do_not_leak_references():
 def test_reference_heading_pattern_accepts_markdown_and_emphasis():
     """pymupdf4llm 输出 `## **References**`，旧正则匹配不到，
     会导致参考文献区裁剪失效 —— 那正是「静默用错口径」的老问题。"""
-    from rharness.sources.local import find_reference_start
+    from fieldmate.sources.local import find_reference_start
     cut = find_reference_start("\n".join(_MD_LINES))
     assert cut >= 0
     assert _MD_LINES[cut].strip() == "## **References**"
@@ -669,13 +669,13 @@ def test_reference_heading_pattern_accepts_markdown_and_emphasis():
 
 def test_structured_backend_is_off_by_default():
     """零依赖是硬底线：默认不注册 pymupdf4llm。"""
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     assert loc._USE_LLM_BACKEND is False
     assert "pymupdf4llm" not in loc.available_backends()
 
 
 def test_structured_backend_availability_check_does_not_mutate_state():
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     before = loc._USE_LLM_BACKEND
     loc.structured_backend_available()
     assert loc._USE_LLM_BACKEND == before
@@ -683,7 +683,7 @@ def test_structured_backend_availability_check_does_not_mutate_state():
 
 def test_enable_structured_backend_clears_registered_extractors():
     """切模式必须清空已注册的后端，否则开关是假的。"""
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     saved = loc._USE_LLM_BACKEND
     try:
         loc._EXTRACTORS.clear()
@@ -699,7 +699,7 @@ def test_parsed_text_cache_separates_raw_text_from_markdown(tmp_path, monkeypatc
     """回归：缓存文件名只按 PDF 名字分时，切换后端会读到**上一种**的产物，
     于是「关掉后端」看起来生效（backend 名变成 cache），文本其实还是 Markdown。
     开关变成假开关，而且极难发现。"""
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     saved_mode, saved_ex = loc._USE_LLM_BACKEND, list(loc._EXTRACTORS)
     monkeypatch.chdir(tmp_path)
     pdf = tmp_path / "sample.pdf"
@@ -733,7 +733,7 @@ def test_parsed_text_cache_separates_raw_text_from_markdown(tmp_path, monkeypatc
 # ------------------------------------------------ 五槽抽取与阅读卡（能力②）
 def test_mention_of_references_in_prose_is_not_the_reference_section():
     """正文里的 "see the references [3]" 不能被当成参考文献区起点。"""
-    from rharness.sources.local import find_reference_start
+    from fieldmate.sources.local import find_reference_start
     body = "\n".join(f"body line {i} discussing the method in detail" for i in range(200))
     text = body + "\nsee the references [3] for the original argument\n" + \
         "\n".join(f"more body {i}" for i in range(50))
@@ -741,7 +741,7 @@ def test_mention_of_references_in_prose_is_not_the_reference_section():
 
 
 def test_reference_section_is_found_and_body_excludes_it():
-    from rharness.sources.local import body_without_references, find_reference_start
+    from fieldmate.sources.local import body_without_references, find_reference_start
     body = "\n".join(f"body line {i} with real content" for i in range(120))
     refs = "References\n[1] Someone. A paper title here. Journal 1, 1-10, 2020."
     text = body + "\n" + refs
@@ -755,7 +755,7 @@ def test_reference_section_is_found_and_body_excludes_it():
 
 def test_unlocatable_reference_section_returns_original_text():
     """裁不掉时必须原样返回并置 False —— 静默砍掉一半正文比留着参考文献严重得多。"""
-    from rharness.sources.local import body_without_references
+    from fieldmate.sources.local import body_without_references
     text = "\n".join(f"line {i} no heading anywhere" for i in range(200))
     out, ok = body_without_references(text)
     assert ok is False
@@ -764,7 +764,7 @@ def test_unlocatable_reference_section_returns_original_text():
 
 def test_body_without_references_never_returns_almost_nothing():
     """参考文献区占全文 90% 以上时判为裁剪失败，不把剩下那点当正文交出去。"""
-    from rharness.sources.local import body_without_references
+    from fieldmate.sources.local import body_without_references
     text = "intro\nReferences\n" + "\n".join(f"[{i}] ref entry" for i in range(500))
     out, ok = body_without_references(text)
     assert ok is False
@@ -778,8 +778,8 @@ def test_report_items_are_matched_on_body_not_on_bibliography():
     于是「报得越少、缺得越不明显」。实测 247 篇上这项偏差 0.4~3.6pp，
     9% 的篇目根本裁不掉参考文献区 —— 口径不齐比偏差本身更糟。
     """
-    from rharness.compare.matrix import REPORT_ITEMS, build_matrix
-    from rharness.sources.arxiv import Paper
+    from fieldmate.compare.matrix import REPORT_ITEMS, build_matrix
+    from fieldmate.sources.arxiv import Paper
     body = "\n".join(f"we describe the method in line {i}" for i in range(120))
     text = (body + "\nReferences\n[1] X. Time step size selection. J. 2020.\n"
             "    we take N = Nx = Ny = Nz = 128 and h = (b-a)/N for the mesh.")
@@ -792,7 +792,7 @@ def test_report_items_are_matched_on_body_not_on_bibliography():
 
 
 def test_matrix_row_discloses_reference_trim_status():
-    from rharness.compare.matrix import MatrixRow
+    from fieldmate.compare.matrix import MatrixRow
     assert MatrixRow(paper_id="x", year=None, title="t", venue="", family="f",
                      reported={}, defects=[]).refs_trimmed is False
     assert "refs_trimmed" in MatrixRow(paper_id="x", year=None, title="t", venue="",
@@ -801,7 +801,7 @@ def test_matrix_row_discloses_reference_trim_status():
 
 def test_defect_stats_reports_reference_scope():
     """口径必须可披露：多少篇裁掉了、多少篇没裁，不能让读者默认全都裁过。"""
-    from rharness.compare.matrix import MatrixRow, defect_stats
+    from fieldmate.compare.matrix import MatrixRow, defect_stats
     rows = [MatrixRow(paper_id=f"p{i}", year=2026, title="t", venue="", family="f",
                       reported={name: True for name, _p, _d in REPORT_ITEMS},
                       defects=[], has_fulltext=True, refs_trimmed=(i == 0))
@@ -821,7 +821,7 @@ def test_defect_stats_reports_reference_scope():
 # 只在参考文献区出现的命中，几乎肯定是「引用了别人」，不该计入可对比篇数。
 
 def _cov_paper(pid, title, body_lines, ref_lines=None):
-    from rharness.sources.arxiv import Paper
+    from fieldmate.sources.arxiv import Paper
     body = "\n".join(body_lines)
     ft = body
     if ref_lines:
@@ -830,7 +830,7 @@ def _cov_paper(pid, title, body_lines, ref_lines=None):
 
 
 def test_term_in_title_counts_as_strong_coverage():
-    from rharness.audit.coverage import TermSpec, audit_coverage
+    from fieldmate.audit.coverage import TermSpec, audit_coverage
     papers = [_cov_paper(f"p{i}", "Langevin driven Cahn-Hilliard flow",
                          [f"body line {j}" for j in range(120)]) for i in range(6)]
     t = audit_coverage(papers, [TermSpec("Langevin")]).terms[0]
@@ -838,7 +838,7 @@ def test_term_in_title_counts_as_strong_coverage():
 
 
 def test_term_only_in_bibliography_is_not_counted_as_comparable():
-    from rharness.audit.coverage import TermSpec, audit_coverage
+    from fieldmate.audit.coverage import TermSpec, audit_coverage
     p = _cov_paper("p1", "Some title",
                    [f"body line {i}" for i in range(120)],
                    ref_lines=["[1] X. The Langevin equation of motion. J. 2020."])
@@ -850,7 +850,7 @@ def test_term_only_in_bibliography_is_not_counted_as_comparable():
 
 
 def test_term_in_body_counts_as_strong_coverage():
-    from rharness.audit.coverage import TermSpec, audit_coverage
+    from fieldmate.audit.coverage import TermSpec, audit_coverage
     p = _cov_paper("p1", "t", ["we derive the Langevin equation of motion here."] +
                    [f"line {i}" for i in range(120)])
     t = audit_coverage([p], [TermSpec("Langevin")]).terms[0]
@@ -858,7 +858,7 @@ def test_term_in_body_counts_as_strong_coverage():
 
 
 def test_term_matching_tolerates_hyphen_space_and_underscore():
-    from rharness.audit.coverage import TermSpec, audit_coverage
+    from fieldmate.audit.coverage import TermSpec, audit_coverage
     papers = [_cov_paper(f"p{i}", "t", [f"we use the phase_field model here {i}"] +
                          [f"line {j}" for j in range(120)]) for i in range(3)]
     t = audit_coverage(papers, [TermSpec("phase field")]).terms[0]
@@ -866,7 +866,7 @@ def test_term_matching_tolerates_hyphen_space_and_underscore():
 
 
 def test_thin_coverage_is_flagged_below_threshold():
-    from rharness.audit.coverage import TermSpec, audit_coverage
+    from fieldmate.audit.coverage import TermSpec, audit_coverage
     papers = [_cov_paper(f"p{i}", "t", ["we use the modified Allen-Cahn flow here"] +
                          [f"line {j}" for j in range(120)]) for i in range(2)]
     t = audit_coverage(papers, [TermSpec("modified Allen-Cahn")]).terms[0]
@@ -874,7 +874,7 @@ def test_thin_coverage_is_flagged_below_threshold():
 
 
 def test_coverage_report_separates_strong_from_reference_only():
-    from rharness.audit.coverage import TermSpec, audit_coverage
+    from fieldmate.audit.coverage import TermSpec, audit_coverage
     spec = TermSpec("Langevin")
     strong = [_cov_paper(f"s{i}", "Langevin in practice",
                          ["we use the Langevin equation."] + [f"l{j}" for j in range(120)])
@@ -891,7 +891,7 @@ def test_coverage_report_separates_strong_from_reference_only():
 
 def test_coverage_report_carries_the_asymmetry_caveat():
     """「0 命中是强告警，非 0 命中不证明相关」这条不对称必须写在输出里。"""
-    from rharness.audit.coverage import TermSpec, audit_coverage
+    from fieldmate.audit.coverage import TermSpec, audit_coverage
     rep = audit_coverage([], [TermSpec("x")])
     d = rep.to_dict()
     assert "0 命中是强告警" in d["caveat"]
@@ -900,8 +900,8 @@ def test_coverage_report_carries_the_asymmetry_caveat():
 
 
 def test_papers_without_fulltext_are_not_counted():
-    from rharness.audit.coverage import TermSpec, audit_coverage
-    from rharness.sources.arxiv import Paper
+    from fieldmate.audit.coverage import TermSpec, audit_coverage
+    from fieldmate.sources.arxiv import Paper
     rep = audit_coverage([Paper(id="a", title="t", abstract="x", fulltext=None)],
                          [TermSpec("x")])
     assert rep.n_with_fulltext == 0
@@ -913,7 +913,7 @@ def test_papers_without_fulltext_are_not_counted():
     最终结论是「正则不可能对所有刊成立」。因此正确做法不是继续调参，
     而是**检测失败并退化** —— 槽位匹配只依赖句法标记，本来就不需要章节。
     """
-    from rharness.extract.slots import _sections
+    from fieldmate.extract.slots import _sections
     body = "\n".join(f"filler line {i} with some text to pad the body" for i in range(200))
     secs = _sections(body)                      # 无任何可识别标题
     assert len(secs) == 1 and len(secs[0][1]) == len(body)
@@ -926,7 +926,7 @@ def test_papers_without_fulltext_are_not_counted():
 # 下面这组全部取自真实 PDF 的原始行。
 
 def test_heading_recognised_when_merged_with_body_on_same_line():
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     assert _heading_at("1. Introduction. In this paper, we focus on numerical study") \
         is not None
     assert _heading_at("4. Numerical results. In this section, we present experiments") \
@@ -937,7 +937,7 @@ def test_heading_recognised_when_merged_with_body_on_same_line():
 
 def test_heading_offset_skips_the_heading_and_keeps_the_body():
     """偏移必须落在标题之后，正文一个字符都不能丢。"""
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     line = "1. Introduction. In this paper, we focus on numerical study"
     name, off = _heading_at(line)
     assert name == "intro"
@@ -950,7 +950,7 @@ def test_prose_starting_with_a_heading_word_is_not_a_heading():
     第一版诊断把这些全判成「0 假阳性」，因为它只把「关键词后直接跟小写词」
     当假阳性 —— 而这些续句首字母是大写的。教训：诊断本身的判据也得被验证。
     """
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     for line in ("proposed model. Statistic metrics such as the sigma, dmax, dmean",
                  "algorithm based on a modified AC equation. The modified equation used",
                  "experiment in this paper, we take the same parameters adopted in 4.1",
@@ -959,20 +959,20 @@ def test_prose_starting_with_a_heading_word_is_not_a_heading():
 
 
 def test_numbered_heading_is_trusted_even_with_unsafe_keyword():
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     assert _heading_at("3. Numerical discretization for 3D reconstruction") is not None
     assert _heading_at("4. Numerical experiments for 3D reconstruction") is not None
 
 
 def test_body_line_starting_with_a_number_is_not_a_heading():
     """首版把 method 命中 17 次，就是因为没守住「关键词紧跟编号」这条。"""
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     assert _heading_at("2. The grid sizes are h = 1/N and zero boundary values") is None
     assert _heading_at("3.1 Convergence analysis is performed on three meshes") is None
 
 
 def test_standalone_headings_still_recognised():
-    from rharness.extract.slots import _heading_at
+    from fieldmate.extract.slots import _heading_at
     for line, name in (("Abstract", "abstract"), ("References", "ref"),
                        ("1. Introduction", "intro"), ("5. Conclusions", "conclusion"),
                        ("I. INTRODUCTION", "intro"), ("2. Related Work", "related")):
@@ -986,7 +986,7 @@ def test_merged_body_is_not_duplicated_into_section_text():
     重复拼接 + \\n 分隔 = 同一段话出现两次并被腰斩，实测把
     "mesh size by h = 1/Nx" 劈成 "...mesh" / "size by h = 1/Nx"。
     """
-    from rharness.extract.slots import _sections
+    from fieldmate.extract.slots import _sections
     filler = "\n".join(f"body sentence number {i} padding the section" for i in range(40))
     text = f"1. Introduction. In this paper we study the problem carefully.\n{filler}"
     secs = _sections(text)
@@ -999,8 +999,8 @@ def test_slot_degrades_to_fulltext_when_its_section_is_missing():
 
     退化只放宽搜索范围，不放宽判据 —— 不允许因此凭空多出候选句。
     """
-    from rharness.extract.slots import extract_slots
-    from rharness.sources.arxiv import Paper
+    from fieldmate.extract.slots import extract_slots
+    from fieldmate.sources.arxiv import Paper
     text = "\n".join(
         ["1. Introduction. We consider the following formulation in detail."] +
         [f"padding line {i} to make the body long enough" for i in range(80)] +
@@ -1016,8 +1016,8 @@ def test_slot_degrades_to_fulltext_when_its_section_is_missing():
 
 def test_degraded_slot_is_disclosed():
     """退化必须可观测，否则「抓到了 N 条」会被误当成「方法段里明确写了 N 条」。"""
-    from rharness.extract.slots import extract_slots
-    from rharness.sources.arxiv import Paper
+    from fieldmate.extract.slots import extract_slots
+    from fieldmate.sources.arxiv import Paper
     text = "\n".join(["2. Related Work. Several authors have studied this problem."] +
                      [f"padding {i}" for i in range(80)])
     ps = extract_slots(Paper(id="x", title="t", abstract=""), text)
@@ -1026,10 +1026,10 @@ def test_degraded_slot_is_disclosed():
 
 
 def test_slots_finds_protocol_sentences_in_real_paper():
-    from rharness.extract.slots import extract_slots
-    from rharness.sources.arxiv import Paper
-    from rharness.sources.local import parse_pdf
-    from rharness.eval.prf import load_corpus
+    from fieldmate.extract.slots import extract_slots
+    from fieldmate.sources.arxiv import Paper
+    from fieldmate.sources.local import parse_pdf
+    from fieldmate.eval.prf import load_corpus
     p1 = (load_corpus().get("papers") or {}).get("P1-recon")
     if not p1 or not Path(p1).exists():
         pytest.skip("目标论文不在本机")
@@ -1044,7 +1044,7 @@ def test_slots_finds_protocol_sentences_in_real_paper():
 
 def test_reading_card_escapes_pipes_in_markdown():
     """markdown 表格单元格必须转义竖线 —— 假设句里到处是 |x| < |y|。"""
-    from rharness.extract.disclose import card_markdown
+    from fieldmate.extract.disclose import card_markdown
     md = card_markdown([{"paper_id": "p", "title": "t", "n_chars": 10,
                          "sections": [], "claim": None, "slot_counts": {},
                          "top_assumption": "|drift(a)| < |drift(b)|",
@@ -1053,7 +1053,7 @@ def test_reading_card_escapes_pipes_in_markdown():
 
 
 def test_purpose_focus_changes_which_slots_expand():
-    from rharness.extract.disclose import PURPOSE_FOCUS
+    from fieldmate.extract.disclose import PURPOSE_FOCUS
     assert "Assumption" in PURPOSE_FOCUS["beat"]
     assert "Mechanism" in PURPOSE_FOCUS["implement"]
     assert PURPOSE_FOCUS["cite"] == ("Claim",)
@@ -1076,7 +1076,7 @@ def _tiny_prereg(**kw):
 
 
 def test_prereg_rejects_non_falsifiable_claim():
-    from rharness.exp.prereg import validate
+    from fieldmate.exp.prereg import validate
     bad = _tiny_prereg()
     bad["hypotheses"][0]["falsification"] = "我们看看相场是不是更保体积"
     p = validate(bad)
@@ -1084,7 +1084,7 @@ def test_prereg_rejects_non_falsifiable_claim():
 
 
 def test_prereg_requires_res_floor_for_precision_claims():
-    from rharness.exp.prereg import validate
+    from fieldmate.exp.prereg import validate
     bad = _tiny_prereg()
     bad["hypotheses"][0].update(
         {"statement": "相场的误差更小", "metric": "err", "falsification": "否则 H1 被推翻"})
@@ -1093,7 +1093,7 @@ def test_prereg_requires_res_floor_for_precision_claims():
 
 
 def test_prereg_rejects_missing_iso_created():
-    from rharness.exp.prereg import validate
+    from fieldmate.exp.prereg import validate
     p = validate(_tiny_prereg(created="昨天"))
     assert any("ISO8601" in x for x in p), p
 
@@ -1104,7 +1104,7 @@ def test_verify_compares_absolute_values_when_statement_uses_bars():
     否则会拿 +0.05 和 -0.03 比大小，结论直接反掉——
     这个 bug 曾让我把「拉普拉斯体积漂移更小」误读成「相场更小」。
     """
-    from rharness.exp.verify import verify
+    from fieldmate.exp.verify import verify
     rows = [{"solver": "a", "drift": 0.05}, {"solver": "b", "drift": -0.03}]
     v = verify(_tiny_prereg(), rows, {})
     assert v.hypotheses[0].verdict == "REFUTED", "0.05 > 0.03，应为推翻"
@@ -1112,7 +1112,7 @@ def test_verify_compares_absolute_values_when_statement_uses_bars():
 
 
 def test_verify_marks_supported_when_direction_holds():
-    from rharness.exp.verify import verify
+    from fieldmate.exp.verify import verify
     rows = [{"solver": "a", "drift": -0.01}, {"solver": "b", "drift": 0.20}]
     v = verify(_tiny_prereg(), rows, {})
     assert v.hypotheses[0].verdict == "SUPPORTED"
@@ -1120,7 +1120,7 @@ def test_verify_marks_supported_when_direction_holds():
 
 def test_verify_downgrades_to_inconclusive_when_resolution_dominates():
     """误差落在 res_floor 量级内 -> 不能断言方法更差。"""
-    from rharness.exp.verify import verify
+    from fieldmate.exp.verify import verify
     d = _tiny_prereg()
     d["hypotheses"][0]["metric"] = "err"
     d["hypotheses"][0]["statement"] = "a 的误差小于 b"
@@ -1131,7 +1131,7 @@ def test_verify_downgrades_to_inconclusive_when_resolution_dominates():
 
 
 def test_verify_detects_backfilled_preregistration():
-    from rharness.exp.verify import verify
+    from fieldmate.exp.verify import verify
     rows = [{"solver": "a", "drift": 0.01}, {"solver": "b", "drift": 0.02}]
     v = verify(_tiny_prereg(created="2026-06-01T00:00:00Z"), rows,
                {"created": "2026-05-01T00:00:00Z"})
@@ -1141,19 +1141,19 @@ def test_verify_detects_backfilled_preregistration():
 
 def test_verify_untested_when_metric_absent():
     """缺结果不是否定证据 —— 必须判 UNTESTED 而不是 REFUTED。"""
-    from rharness.exp.verify import verify
+    from fieldmate.exp.verify import verify
     rows = [{"solver": "a", "other": 1.0}, {"solver": "b", "other": 2.0}]
     v = verify(_tiny_prereg(), rows, {})
     assert v.hypotheses[0].verdict == "UNTESTED"
     import re as _re
-    from rharness.compare.matrix import REPORT_ITEMS
+    from fieldmate.compare.matrix import REPORT_ITEMS
     for name, pat, did in REPORT_ITEMS:
         _re.compile(pat, _re.IGNORECASE)          # 编译失败会直接抛
         assert did.startswith("D-"), f"{name} 关联缺陷 id 异常：{did}"
 
 
 def test_goldset_labels_are_binary_and_have_evidence():
-    from rharness.eval.prf import load_goldset
+    from fieldmate.eval.prf import load_goldset
     for g in load_goldset():
         assert g["label"] in (0, 1), g
         assert g.get("evidence", "").strip(), f"{g} 缺 evidence 理由"
@@ -1165,7 +1165,7 @@ def test_report_item_regexes_reject_contextual_false_positives():
     收紧前的实测精确率：报稳定条件 0.00 / 报分辨率 0.25 / 报时间步 0.25。
     这里把最典型的假阳性句固定为负例，防止有人把正则改回宽匹配。
     """
-    from rharness.compare.matrix import re_search, REPORT_ITEMS
+    from fieldmate.compare.matrix import re_search, REPORT_ITEMS
     import re as _re
     pats = {n: _re.compile(p, _re.IGNORECASE) for n, p, _ in REPORT_ITEMS}
 
@@ -1224,7 +1224,7 @@ class _Row:
 
 
 def test_gap_carries_the_family_its_rate_was_computed_over():
-    from rharness.gaps.mine import mine_gaps
+    from fieldmate.gaps.mine import mine_gaps
     rows = []
     # 族 A：8 篇全缺「报分辨率」；族 B：4 篇（低于 min_n，应被排除）
     rows += [_Row("A", {"报分辨率": False}) for _ in range(8)]
@@ -1236,7 +1236,7 @@ def test_gap_carries_the_family_its_rate_was_computed_over():
 
 
 def test_gap_to_dict_exposes_family():
-    from rharness.gaps.mine import mine_gaps
+    from fieldmate.gaps.mine import mine_gaps
     rows = [_Row("时间分数阶", {"报时间步": False}) for _ in range(6)]
     g = mine_gaps(rows, {}, min_n=5, min_rate=0.5)[0]
     assert g.to_dict()["family"] == "时间分数阶"
@@ -1244,7 +1244,7 @@ def test_gap_to_dict_exposes_family():
 
 def test_gaps_json_reports_distinct_item_count_and_families():
     """候选条数是「族 × 条目」组合数；不报去重条目数会被误读成机会数。"""
-    from rharness.gaps.mine import gaps_json, mine_gaps
+    from fieldmate.gaps.mine import gaps_json, mine_gaps
     rows = []
     for fam in ("A", "B"):
         rows += [_Row(fam, {"报分辨率": False, "报时间步": False}) for _ in range(6)]
@@ -1258,7 +1258,7 @@ def test_gaps_json_reports_distinct_item_count_and_families():
 def test_gaps_markdown_does_not_confuse_candidate_count_with_family_count():
     """22 条候选 ≠ 22 个族。早先版本两处都写了 len(gaps)，
     于是「6 个条目 × 22 个族」这种自相矛盾的话印在报告第一行。"""
-    from rharness.gaps.mine import gaps_markdown, mine_gaps
+    from fieldmate.gaps.mine import gaps_markdown, mine_gaps
     rows = []
     for fam in ("A", "B"):
         rows += [_Row(fam, {"报分辨率": False, "报时间步": False}) for _ in range(6)]

@@ -25,8 +25,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from rharness.sources.fulltext import load_manifest          # noqa: E402
-from rharness.compare.matrix import REPORT_ITEMS             # noqa: E402
+from fieldmate.sources.fulltext import load_manifest          # noqa: E402
+from fieldmate.compare.matrix import REPORT_ITEMS             # noqa: E402
 
 # 参考文献区的起始。用行首匹配 + 短行要求，避免把正文里提到的
 # "the references [3] show" 当成参考文献区。

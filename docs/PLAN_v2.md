@@ -1,7 +1,7 @@
 # fieldmate · 定位与路线图（定稿）
 
 > v2 定稿（2026-10-02）。已拍板三项决策，本文不再是草案：
-> ① 更名 **fieldmate**（research-harness → fieldmate，PyPI 已核实可用）；
+> ① 更名 **fieldmate**（fieldmate → fieldmate，PyPI 已核实可用）；
 > ② 领域范围**只做 L1**（相场几何处理），金融线不纳入，L2/L3 进暂缓池；
 > ③ 交付形态**以 Harness 内 skill / 子 Agent 为主**，MCP 次之，裸 CLI 是底座。
 >
@@ -27,18 +27,18 @@ fieldmate 只提供宿主没有的三样东西——领域缺陷库、三态判�
 证据强度分级（STRONG/MEDIUM/WEAK）。工程纪律「判定归脚本、判断归 Prompt」不变，
 但它只是内部实现原则，不再对外当卖点叙事（§5 红线）。
 
-## 1. 更名方案：research-harness → fieldmate
+## 1. 更名方案：fieldmate → fieldmate
 
 **时机：Phase 0 立即执行。** 现在零外部用户，改名零成本；PyPI 发布后再改就是破坏性变更。
 
 | 项 | 改法 |
 |---|---|
-| PyPI 包名 | `research-harness` → `fieldmate`，版本 0.3.0 |
-| 包目录 | `rharness/` → `fieldmate/` |
-| CLI 入口 | `rharness = fieldmate.cli:main`；`python -m fieldmate` |
-| 环境变量 | `RHARNESS_QUERY` → `FIELDMATE_QUERY` |
-| 缓存目录 | `.rharness-cache/` → `.fieldmate-cache/`（旧缓存改名迁移或重建） |
-| MCP server 名 | `"research-harness"` → `"fieldmate"` |
+| PyPI 包名 | `fieldmate` → `fieldmate`，版本 0.3.0 |
+| 包目录 | `fieldmate/` → `fieldmate/` |
+| CLI 入口 | `fieldmate = fieldmate.cli:main`；`python -m fieldmate` |
+| 环境变量 | `FIELDMATE_QUERY` → `FIELDMATE_QUERY` |
+| 缓存目录 | `.fieldmate-cache/` → `.fieldmate-cache/`（旧缓存改名迁移或重建） |
+| MCP server 名 | `"fieldmate"` → `"fieldmate"` |
 | SKILL.md | `name:` 字段与正文同步 |
 | 文档 | README 重写定位叙事（四步闭环，去「横向对比+缺陷库匹配」的工具味自述），全量替换自称 |
 | 仓库 | GitHub 仓库名 `fieldmate` |
@@ -120,7 +120,7 @@ L1 相关缺陷 ≥25 条（现 17 条中多数已是 L1）。
 
 ### Phase 3 · 判断分工硬化（1~2 周）
 
-1. `--llm-cmd` 适配层（协议已在 `rharness/llm/__init__.py` 设计好，独立 CLI 场景用）。
+1. `--llm-cmd` 适配层（协议已在 `fieldmate/llm/__init__.py` 设计好，独立 CLI 场景用）。
 2. Assumption/Gap 槽升级：正则出候选 → 宿主精筛 → 人复核（Assumption 槽现在是 0 命中）。
 3. harvest 的子领域过滤交给宿主判断，判断记录进 rejection log。
 
@@ -149,7 +149,7 @@ README 与 SKILL.md 的所有措辞按此校准；凡是读起来像「裁判别
 | L1 期刊全文无公开接口 | 接受：OpenAlex 只做元数据层（分诊线索），全文走人工 corpus.json——这本来就是主轨道 |
 | gold set 单人标注偏见 | Phase 1 引入组内第二标注者交叉 20% |
 | skill 触发不稳 | SKILL.md description 用实测触发词打磨，Phase 2 验收时在真实宿主里试触发 |
-| 更名牵连测试与脚本 | Phase 0 一并做，`grep -r rharness` 清零后才算完 |
+| 更名牵连测试与脚本 | Phase 0 一并做，`grep -r fieldmate` 清零后才算完 |
 
 ## 7. 暂缓池（记录在案，不排期）
 

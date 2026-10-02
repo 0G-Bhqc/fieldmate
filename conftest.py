@@ -3,8 +3,8 @@
 问题
 ----
 早先跑 `pytest tests/` 一律先 `cd` 到项目根，所以 143 个测试全过。
-换个目录用绝对路径跑就 `ModuleNotFoundError: No module named 'rharness'` ——
-因为 `rharness` 并没有安装（`pip install -e .` 没人跑过），
+换个目录用绝对路径跑就 `ModuleNotFoundError: No module named 'fieldmate'` ——
+因为 `fieldmate` 并没有安装（`pip install -e .` 没人跑过），
 而 Python 只把**当前工作目录**加进 `sys.path`。
 
 为什么这不是小事

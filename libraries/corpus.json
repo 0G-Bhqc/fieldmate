@@ -1,7 +1,7 @@
 {
   "version": "0.2",
   "description": "gold set 里的 paper 标识 -> 本地文件路径。\n\n为什么需要它：arXiv 检索对**计算数学方向基本无效**（实测 `all:\"phase field\" AND all:denoising`\n取回 7 篇，0 篇真在做相场去噪；且 'denoising' 一词在现代 ML 里专指「去噪扩散」，\n会把整个扩散模型文献拉进来）。这个方向的论文普遍**走期刊投稿、不上 arXiv**，\n所以目标语料必须由人工指定，不能指望自动检索。",
-  "cache_dir": ".rharness-cache/arxiv_pdfs",
+  "cache_dir": ".fieldmate-cache/arxiv_pdfs",
   "papers": {
     "P1-recon": "G:/我的云端硬盘/station/信计/Surface Restruction/各向同性AC曲面重建/PhaseFieldSurfaceReconstruction.pdf",
     "P2-denoise": "G:/我的云端硬盘/station/信计/Image and Vision Computing/paper resubmit/D3SurfaceDenosing5.pdf"

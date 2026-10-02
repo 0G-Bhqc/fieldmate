@@ -2,7 +2,7 @@
 
 为什么读它
 ----------
-`rharness topics` 报「可微求解器 2 篇」，其中一篇就是 JAX-PF（2601.06079）。
+`fieldmate topics` 报「可微求解器 2 篇」，其中一篇就是 JAX-PF（2601.06079）。
 它是这个方向少见的**公开、完整、带基准**的实现：AC / CH / 耦合 AC-CH 四组，
 显式与隐式两套时间积分，还有 Eshelby 包含。
 
@@ -24,9 +24,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from rharness.sources.local import parse_pdf_cached            # noqa: E402
+from fieldmate.sources.local import parse_pdf_cached            # noqa: E402
 
-PDF = Path(".rharness-cache/arxiv_pdfs/2601.06079.pdf")
+PDF = Path(".fieldmate-cache/arxiv_pdfs/2601.06079.pdf")
 
 # 逐个探针：关键词 -> 关注什么
 PROBES = {

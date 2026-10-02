@@ -21,14 +21,14 @@ from pathlib import Path
 
 import pytest
 
-from rharness.sources.arxiv import (
+from fieldmate.sources.arxiv import (
     MIN_INTERVAL,
     BULK_INTERVAL,
     RateLimiter,
     backoff_seconds,
     is_throttle,
 )
-from rharness.sources.fulltext import (
+from fieldmate.sources.fulltext import (
     _candidate_urls,
     _download,
     _earlier_versions,
@@ -242,7 +242,7 @@ def test_successful_url_shape_is_learned_not_hardcoded():
     这不是洁癖：固定顺序把最容易失败的写法排在第一位，实测会让
     单篇耗时从 ~8s 涨到 ~85s，且请求数翻数倍、限流暴露面同步放大。
     """
-    import rharness.sources.fulltext as ft
+    import fieldmate.sources.fulltext as ft
     saved = list(ft._PREFERRED_SHAPE)
     try:
         ft._PREFERRED_SHAPE[:] = list(ft._URL_SHAPES)
@@ -260,7 +260,7 @@ def test_successful_url_shape_is_learned_not_hardcoded():
 
 def test_remember_shape_does_not_mistake_version_for_suffix():
     """带版本号的 export 地址要认成 export_versioned，不能误判成别的形状。"""
-    import rharness.sources.fulltext as ft
+    import fieldmate.sources.fulltext as ft
     saved = list(ft._PREFERRED_SHAPE)
     try:
         ft._PREFERRED_SHAPE[:] = list(ft._URL_SHAPES)
@@ -280,7 +280,7 @@ def test_learned_order_still_covers_all_shapes_without_duplicates():
     候选表还包含更早版本号的回退（见 2609.24871v2 的实测），
     总数会随版本号变化，把总数钉死会让这个测试在正确扩展时误报。
     """
-    import rharness.sources.fulltext as ft
+    import fieldmate.sources.fulltext as ft
     saved = list(ft._PREFERRED_SHAPE)
     try:
         plain = _candidate_urls("2501.00008")
@@ -297,7 +297,7 @@ def test_learned_order_still_covers_all_shapes_without_duplicates():
 # ---------------------------------------------------- 解析缓存的失效纪律
 def test_parsed_text_cache_is_used_on_second_read(tmp_path, monkeypatch):
     """同一份 PDF 第二次读必须走缓存 —— 240 篇重解析要 2.5 分钟，这是痛点本身。"""
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     monkeypatch.setattr(loc, "_text_cache_dir", lambda: tmp_path / "tc")
     src = tmp_path / "a.pdf"
     src.write_bytes(b"%PDF-1.4 hello world " * 100)
@@ -318,7 +318,7 @@ def test_parsed_text_cache_is_used_on_second_read(tmp_path, monkeypatch):
 
 def test_parsed_text_cache_invalidates_when_pdf_changes(tmp_path, monkeypatch):
     """PDF 内容变了必须重解析。只按 size 判会漏掉「同尺寸换内容」，那会让结论悄悄错。"""
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     monkeypatch.setattr(loc, "_text_cache_dir", lambda: tmp_path / "tc")
     src = tmp_path / "b.pdf"
     src.write_bytes(b"%PDF-1.4 v1 " * 100)
@@ -342,7 +342,7 @@ def test_parsed_text_cache_invalidates_when_pdf_changes(tmp_path, monkeypatch):
 
 def test_parsed_text_cache_key_includes_max_chars(tmp_path, monkeypatch):
     """max_chars 是硬上限，参与缓存键；否则调小上限后会读到被截断的旧文本。"""
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     monkeypatch.setattr(loc, "_text_cache_dir", lambda: tmp_path / "tc")
     src = tmp_path / "c.pdf"
     src.write_bytes(b"%PDF-1.4 x " * 100)
@@ -356,7 +356,7 @@ def test_parsed_text_cache_key_includes_max_chars(tmp_path, monkeypatch):
 
 def test_parsed_text_cache_write_failure_is_silent_but_read_failure_is_not(tmp_path, monkeypatch):
     """缓存写不进去要静默退回直解（缓存是优化不是正确性）；读不出来则必须重解。"""
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     monkeypatch.setattr(loc, "_text_cache_dir", lambda: tmp_path / "ro")
     src = tmp_path / "d.pdf"
     src.write_bytes(b"%PDF-1.4 y " * 100)
@@ -377,7 +377,7 @@ def test_parsed_text_cache_write_failure_is_silent_but_read_failure_is_not(tmp_p
 
 def test_parsed_text_cache_returns_none_for_missing_file(tmp_path):
     """文件不存在时不能抛异常之外的怪错，也不能凭空造出文本。"""
-    import rharness.sources.local as loc
+    import fieldmate.sources.local as loc
     txt, backend = loc.parse_pdf_cached(tmp_path / "ghost.pdf")
     assert txt is None, "不存在的文件绝不能返回文本"
 

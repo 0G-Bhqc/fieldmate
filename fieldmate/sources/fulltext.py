@@ -33,7 +33,7 @@ PDF_TMPL = "https://arxiv.org/pdf/{id}"
 
 
 def default_cache() -> Path:
-    return Path(".rharness-cache/arxiv_pdfs")
+    return Path(".fieldmate-cache/arxiv_pdfs")
 
 
 def _pdf_path(cache: Path, arxiv_id: str) -> Path:
@@ -52,7 +52,7 @@ def _pdf_path(cache: Path, arxiv_id: str) -> Path:
 #
 # 两条实测结论，都与直觉相反，值得写下来免得以后被「优化」掉：
 #   1. **决定成败的是主机，不是 User-Agent。** 同一地址换三种 UA
-#      （浏览器型 / rharness 型 / 带 Referer）结果完全一致，
+#      （浏览器型 / fieldmate 型 / 带 Referer）结果完全一致，
 #      全是 406 或全是 200。早先注释里「PDF 请求改用浏览器 UA 更稳」是错的。
 #   2. **带 `.pdf` 后缀那种写法是最差的**，却是很多示例代码的默认写法。
 #
@@ -143,7 +143,7 @@ def _download(url: str, dest: Path, limiter: RateLimiter,
          urllib.error 的子类里，必须单独捕获 —— 漏掉它会让工具在
          第一次网络抖动时直接崩掉，而不是跳过一篇继续跑。
       2. IncompleteRead 的残片**不再直接当成品**（见下方第 5 条）。
-      3. 406 与 User-Agent 无关：实测同一地址换浏览器型 / rharness 型 /
+      3. 406 与 User-Agent 无关：实测同一地址换浏览器型 / fieldmate 型 /
          带 Referer 三种 UA，结果逐条一致。406 的真正开关是**主机**
          （见 _candidate_urls 的对拍表）。这里保留一个明确的 UA
          只是为了表明身份，不是为了绕过 406 —— 别再把它当调优旋钮。
@@ -167,7 +167,7 @@ def _download(url: str, dest: Path, limiter: RateLimiter,
         limiter.wait()
         try:
             req = urllib.request.Request(
-                url, headers={"User-Agent": "Mozilla/5.0 (compatible; rharness/0.2)",
+                url, headers={"User-Agent": "Mozilla/5.0 (compatible; fieldmate/0.2)",
                               "Accept": "application/pdf,*/*"})
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 data = r.read()

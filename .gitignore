@@ -14,9 +14,8 @@ out/
 *.csv
 !docs/**/*.csv
 
-# arXiv PDF 缓存：纯派生数据，可由 `_resume.py` 重新抓取。
+# PDF/解析缓存：纯派生数据，可由 `_resume.py` 重新抓取。
 # 实测 247 篇约 1 GB，**绝不能进版本库** —— 换个目录 clone 就变灾难。
+# （旧名目录行保留，防止历史工作区意外入库）
 .rharness-cache/
-
-# fieldmate 缓存（更名后的派生数据，同样不进库）
 .fieldmate-cache/

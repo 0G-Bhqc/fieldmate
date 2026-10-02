@@ -19,10 +19,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from rharness.sources.local import parse_pdf_cached      # noqa: E402
+from fieldmate.sources.local import parse_pdf_cached      # noqa: E402
 from _audit_cache import cache_path                      # noqa: E402
 
-CACHE = Path(".rharness-cache/arxiv_pdfs")
+CACHE = Path(".fieldmate-cache/arxiv_pdfs")
 IDS = ["2102.05139v2", "2502.00509v1", "1704.02348v1",
        "2411.05840v1", "2410.04451v1", "2504.13967v1",
        "2609.24871v2"]          # 最后一个是「缺失」，一并看

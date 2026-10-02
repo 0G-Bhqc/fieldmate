@@ -30,7 +30,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from rharness.sources.fulltext import load_manifest                    # noqa: E402
+from fieldmate.sources.fulltext import load_manifest                    # noqa: E402
 
 # 课题组研究线的关键术语。每条附 note，说明它为什么必须在语料里有支撑。
 TERMS: list[tuple[str, str]] = [

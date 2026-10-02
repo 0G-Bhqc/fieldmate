@@ -33,7 +33,7 @@ MIN_INTERVAL = 3.0          # arXiv 官方要求：两次请求至少间隔 3 �
 # 真正把限流暴露面压下去的是「每篇只发一次请求」（候选地址按实测成功率排序），
 # 那比调间隔有效得多。
 BULK_INTERVAL = 5.0
-_UA = "rharness/0.2 (research-harness; +https://github.com/your-org/research-harness)"
+_UA = "fieldmate/0.2 (fieldmate; +https://github.com/your-org/fieldmate)"
 
 
 @dataclass

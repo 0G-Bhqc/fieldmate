@@ -1,9 +1,9 @@
 ---
-name: research-harness
+name: fieldmate
 description: 用于计算科学研究（数值 PDE / 几何处理 / 计算成像 / 相场类方向）的文献横向对比、缺陷检查、精进点挖掘与实验核验。当需要：检索并横向对比某个研究方向的论文、找出可做的精进点、检查论文的可复现性与评测协议完整性、判断语料够不够覆盖某个方向、或把假设落成可证伪的实验并核验结果时使用。触发词：横向对比、文献对比、复现性检查、评测协议、精进点、这个方向最近有什么进展、帮我读这篇论文、arXiv 检索、我的语料够吗、验证实验结果。
 ---
 
-# research-harness
+# fieldmate
 
 ## 这个 Skill 做什么
 
@@ -29,18 +29,18 @@ description: 用于计算科学研究（数值 PDE / 几何处理 / 计算成像
 echo 'abs:"time-fractional" AND abs:"Allen-Cahn"' > q.txt
 
 # ② 横向对比
-python -m rharness compare --query-file q.txt --limit 20 --format markdown
+python -m fieldmate compare --query-file q.txt --limit 20 --format markdown
 
 # ① 精进点：读离线批量语料（libraries/corpus_bulk.json），不联网
-python -m rharness gaps --corpus libraries/corpus_bulk.json --min-n 8
+python -m fieldmate gaps --corpus libraries/corpus_bulk.json --min-n 8
 
 # 语料自检：先确认语料够用，再谈结论
-python -m rharness coverage --corpus libraries/corpus_bulk.json   # 术语够不够
-python -m rharness topics   --corpus libraries/corpus_bulk.json   # 方向分布
+python -m fieldmate coverage --corpus libraries/corpus_bulk.json   # 术语够不够
+python -m fieldmate topics   --corpus libraries/corpus_bulk.json   # 方向分布
 
 # ③ 实验核验
-python -m rharness prereg --init
-python -m rharness verify --prereg my.json --results out.json
+python -m fieldmate prereg --init
+python -m fieldmate verify --prereg my.json --results out.json
 ```
 
 依赖：核心零依赖（纯 stdlib）。`pip install -e .` 后即可用。
@@ -93,6 +93,6 @@ python -m rharness verify --prereg my.json --results out.json
 `evidence` 字段必须能被独立复核（引用论文时给原文出处）。
 
 ```bash
-python -m rharness patterns    # 查看哪些缺陷还没有可执行规则
-python -m rharness evaluate    # 用 gold set 体检规则的精确率/召回率
+python -m fieldmate patterns    # 查看哪些缺陷还没有可执行规则
+python -m fieldmate evaluate    # 用 gold set 体检规则的精确率/召回率
 ```

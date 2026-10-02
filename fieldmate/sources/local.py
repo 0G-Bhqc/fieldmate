@@ -24,7 +24,7 @@ _EXTRACTORS: list[tuple[str, Any]] = []
 # 是否注册 pymupdf4llm 结构后端。**默认 False** —— 零依赖是本项目的硬底线，
 # 详见 `_register_extractors` 的 docstring 里的取舍说明。
 # 改这个值（或调 enable_structured_backend()）之前请先读那段。
-_USE_LLM_BACKEND = bool(__import__("os").environ.get("RHARNESS_PYMUPDF4LLM"))
+_USE_LLM_BACKEND = bool(__import__("os").environ.get("FIELDMATE_PYMUPDF4LLM"))
 
 
 def enable_structured_backend(on: bool = True) -> None:
@@ -32,7 +32,7 @@ def enable_structured_backend(on: bool = True) -> None:
 
     打开后：
       * `parse_pdf` 优先返回 Markdown（标题带 `#`，是显式结构而非猜的）；
-      * `rharness.extract.slots` 会直接认 Markdown 标题；
+      * `fieldmate.extract.slots` 会直接认 Markdown 标题；
       * 参考文献区裁剪**不变**，仍走 `find_reference_start`。
 
     装不上 / 没装这个包时静默退回原有后端链，功能降级但不报错 ——
@@ -171,7 +171,7 @@ _TXT_CACHE_DIRNAME = "parsed_text"
 
 
 def _text_cache_dir() -> Path:
-    return Path(".rharness-cache") / _TXT_CACHE_DIRNAME
+    return Path(".fieldmate-cache") / _TXT_CACHE_DIRNAME
 
 
 def parse_pdf_cached(path: str | Path, max_chars: int = 2_000_000) -> tuple[str | None, str]:

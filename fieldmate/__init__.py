@@ -1,4 +1,4 @@
-"""research-harness —— 跨论文横向对比 + 缺陷库匹配（harness 无关）
+"""fieldmate —— 跨论文横向对比 + 缺陷库匹配（harness 无关）
 
 核心保证：**不接 LLM 也能跑**。LLM 是可插拔的外部依赖，不是前置条件。
 """

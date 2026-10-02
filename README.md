@@ -1,4 +1,4 @@
-# research-harness
+# fieldmate
 
 **跨论文横向对比 + 缺陷库匹配**。为计算科学研究设计，可挂进**任意** Agent Harness。
 
@@ -28,39 +28,39 @@ pip install -e .            # 零依赖
 pip install -e ".[pdf]"     # 需要解析本地 PDF 时
 
 # 1) 体检缺陷库与检测规则的覆盖情况
-python -m rharness patterns
+python -m fieldmate patterns
 
 # 2) ★ 规则体检：用人工标注集算精确率/召回率（先抓全文）
-python -m rharness gaps --query-file q.txt --fulltext      # 顺带把 PDF 缓存下来
-python -m rharness evaluate
+python -m fieldmate gaps --query-file q.txt --fulltext      # 顺带把 PDF 缓存下来
+python -m fieldmate evaluate
 
 # 3) 跨论文横向对比
-python -m rharness compare --query-file q.txt --fulltext --format markdown
+python -m fieldmate compare --query-file q.txt --fulltext --format markdown
 
 # 4) ★ 精进点生成（带证据强度分级）
-python -m rharness gaps --query-file q.txt --fulltext
+python -m fieldmate gaps --query-file q.txt --fulltext
 
 # 5) ★ 论文阅读卡：按阅读目的渐进披露（五槽抽取）
-python -m rharness read --purpose beat --l2
+python -m fieldmate read --purpose beat --l2
 
 # 6) ★★ 实验预注册与核验（跑实验前后各一次）
-python -m rharness prereg --init --out experiments/exp-001.json
-python -m rharness prereg --prereg experiments/exp-001.json --results results.json
-python -m rharness verify  --prereg experiments/exp-001.json --results results.json
+python -m fieldmate prereg --init --out experiments/exp-001.json
+python -m fieldmate prereg --prereg experiments/exp-001.json --results results.json
+python -m fieldmate verify  --prereg experiments/exp-001.json --results results.json
 
 # 7) 批量语料离线分析（248 篇，只读 PDF 缓存，不联网）
-python -m rharness gaps --corpus libraries/corpus_bulk.json
+python -m fieldmate gaps --corpus libraries/corpus_bulk.json
 
 # 8) ★ 语料自检：确认语料够用，再谈结论
-python -m rharness coverage --corpus libraries/corpus_bulk.json   # 关键术语有没有支撑（按命中出处分层）
-python -m rharness topics   --corpus libraries/corpus_bulk.json   # 哪些方向有、哪些几乎没有（附原文片段）
+python -m fieldmate coverage --corpus libraries/corpus_bulk.json   # 关键术语有没有支撑（按命中出处分层）
+python -m fieldmate topics   --corpus libraries/corpus_bulk.json   # 哪些方向有、哪些几乎没有（附原文片段）
 
 # 9) 体检与查表
-python -m rharness --help                   # 所有子命令（12 个）
-python -m rharness list                     # 缺陷库速览（每条是否已有可执行检测规则）
-python -m rharness sources --path paper.pdf  # 数据源体检（arXiv 通不通 / PDF 能不能解析）
-python -m rharness patterns                 # 缺陷库 & 规则的分栏体检（欠规则 vs 运行时缺陷）
-python -m rharness evaluate                 # 检测规则的精确率/召回率体检
+python -m fieldmate --help                   # 所有子命令（12 个）
+python -m fieldmate list                     # 缺陷库速览（每条是否已有可执行检测规则）
+python -m fieldmate sources --path paper.pdf  # 数据源体检（arXiv 通不通 / PDF 能不能解析）
+python -m fieldmate patterns                 # 缺陷库 & 规则的分栏体检（欠规则 vs 运行时缺陷）
+python -m fieldmate evaluate                 # 检测规则的精确率/召回率体检
 ```
 
 > **别跳过第 8 步。** 语料覆盖不足时，`gaps` 照样会产出一堆看起来很漂亮的精进点 ——
@@ -71,9 +71,9 @@ python -m rharness evaluate                 # 检测规则的精确率/召回率
 想直接看端到端效果（用的是本项目真实的预注册与结果）：
 
 ```bash
-python -m rharness prereg --prereg examples/prereg_exp-pfdenoise-001.json \
+python -m fieldmate prereg --prereg examples/prereg_exp-pfdenoise-001.json \
                           --results examples/results_exp-pfdenoise-001.json
-python -m rharness verify  --prereg examples/prereg_exp-pfdenoise-001.json \
+python -m fieldmate verify  --prereg examples/prereg_exp-pfdenoise-001.json \
                           --results examples/results_exp-pfdenoise-001.json
 ```
 
@@ -94,7 +94,7 @@ STRONG 级证据：arXiv 摘要是 150~250 词，**没人会在摘要里写 Δt�
 arXiv 检索式天然含空格与引号，而 shell、subprocess、各家 harness 的参数传递处理方式**都不一样**
 （PowerShell 会直接拆词）。我实测踩过：`--query 'all:"phase field" AND all:denoising'`
 在 PowerShell 下被拆成 4 个参数，直接报 `unrecognized arguments`。
-所以框架提供了三条旁路：`--query` / `--query-file` / 环境变量 `RHARNESS_QUERY`。
+所以框架提供了三条旁路：`--query` / `--query-file` / 环境变量 `FIELDMATE_QUERY`。
 **这类「看起来是数据问题、实际是引用问题」的失败最难查**，所以必须内置旁路。
 
 ---
@@ -233,7 +233,7 @@ arXiv 检索式天然含空格与引号，而 shell、subprocess、各家 harnes
 两条结论都和直觉相反：
 
 1. **决定成败的是主机，不是 User-Agent。** 同一地址换三种 UA
-   （浏览器型 / rharness 型 / 带 Referer）结果逐条一致，全 406 或全 200。
+   （浏览器型 / fieldmate 型 / 带 Referer）结果逐条一致，全 406 或全 200。
    代码注释里原先那句「PDF 请求改用浏览器 UA 更稳」是错的，已更正。
 2. **带 `.pdf` 后缀的写法是最差的（0/3），却是大量示例代码的默认写法。**
    早期把它排在候选第一位，等于每篇先白烧一轮重试：实测单篇 **64.4 秒且完全失败**。
@@ -255,7 +255,7 @@ arXiv 检索式天然含空格与引号，而 shell、subprocess、各家 harnes
 
 ```bash
 # 装载 manifest 语料做离线分析（只读 PDF 缓存，不联网）
-python -m rharness.cli gaps --corpus libraries/corpus_bulk.json --min-n 10
+python -m fieldmate.cli gaps --corpus libraries/corpus_bulk.json --min-n 10
 ```
 
 `--corpus` 与 `--query` 是**并集**关系而非替代：检索结果通常只有摘要，
@@ -320,8 +320,8 @@ python -m rharness.cli gaps --corpus libraries/corpus_bulk.json --min-n 10
 ## 能力②　五槽抽取 + 渐进式披露阅读卡（`read`）
 
 ```bash
-python -m rharness read --purpose beat --l2      # 超越某篇该看什么
-python -m rharness read --purpose implement     # 复现某篇该看什么
+python -m fieldmate read --purpose beat --l2      # 超越某篇该看什么
+python -m fieldmate read --purpose implement     # 复现某篇该看什么
 ```
 
 **要解决的问题：对所有论文都给同样的均匀深度，是 LLM 论文助手最大的浪费。**
@@ -373,10 +373,10 @@ python -m rharness read --purpose implement     # 复现某篇该看什么
 ## 能力③　实验预注册与结果核验（`prereg` / `verify`）
 
 ```bash
-python -m rharness prereg --init --out experiments/exp-001.json        # 生成模板
-python -m rharness prereg --prereg experiments/exp-001.json \
+python -m fieldmate prereg --init --out experiments/exp-001.json        # 生成模板
+python -m fieldmate prereg --prereg experiments/exp-001.json \
                           --results results.json                       # 校验（不合格就别开跑）
-python -m rharness verify  --prereg experiments/exp-001.json \
+python -m fieldmate verify  --prereg experiments/exp-001.json \
                           --results results.json                       # 三态核验
 ```
 
@@ -431,7 +431,7 @@ python -m rharness verify  --prereg experiments/exp-001.json \
 ## 规则体检（`evaluate` 子命令）—— 工具对自己的诚实体检
 
 ```bash
-python -m rharness evaluate          # 用人工标注 gold set 算精确率/召回率
+python -m fieldmate evaluate          # 用人工标注 gold set 算精确率/召回率
 ```
 
 gold set 共 **42** 条 = 目标领域论文 12 条（作者亲读全文、高置信度）+ 其他论文 30 条。
@@ -496,7 +496,7 @@ v1 的教训同样值钱：`stability` 在相场/ML/材料论文里绝大多数�
 > **入库硬标准：没有可执行检测方式的条目不准入库。**
 > 只写「注意事项」的条目无法被复用，只会变成又一篇需要人读的文档——
 > 那样的话缺陷库就退化成了没人读的长文档（R1 风险）。
-> `python -m rharness patterns` 会明确列出哪些缺陷还没有可执行规则。
+> `python -m fieldmate patterns` 会明确列出哪些缺陷还没有可执行规则。
 
 ---
 
@@ -506,13 +506,13 @@ v1 的教训同样值钱：`stability` 在相场/ML/材料论文里绝大多数�
 
 ```bash
 # 默认只用验证过的高纯度检索式
-python -m rharness harvest --per-query 10 --only high
+python -m fieldmate harvest --per-query 10 --only high
 
 # 把被污染的检索式也放进去，验证闸门到底拦不拦得住
-python -m rharness harvest --per-query 8 --only all --no-download
+python -m fieldmate harvest --per-query 8 --only all --no-download
 
 # 消融实验：关掉词法闸门，看纯学科闸门值多少
-python -m rharness harvest --only all --no-term-gate --no-download
+python -m fieldmate harvest --only all --no-term-gate --no-download
 ```
 
 **这个子命令的价值不在「抓」，在「抓完敢扔」。**
@@ -564,8 +564,8 @@ python -m rharness harvest --only all --no-term-gate --no-download
 
 | 形态 | 做法 |
 |---|---|
-| 裸 CLI | `python -m rharness gaps --query-file q.txt --fulltext --format json` |
-| 任意 Python harness | `import rharness; rharness.mine_gaps(rows, stats, library)` |
+| 裸 CLI | `python -m fieldmate gaps --query-file q.txt --fulltext --format json` |
+| 任意 Python harness | `import fieldmate; fieldmate.mine_gaps(rows, stats, library)` |
 | MCP | `pip install -e ".[mcp]"` + `adapters/mcp/server.py`（7 个工具，三项能力各有入口） |
 | Agent Skill | `adapters/skill/SKILL.md`，抄走即可 |
 

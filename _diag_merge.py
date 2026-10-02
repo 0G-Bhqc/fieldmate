@@ -19,7 +19,7 @@ import sys
 from collections import Counter
 
 sys.path.insert(0, '.')
-from rharness.sources.fulltext import load_manifest          # noqa: E402
+from fieldmate.sources.fulltext import load_manifest          # noqa: E402
 
 # 行首匹配：可选编号 + 章节关键词，后跟分隔符或词边界
 HEAD_KW = re.compile(
