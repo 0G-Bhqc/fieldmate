@@ -1,0 +1,141 @@
+{
+  "generated": true,
+  "n_papers": 13,
+  "n_with_fulltext": 12,
+  "queries": [
+    {
+      "query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\"",
+      "label": "时间分数阶 Allen-Cahn（导师 2025-2026 最活跃的线）"
+    },
+    {
+      "query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\"",
+      "label": "反应扩散 / Lengyel-Epstein 图案形成"
+    },
+    {
+      "query": "abs:\"Cahn-Hilliard\" AND abs:\"image segmentation\"",
+      "label": "CH 图像分割（对应组里 Neural Networks / TIP / TPAMI 那几篇）"
+    }
+  ],
+  "papers": [
+    {
+      "id": "2609.21512v1",
+      "title": "FrFNO:Injecting the analytic Mittag-Leffler propagator into a resolution-robust neural operator for space-time",
+      "published": "2026-09-18",
+      "categories": [
+        "math.NA",
+        "math-ph"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2606.12799v1",
+      "title": "A variable time-step, second-order, and MBP-preserving linear stabilized scheme for the time-fractional Allen-",
+      "published": "2026-06-11",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2603.11696v1",
+      "title": "Non-uniform $α$-Robust Alikhanov Mixed FEM with Optimal Convergence for the Time-Fractional Allen--Cahn Equati",
+      "published": "2026-03-12",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2510.16496v1",
+      "title": "A linear unconditionally structure-preserving L1 scheme for the time-fractional Allen-Cahn equation",
+      "published": "2025-10-18",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2509.03471v1",
+      "title": "Linear Relaxation Schemes with Asymptotically Compatible Energy Law for Time-Fractional Phase-Field Models",
+      "published": "2025-09-03",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2508.19965v3",
+      "title": "High-order nonuniform time-stepping and MBP-preserving linear schemes for the time-fractional Allen-Cahn equat",
+      "published": "2025-08-27",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2506.11817v1",
+      "title": "Second-Order Linear Relaxation Schemes for Time-Fractional Phase-Field Models",
+      "published": "2025-06-13",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2609.08969v1",
+      "title": "Singular Turing bifurcations and spatial canard solutions in nonlinear reaction-diffusion systems",
+      "published": "2026-09-08",
+      "categories": [
+        "math.DS"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2504.13967v1",
+      "title": "Maze-Bubble Pattern Magnetic Domain Simulation Based on the Lengyel-Epstein Model",
+      "published": "2025-04-17",
+      "categories": [
+        "cond-mat.mtrl-sci",
+        "math.AP"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2412.15531v1",
+      "title": "Spatiotemporal pattern formations in a two-layer coupled reaction-diffusion Lengyel-Epstein system",
+      "published": "2024-12-20",
+      "categories": [
+        "math.AP"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "1711.00976v2",
+      "title": "The global existence of solutions and asymptotic stability of a reaction-diffusion system",
+      "published": "2017-11-02",
+      "categories": [
+        "math.AP"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2508.08309v1",
+      "title": "Variational volume reconstruction with the Deep Ritz Method",
+      "published": "2025-08-08",
+      "categories": [
+        "eess.IV",
+        "cs.CV"
+      ],
+      "has_fulltext": true
+    },
+    {
+      "id": "2505.05806v2",
+      "title": "Image Segmentation via Variational Model Based Tailored UNet: A Deep Variational Framework",
+      "published": "2025-05-09",
+      "categories": [
+        "cs.CV"
+      ],
+      "has_fulltext": true
+    }
+  ]
+}

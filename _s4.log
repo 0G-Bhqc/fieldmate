@@ -1,0 +1,11 @@
+
+list            exit=0   lines=28
+patterns        exit=0   lines=57
+sources         exit=0   lines=15
+compare         exit=0   lines=155
+compare-bulk    exit=0   lines=5826
+read            exit=0   lines=56
+evaluate        exit=0   lines=31
+gaps            exit=0   lines=541
+sources-noarg   exit=1   lines=1
+compare-badpath exit=2   lines=1

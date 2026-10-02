@@ -1,0 +1,612 @@
+{
+  "generated": "2026-10-01T11:09:17Z",
+  "fingerprint": "sha256:650257d6e22e1e66  papers=25  with_fulltext=0",
+  "gate": {
+    "require_term": true,
+    "core_categories": [
+      "cond-mat.mtrl-sci",
+      "cond-mat.stat-mech",
+      "cs.CE",
+      "cs.CV",
+      "cs.NA",
+      "eess.IV",
+      "math-ph",
+      "math.AP",
+      "math.DS",
+      "math.NA",
+      "math.PR",
+      "math.SP"
+    ],
+    "ml_categories": [
+      "cs.AI",
+      "cs.CL",
+      "cs.LG"
+    ],
+    "n_strong_terms": 24,
+    "n_weak_terms": 6
+  },
+  "counts": {
+    "queries": 10,
+    "fetched": 45,
+    "accepted": 25,
+    "rejected": 19,
+    "with_fulltext": 0,
+    "downloaded": 0,
+    "cached": 0,
+    "parsed": 0,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "id": "2609.21512v1",
+      "title": "FrFNO:Injecting the analytic Mittag-Leffler propagator into a resolution-robust neural operator for space-time fractional PDEs",
+      "published": "2026-09-18",
+      "categories": [
+        "math.NA",
+        "math-ph"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2606.12799v1",
+      "title": "A variable time-step, second-order, and MBP-preserving linear stabilized scheme for the time-fractional Allen-Cahn equation",
+      "published": "2026-06-11",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2603.11696v1",
+      "title": "Non-uniform $α$-Robust Alikhanov Mixed FEM with Optimal Convergence for the Time-Fractional Allen--Cahn Equation",
+      "published": "2026-03-12",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2510.16496v1",
+      "title": "A linear unconditionally structure-preserving L1 scheme for the time-fractional Allen-Cahn equation",
+      "published": "2025-10-18",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2509.03471v1",
+      "title": "Linear Relaxation Schemes with Asymptotically Compatible Energy Law for Time-Fractional Phase-Field Models",
+      "published": "2025-09-03",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2508.19965v3",
+      "title": "High-order nonuniform time-stepping and MBP-preserving linear schemes for the time-fractional Allen-Cahn equation",
+      "published": "2025-08-27",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2506.11817v1",
+      "title": "Second-Order Linear Relaxation Schemes for Time-Fractional Phase-Field Models",
+      "published": "2025-06-13",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2402.05250v2",
+      "title": "Time-fractional Allen-Cahn equations versus powers of the mean curvature",
+      "published": "2024-02-07",
+      "categories": [
+        "math.AP"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2609.08969v1",
+      "title": "Singular Turing bifurcations and spatial canard solutions in nonlinear reaction-diffusion systems",
+      "published": "2026-09-08",
+      "categories": [
+        "math.DS"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2504.13967v1",
+      "title": "Maze-Bubble Pattern Magnetic Domain Simulation Based on the Lengyel-Epstein Model",
+      "published": "2025-04-17",
+      "categories": [
+        "cond-mat.mtrl-sci",
+        "math.AP"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2412.15531v1",
+      "title": "Spatiotemporal pattern formations in a two-layer coupled reaction-diffusion Lengyel-Epstein system",
+      "published": "2024-12-20",
+      "categories": [
+        "math.AP"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "1711.00976v2",
+      "title": "The global existence of solutions and asymptotic stability of a reaction-diffusion system",
+      "published": "2017-11-02",
+      "categories": [
+        "math.AP"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2609.18403v1",
+      "title": "Constrained weak identification of Allen--Cahn free energies with surface-tension calibration",
+      "published": "2026-09-16",
+      "categories": [
+        "math.NA",
+        "cs.CE",
+        "nlin.PS",
+        "physics.comp-ph"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2508.08309v1",
+      "title": "Variational volume reconstruction with the Deep Ritz Method",
+      "published": "2025-08-08",
+      "categories": [
+        "eess.IV",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2609.24069v1",
+      "title": "Accurate wall shear stress in immersed flow analysis with application to point cloud-based CFD",
+      "published": "2026-09-21",
+      "categories": [
+        "math.NA",
+        "cs.CE",
+        "physics.flu-dyn"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2609.05744v1",
+      "title": "Gaussian Linear Functional Manifold Method for Massive Point Cloud Data",
+      "published": "2026-09-04",
+      "categories": [
+        "cs.CV",
+        "cs.LG",
+        "stat.ML"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2607.29584v2",
+      "title": "A Thresholding Based Operator-Splitting Method for Curvature-Regularized Surface Reconstruction",
+      "published": "2026-07-31",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2607.28995v1",
+      "title": "Receding-Horizon Next-Best-View Planner for Autonomous Leaf Surface Reconstruction",
+      "published": "2026-07-31",
+      "categories": [
+        "cs.RO"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2607.28855v1",
+      "title": "Learning Manifolds in High-D Point Embedding for Anisotropic Surface Approximation from Unstructured Point Clouds",
+      "published": "2026-07-30",
+      "categories": [
+        "cs.GR",
+        "cs.CV"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2607.22773v1",
+      "title": "Metric Surface Reconstruction of Neurosurgical Scenes from Monocular Operating Microscope Images and Microscope Pose",
+      "published": "2026-07-24",
+      "categories": [
+        "eess.IV",
+        "cs.CV",
+        "physics.med-ph"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2607.21840v1",
+      "title": "Toward High-Fidelity 3D Point-Cloud Learning for Brain Folding Morphology Prediction Using Trans-Unet",
+      "published": "2026-07-23",
+      "categories": [
+        "cs.CV",
+        "eess.IV",
+        "stat.ME",
+        "stat.ML"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2607.16946v1",
+      "title": "Points as Tori: Fast Pointwise Signed Distance for Point Clouds",
+      "published": "2026-07-18",
+      "categories": [
+        "cs.GR",
+        "cs.CV"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2607.10429v1",
+      "title": "Data-efficient continuous conditional denoising diffusion model for microstructure generation",
+      "published": "2026-07-11",
+      "categories": [
+        "cs.CE",
+        "cond-mat.mtrl-sci"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2605.01177v1",
+      "title": "Energy Dissipative Solution to a Nonlinear Parabolic Systems with Unknown Dependent Coefficients",
+      "published": "2026-05-02",
+      "categories": [
+        "math.AP"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2503.17945v2",
+      "title": "Deep Learning Assisted Denoising of Experimental Micrographs",
+      "published": "2025-03-23",
+      "categories": [
+        "cond-mat.mtrl-sci"
+      ],
+      "has_fulltext": false
+    }
+  ],
+  "per_query": [
+    {
+      "query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\"",
+      "label": "时间分数阶 Allen-Cahn（导师 2025-2026 最活跃的线）",
+      "fetched": 8,
+      "accepted": [
+        {
+          "id": "2609.21512v1",
+          "title": "FrFNO:Injecting the analytic Mittag-Leffler propagator into a resolution-robust neural operator for space-time",
+          "reason": "通过（强术语 ['time[- ]fractional']，分类 ['math-ph', 'math.NA']；⚠ 命中 ML 词 ['neural\\\\s+operator', 'convolutional']，但有强术语+核心分类，保留待人审",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        },
+        {
+          "id": "2606.12799v1",
+          "title": "A variable time-step, second-order, and MBP-preserving linear stabilized scheme for the time-fractional Allen-",
+          "reason": "通过（强术语 ['time[- ]fractional']，分类 ['math.NA']",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        },
+        {
+          "id": "2603.11696v1",
+          "title": "Non-uniform $α$-Robust Alikhanov Mixed FEM with Optimal Convergence for the Time-Fractional Allen--Cahn Equati",
+          "reason": "通过（强术语 ['time[- ]fractional']，分类 ['math.NA']",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        },
+        {
+          "id": "2510.16496v1",
+          "title": "A linear unconditionally structure-preserving L1 scheme for the time-fractional Allen-Cahn equation",
+          "reason": "通过（强术语 ['phase[- ]field\\\\s+(?:method|model|modeling|simulation|approximation|reconstruction|technique|framework|equation|representation|discretiz\\\\w*)', 'time[- ]fractional']，分类 ['math.NA']",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        },
+        {
+          "id": "2509.03471v1",
+          "title": "Linear Relaxation Schemes with Asymptotically Compatible Energy Law for Time-Fractional Phase-Field Models",
+          "reason": "通过（强术语 ['phase[- ]field\\\\s+(?:method|model|modeling|simulation|approximation|reconstruction|technique|framework|equation|representation|discretiz\\\\w*)', 'time[- ]fractional']，分类 ['math.NA']",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        },
+        {
+          "id": "2508.19965v3",
+          "title": "High-order nonuniform time-stepping and MBP-preserving linear schemes for the time-fractional Allen-Cahn equat",
+          "reason": "通过（强术语 ['time[- ]fractional']，分类 ['math.NA']",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        },
+        {
+          "id": "2506.11817v1",
+          "title": "Second-Order Linear Relaxation Schemes for Time-Fractional Phase-Field Models",
+          "reason": "通过（强术语 ['phase[- ]field\\\\s+(?:method|model|modeling|simulation|approximation|reconstruction|technique|framework|equation|representation|discretiz\\\\w*)', 'time[- ]fractional']，分类 ['math.NA']",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        },
+        {
+          "id": "2402.05250v2",
+          "title": "Time-fractional Allen-Cahn equations versus powers of the mean curvature",
+          "reason": "通过（强术语 ['time[- ]fractional']，分类 ['math.AP']",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        }
+      ],
+      "rejected": []
+    },
+    {
+      "query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\"",
+      "label": "反应扩散 / Lengyel-Epstein 图案形成",
+      "fetched": 4,
+      "accepted": [
+        {
+          "id": "2609.08969v1",
+          "title": "Singular Turing bifurcations and spatial canard solutions in nonlinear reaction-diffusion systems",
+          "reason": "通过（仅弱术语 ['reaction[- ]diffusion']，但分类 ['math.DS'] 且无 ML 特征）",
+          "via_query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\""
+        },
+        {
+          "id": "2504.13967v1",
+          "title": "Maze-Bubble Pattern Magnetic Domain Simulation Based on the Lengyel-Epstein Model",
+          "reason": "通过（仅弱术语 ['reaction[- ]diffusion']，但分类 ['cond-mat.mtrl-sci', 'math.AP'] 且无 ML 特征）",
+          "via_query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\""
+        },
+        {
+          "id": "2412.15531v1",
+          "title": "Spatiotemporal pattern formations in a two-layer coupled reaction-diffusion Lengyel-Epstein system",
+          "reason": "通过（仅弱术语 ['reaction[- ]diffusion']，但分类 ['math.AP'] 且无 ML 特征）",
+          "via_query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\""
+        },
+        {
+          "id": "1711.00976v2",
+          "title": "The global existence of solutions and asymptotic stability of a reaction-diffusion system",
+          "reason": "通过（仅弱术语 ['reaction[- ]diffusion']，但分类 ['math.AP'] 且无 ML 特征）",
+          "via_query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\""
+        }
+      ],
+      "rejected": []
+    },
+    {
+      "query": "abs:\"Allen-Cahn\" AND abs:\"regularization\"",
+      "label": "Allen-Cahn 正则化（跨 PDE / ML）",
+      "fetched": 8,
+      "accepted": [
+        {
+          "id": "2609.18403v1",
+          "title": "Constrained weak identification of Allen--Cahn free energies with surface-tension calibration",
+          "reason": "通过（仅弱术语 ['phase[- ]field']，但分类 ['cs.CE', 'math.NA'] 且无 ML 特征）",
+          "via_query": "abs:\"Allen-Cahn\" AND abs:\"regularization\""
+        }
+      ],
+      "rejected": [
+        {
+          "id": "2609.35196v1",
+          "title": "GAC-PINN: Geometry-Adaptive and Constraint-Enhanced Physics-Informed Neural Networks",
+          "reason": "词法闸门：未命中任何核心术语"
+        },
+        {
+          "id": "2609.34012v1",
+          "title": "When Known Physics Helps Neural PDE Models: Residual Constraints Out-Regularize Generic Priors for Nonlinear D",
+          "reason": "分类闸门：ML 主分类 ['cs.AI', 'cs.LG'] 且无数学/物理分类"
+        },
+        {
+          "id": "2609.26400v1",
+          "title": "Routes to chaos in a mass-conserving two-species reaction-diffusion model",
+          "reason": "分类闸门：['nlin.CD', 'nlin.PS'] 不在核心学科范围，且无强术语"
+        },
+        {
+          "id": "2609.21680v1",
+          "title": "Stable De Giorgi conjecture of the Allen--Cahn equation in $\\mathbb{R}^3$",
+          "reason": "词法闸门：未命中任何核心术语"
+        },
+        {
+          "id": "2609.18201v1",
+          "title": "Relaxation and Steady-State Entropy Production for Langevin SPDEs: A Dirichlet-Form Approach",
+          "reason": "词法闸门：未命中任何核心术语"
+        },
+        {
+          "id": "2609.01009v1",
+          "title": "OptiXDE: A fast optical-inspired solver for differential equations",
+          "reason": "词法闸门：未命中任何核心术语"
+        },
+        {
+          "id": "2609.00739v1",
+          "title": "Boundary asymptotics for two-dimensional vectorial Allen-Cahn systems",
+          "reason": "词法闸门：未命中任何核心术语"
+        }
+      ]
+    },
+    {
+      "query": "abs:\"Cahn-Hilliard\" AND abs:\"image segmentation\"",
+      "label": "CH 图像分割（对应组里 Neural Networks / TIP / TPAMI 那几篇）",
+      "fetched": 2,
+      "accepted": [
+        {
+          "id": "2508.08309v1",
+          "title": "Variational volume reconstruction with the Deep Ritz Method",
+          "reason": "通过（强术语 ['volume\\\\s+reconstruction']，分类 ['cs.CV', 'eess.IV']；⚠ 命中 ML 词 ['neural\\\\s+network']，但有强术语+核心分类，保留待人审",
+          "via_query": "abs:\"Cahn-Hilliard\" AND abs:\"image segmentation\""
+        }
+      ],
+      "rejected": [
+        {
+          "id": "2505.05806v2",
+          "title": "Image Segmentation via Variational Model Based Tailored UNet: A Deep Variational Framework",
+          "reason": "词法闸门：未命中任何核心术语"
+        }
+      ]
+    },
+    {
+      "query": "abs:\"surface reconstruction\" AND abs:\"point cloud\"",
+      "label": "点云曲面重建",
+      "fetched": 8,
+      "accepted": [
+        {
+          "id": "2609.24069v1",
+          "title": "Accurate wall shear stress in immersed flow analysis with application to point cloud-based CFD",
+          "reason": "通过（强术语 ['surface\\\\s+reconstruction']，分类 ['cs.CE', 'math.NA']",
+          "via_query": "abs:\"surface reconstruction\" AND abs:\"point cloud\""
+        },
+        {
+          "id": "2609.05744v1",
+          "title": "Gaussian Linear Functional Manifold Method for Massive Point Cloud Data",
+          "reason": "通过（强术语 ['surface\\\\s+reconstruction']，分类 ['cs.CV']；⚠ 命中 ML 词 ['physics[- ]informed', 'neural\\\\s+network']，但有强术语+核心分类，保留待人审",
+          "via_query": "abs:\"surface reconstruction\" AND abs:\"point cloud\""
+        },
+        {
+          "id": "2607.29584v2",
+          "title": "A Thresholding Based Operator-Splitting Method for Curvature-Regularized Surface Reconstruction",
+          "reason": "通过（强术语 ['level[- ]set\\\\s+(?:method|equation|evolution)', 'surface\\\\s+reconstruction']，分类 ['math.NA']",
+          "via_query": "abs:\"surface reconstruction\" AND abs:\"point cloud\""
+        },
+        {
+          "id": "2607.28995v1",
+          "title": "Receding-Horizon Next-Best-View Planner for Autonomous Leaf Surface Reconstruction",
+          "reason": "通过（强术语 ['surface\\\\s+reconstruction']，分类 ['cs.RO']",
+          "via_query": "abs:\"surface reconstruction\" AND abs:\"point cloud\""
+        },
+        {
+          "id": "2607.28855v1",
+          "title": "Learning Manifolds in High-D Point Embedding for Anisotropic Surface Approximation from Unstructured Point Clo",
+          "reason": "通过（强术语 ['surface\\\\s+reconstruction']，分类 ['cs.CV']；⚠ 命中 ML 词 ['deep\\\\s+learning']，但有强术语+核心分类，保留待人审",
+          "via_query": "abs:\"surface reconstruction\" AND abs:\"point cloud\""
+        },
+        {
+          "id": "2607.22773v1",
+          "title": "Metric Surface Reconstruction of Neurosurgical Scenes from Monocular Operating Microscope Images and Microscop",
+          "reason": "通过（强术语 ['surface\\\\s+reconstruction']，分类 ['cs.CV', 'eess.IV']",
+          "via_query": "abs:\"surface reconstruction\" AND abs:\"point cloud\""
+        },
+        {
+          "id": "2607.21840v1",
+          "title": "Toward High-Fidelity 3D Point-Cloud Learning for Brain Folding Morphology Prediction Using Trans-Unet",
+          "reason": "通过（强术语 ['surface\\\\s+reconstruction']，分类 ['cs.CV', 'eess.IV']；⚠ 命中 ML 词 ['convolutional', 'neural\\\\s+network']，但有强术语+核心分类，保留待人审",
+          "via_query": "abs:\"surface reconstruction\" AND abs:\"point cloud\""
+        },
+        {
+          "id": "2607.16946v1",
+          "title": "Points as Tori: Fast Pointwise Signed Distance for Point Clouds",
+          "reason": "通过（强术语 ['surface\\\\s+reconstruction']，分类 ['cs.CV']",
+          "via_query": "abs:\"surface reconstruction\" AND abs:\"point cloud\""
+        }
+      ],
+      "rejected": []
+    },
+    {
+      "query": "abs:\"Gray-Scott\"",
+      "label": "Gray-Scott 反应扩散",
+      "fetched": 8,
+      "accepted": [],
+      "rejected": [
+        {
+          "id": "2608.29448v1",
+          "title": "SS-ESOAP: Self-Scaled Adaptive Preconditioning for Physics-Informed Learning",
+          "reason": "分类闸门：ML 主分类 ['cs.AI', 'cs.LG'] 且无数学/物理分类"
+        },
+        {
+          "id": "2608.25564v1",
+          "title": "Physics-Informed Foresight Pruning for Sparse PINN Solvers of Nonlinear PDEs",
+          "reason": "分类闸门：ML 主分类 ['cs.AI', 'cs.LG'] 且无数学/物理分类"
+        },
+        {
+          "id": "2608.15613v1",
+          "title": "Rigorous Validation of Cusp Bifurcations of Stationary Periodic Patterns in Partial Differential Equations",
+          "reason": "词法闸门：未命中任何核心术语"
+        },
+        {
+          "id": "2608.13132v1",
+          "title": "Analysis of Error Propagation in Autoencoder-Based Reduced-Order Neural Ordinary Differential Equations",
+          "reason": "词法闸门：未命中任何核心术语"
+        },
+        {
+          "id": "2608.12286v1",
+          "title": "PatternFormer: Learning Multiple Solution Patterns in Reaction--Diffusion Systems",
+          "reason": "词法闸门：未命中任何核心术语"
+        },
+        {
+          "id": "2607.23466v1",
+          "title": "Extending Fourier Neural Operators for Modeling Parameterized and Coupled PDEs",
+          "reason": "分类闸门：ML 主分类 ['cs.LG'] 且无数学/物理分类"
+        },
+        {
+          "id": "2607.21630v1",
+          "title": "Evolving Self-Organising Agents Without Fitness: Three Falsifiable Experiments from Constraint-Driven Selectio",
+          "reason": "分类闸门：['cs.NE'] 不在核心学科范围，且无强术语"
+        }
+      ]
+    },
+    {
+      "query": "abs:\"Langevin equation\" AND abs:\"Allen-Cahn\"",
+      "label": "Langevin + Allen-Cahn",
+      "fetched": 0,
+      "accepted": [],
+      "rejected": []
+    },
+    {
+      "query": "abs:\"damping limit\" AND abs:\"Sine-Gordon\"",
+      "label": "damping limit + Sine-Gordon",
+      "fetched": 0,
+      "accepted": [],
+      "rejected": []
+    },
+    {
+      "query": "all:\"phase field\" AND all:denoising",
+      "label": "",
+      "fetched": 7,
+      "accepted": [
+        {
+          "id": "2607.10429v1",
+          "title": "Data-efficient continuous conditional denoising diffusion model for microstructure generation",
+          "reason": "通过（强术语 ['phase[- ]field\\\\s+(?:method|model|modeling|simulation|approximation|reconstruction|technique|framework|equation|representation|discretiz\\\\w*)']，分类 ['cond-mat.mtrl-sci', 'cs.CE']；⚠ 命中 ML 词 ['diffusion\\\\s+model', 'denoising\\\\s+diffusion']，但有强术语+核心分类，保留待人审",
+          "via_query": "all:\"phase field\" AND all:denoising"
+        },
+        {
+          "id": "2605.01177v1",
+          "title": "Energy Dissipative Solution to a Nonlinear Parabolic Systems with Unknown Dependent Coefficients",
+          "reason": "通过（强术语 ['phase[- ]field\\\\s+(?:method|model|modeling|simulation|approximation|reconstruction|technique|framework|equation|representation|discretiz\\\\w*)']，分类 ['math.AP']",
+          "via_query": "all:\"phase field\" AND all:denoising"
+        },
+        {
+          "id": "2503.17945v2",
+          "title": "Deep Learning Assisted Denoising of Experimental Micrographs",
+          "reason": "通过（强术语 ['phase[- ]field\\\\s+(?:method|model|modeling|simulation|approximation|reconstruction|technique|framework|equation|representation|discretiz\\\\w*)']，分类 ['cond-mat.mtrl-sci']；⚠ 命中 ML 词 ['deep\\\\s+learning', 'neural\\\\s+network']，但有强术语+核心分类，保留待人审",
+          "via_query": "all:\"phase field\" AND all:denoising"
+        }
+      ],
+      "rejected": [
+        {
+          "id": "2607.11971v1",
+          "title": "Uncertainty-Aware Crack Growth Forecasting via Conditional Denoising Diffusion Models for Phase-Field Fracture",
+          "reason": "分类闸门：['math.GM'] 不在核心学科范围，且无强术语"
+        },
+        {
+          "id": "2604.06881v2",
+          "title": "MENO: MeanFlow-Enhanced Neural Operators for Dynamical Systems",
+          "reason": "分类闸门：ML 主分类 ['cs.LG'] 且无数学/物理分类"
+        },
+        {
+          "id": "2501.16510v1",
+          "title": "Decrypting the temperature field in flow boiling with latent diffusion models",
+          "reason": "分类闸门：ML 主分类 ['cs.AI'] 且无数学/物理分类"
+        },
+        {
+          "id": "1901.00361v3",
+          "title": "Optical Fringe Patterns Filtering Based on Multi-Stage Convolution Neural Network",
+          "reason": "词法闸门：仅弱术语 ['phase[- ]field'] 且命中 ML 词 ['convolutional', 'deep\\\\s+learning']"
+        }
+      ]
+    },
+    {
+      "query": "abs:\"phase field\" AND abs:\"mesh denoising\"",
+      "label": "",
+      "fetched": 0,
+      "accepted": [],
+      "rejected": []
+    }
+  ]
+}

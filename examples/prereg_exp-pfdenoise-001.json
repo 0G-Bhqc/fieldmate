@@ -1,0 +1,34 @@
+{
+  "id": "exp-pfdenoise-001",
+  "created": "2026-10-01T09:00:00Z",
+  "status": "registered",
+  "claim": "相场去噪（pf_ac_fidelity）在保体积上优于拉普拉斯平滑",
+  "mechanism": "相场的等值面演化不引入系统性体积漂移；拉普拉斯平滑沿法向收缩",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "statement": "|radius_drift(pf_ac_fidelity)| < |radius_drift(laplacian)|",
+      "metric": "radius_drift",
+      "compare": "pf_ac_fidelity vs laplacian",
+      "expected": "pf_smaller",
+      "falsification": "若 |radius_drift(pf_ac_fidelity)| >= |radius_drift(laplacian)|，H1 被推翻",
+      "support_required": []
+    },
+    {
+      "id": "H2",
+      "statement": "相场在 Chamfer 距离上不劣于拉普拉斯平滑",
+      "metric": "chamfer",
+      "compare": "pf_ac_fidelity vs laplacian",
+      "expected": "pf_smaller",
+      "falsification": "若 chamfer(pf_ac_fidelity) > chamfer(laplacian)，H2 被推翻",
+      "support_required": ["res_floor"],
+      "note": "相场走体素化路线，误差下限受 h/2 支配。若本条被推翻，必须先查 res_floor 再下结论。"
+    }
+  ],
+  "confounds": ["体素分辨率", "噪声模型", "点云密度"],
+  "backend": "pfdenoise",
+  "reproduce": {
+    "cmd": "python ac_2d.py --mode denoise -n 6000 --noise realistic",
+    "shape": "bumpy", "n": 6000, "noise": "realistic"
+  }
+}

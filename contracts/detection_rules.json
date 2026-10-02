@@ -1,0 +1,417 @@
+{
+  "version": "0.2",
+  "description": "把 defect_patterns.jsonl 的 detection 字段变成可执行的检测规则。知识（是什么）与检测（怎么找）分离：知识库可被引用与讨论，检测规则可被测试与演进。",
+  "signal_types": {
+    "absent": "某类信息在指定范围内【完全不出现】——横向对比最有力的信号",
+    "present": "某类信息【出现】——用于确认论文属于某方法族",
+    "regex": "正则命中——用于识别具体记号/写法",
+    "numeric": "数值特征，如 Δt ∝ h^exponent"
+  },
+  "scopes": [
+    "title",
+    "abstract",
+    "fulltext",
+    "any"
+  ],
+  "rules": [
+    {
+      "id": "D-RES-001",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(Allen[- ]Cahn|Cahn[- ]Hilliard|phase[- ]field|相场)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(Delta ?t|\\\\Delta ?t|time step|timestep|时间步)\\b",
+          "note": "提到时间步"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(CFL|stable|stability|unconditionally|energy stable|稳定)\\b",
+          "note": "提到时间步但【未】给出稳定条件——D-RES-001 的核心信号"
+        }
+      ]
+    },
+    {
+      "id": "D-RES-002",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\bCahn[- ]Hilliard\\b|\\bCH\\b.*\\b(phase|相)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\bCahn[- ]Hilliard\\b"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(SAV|ES[- ]SAV|BDF2|BDF1|IMEX|semi[- ]implicit|splitting|分裂)\\b",
+          "note": "用 CH 但未提任何现代稳定化技术——刚性可能压不住"
+        }
+      ]
+    },
+    {
+      "id": "D-MOD-001",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\bAllen[- ]Cahn\\b|\\bAC\\b.*\\b(phase|相)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\bAllen[- ]Cahn\\b"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(fidelity|preserv|conserv|driv|保真|保体积|驱动)\\b",
+          "note": "用 AC 但未提保真/驱动项——有限液滴会被腐蚀（D-MOD-001）"
+        }
+      ]
+    },
+    {
+      "id": "D-MOD-002",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(point cloud|mesh|体素|voxel|点云|网格)\\b"
+          ],
+          [
+            "any",
+            "\\b(phase[- ]field|相场)\\b|\\bAC\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(voxel|grid|体素|网格分辨率|grid resolution)\\b"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(interface width|interfacial|epsilon|eps|界面宽度|网格无关|grid[- ]independen|convergen)\\b",
+          "note": "体素化相场但未提界面宽度/网格无关性——D-MOD-002 与 D-EVA-001 的共同前置信号"
+        }
+      ]
+    },
+    {
+      "id": "D-MOD-003",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(control|fidelity|保真|控制)\\b.*\\bterm\\b|\\\\lambda\\s*\\(?\\s*(f|\\\\phi_?0)"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(signed|\\+1|\\\\pm ?1|bipolar|±1|正负)\\b",
+          "note": "控制/保真项存在但未说明目标场编码方式——±1 vs 0/1 是 D-MOD-003 的关键"
+        }
+      ]
+    },
+    {
+      "id": "D-MOD-004",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\bdouble[- ]well|双阱|\\\\frac\\{1\\}\\{4\\}"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\bdouble[- ]well|双阱"
+        },
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "epsilon_?w|eps_?w|\\\\varepsilon_?w"
+        }
+      ],
+      "composite": "both",
+      "note": "双阱项【又】引入独立的 ε_w —— 显式格式下刚性风险（D-MOD-004）。composite=both 表示两条都出现才告警。"
+    },
+    {
+      "id": "D-EVA-001",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(voxel|grid[- ]based|体素|体素化)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(voxel|体素|grid[- ]based)\\b"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(resolution|分辨率|quantization|网格大小|grid size|h\\s*=)",
+          "note": "体素化方法未报告任何分辨率信息——横向对比的核心缺失项"
+        }
+      ]
+    },
+    {
+      "id": "D-EVA-002",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(noise2noise|N2N|self[- ]supervised|unsupervised|无监督|自监督)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(noise2noise|N2N|consistency|一致性)"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(identity|no[- ]op|恒等|不做处理|trivial)\\b",
+          "note": "用 N2N 一致性但【未】报告恒等变换基线——D-EVA-002 的核心信号"
+        }
+      ]
+    },
+    {
+      "id": "D-EVA-003",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(train|supervis|learn|训练|监督)\\b"
+          ],
+          [
+            "any",
+            "\\b(denois|去噪|restor|复原)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(noise model|noise distribution|噪声模型|噪声分布|合成噪声|synthetic noise)"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(real[- ]world|real scan|真实(数据|扫描)|in the wild|传感器|sensor)\\b",
+          "note": "训练用合成噪声但未在真实噪声上验证——D-EVA-003"
+        }
+      ]
+    },
+    {
+      "id": "D-REP-001",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "."
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "absent",
+          "scope": "fulltext",
+          "pattern": "\\b(code|github|repository|implementation is available|代码|开源|复现)\\b",
+          "note": "未提供任何可获取的实现——D-REP-001 类缺陷（结论不可复核）的前置信号"
+        }
+      ]
+    },
+    {
+      "id": "D-REP-002",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(denois|smooth|平滑|去噪)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(nearest neighb|最近邻|k[- ]?NN|voxel hash|grid hash)"
+        },
+        {
+          "type": "absent",
+          "scope": "fulltext",
+          "pattern": "\\b(unit test|regression test|回归测试|单元测试|edge case|边界情况)\\b",
+          "note": "实现了近邻检索但未提及任何测试——D-REP-002 类实现缺陷的先兆"
+        }
+      ]
+    },
+    {
+      "id": "D-SIG-001",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(growth|growing|生长|晶体|crystal)\\b"
+          ],
+          [
+            "any",
+            "\\b(Allen[- ]Cahn|相场|phase[- ]field)"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\blambda\\b|\\\\lambda"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(negative|负|sign of|符号)\\b",
+          "note": "用 λ 驱动生长但未说明符号约定——D-SIG-001 的核心信号"
+        }
+      ]
+    },
+    {
+      "id": "D-SIG-002",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(edge[- ]indicating|edge stopping|边缘(指示|停止)|gradient magnitude|梯度模)"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(edge[- ]indicating|edge stopping|边缘(指示|停止))"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(convolution|卷积|G_\\\\sigma|\\*|blur|高斯)",
+          "note": "边缘指示函数未说明是卷积还是核系数相乘——D-SIG-002 的核心信号"
+        }
+      ]
+    },
+    {
+      "id": "D-SIG-003",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(denois|去噪)\\b"
+          ],
+          [
+            "any",
+            "\\b(Allen[- ]Cahn|phase[- ]field|相场)"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(denois|去噪)"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(parameter table|参数表|\\\\lambda\\s*=|\\\\lambda\\s*:|\\\\Delta ?t\\s*=|网格\\s*N\\s*=)",
+          "note": "未给出可直接复现的关键参数——D-SIG-003 的核心信号"
+        }
+      ]
+    },
+    {
+      "id": "D-REP-005",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(noise2noise|N2N|无监督|unsupervised|自监督|self[- ]supervised)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(noise2noise|N2N|无监督|unsupervised)"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(independent|zero[- ]mean|独立|零均值|pair|配对)",
+          "note": "无标签协议未声明噪声独立性假设——D-REP-005"
+        }
+      ]
+    },
+    {
+      "id": "D-EVA-004",
+      "applies_if": {
+        "present": [
+          [
+            "any",
+            "\\b(phase[- ]field|相场|Allen[- ]Cahn|Cahn[- ]Hilliard)\\b"
+          ]
+        ]
+      },
+      "signals": [
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(?:explicit|implicit)\\b",
+          "note": "提到显式/隐式时间积分"
+        },
+        {
+          "type": "present",
+          "scope": "any",
+          "pattern": "\\b(?:explicit\\s+(?:and|vs\\.?|versus)\\s+implicit|implicit\\s+(?:and|vs\\.?|versus)\\s+explicit|compar\\w+\\s+(?:of|between)\\s+[^.]{0,40}(?:explicit|implicit))\\b",
+          "note": "把显式与隐式**并列比较**"
+        },
+        {
+          "type": "absent",
+          "scope": "any",
+          "pattern": "\\b(Delta ?t|\\\\Delta ?t|Δt|∆t|dt\\s*=|time step|timestep|step size|时间步)\\b",
+          "note": "并列比较了显式/隐式却【未】报时间步——D-EVA-004 的核心信号。没有可比的时间步，速度比不成立。"
+        }
+      ]
+    }
+  ]
+}

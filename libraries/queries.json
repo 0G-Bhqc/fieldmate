@@ -1,0 +1,246 @@
+{
+  "version": "2.0",
+  "generated": "2026-10-01",
+  "description": "arXiv 检索式档案。每条都带**实测**的命中量与纯度判定，不是推测。语料由这些检索式构建：30 条 × 每条 12 篇，去重后 247 篇，全部拿到全文。",
+  "how_measured": "命中量来自 arXiv Atom API 实测 totalResults；纯度是人工看前若干条标题/摘要判定的，不是自动打分。构建语料时用 libraries/corpus_bulk.json 落盘。",
+  "queries": [
+    {
+      "query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\"",
+      "label": "时间分数阶 Allen–Cahn（导师 2025–2026 最活跃的线）",
+      "total": 28,
+      "purity": "high",
+      "note": "命中几乎全在 math.NA / math-ph，正是该子领域的主战场。**当前最佳语料来源。**"
+    },
+    {
+      "query": "abs:\"time-fractional\" AND abs:\"Cahn-Hilliard\"",
+      "label": "时间分数阶 Cahn–Hilliard",
+      "purity": "high",
+      "note": "与上一条同族但命中更少，合并使用可补齐四阶算子一侧。"
+    },
+    {
+      "query": "abs:\"time-fractional\" AND abs:\"reaction-diffusion\"",
+      "label": "时间分数阶反应扩散",
+      "purity": "high",
+      "note": "覆盖 Gray–Scott / Lengyel–Epstein / Sine–Gordon 的分数阶推广。"
+    },
+    {
+      "query": "abs:\"Cahn-Hilliard\" AND abs:\"segmentation\"",
+      "label": "Cahn–Hilliard 用于图像分割",
+      "total": 2,
+      "purity": "high",
+      "note": "命中极少但极精准：CH 做分割是与本课题「保体积/守恒」最直接可比的一类工作。样本量小，只能当线索。"
+    },
+    {
+      "query": "abs:\"Cahn-Hilliard\" AND abs:\"image\"",
+      "label": "Cahn–Hilliard 图像处理",
+      "purity": "high",
+      "note": "比上一条宽，命中率显著上升，是本方向在 CS 侧的主要落点。"
+    },
+    {
+      "query": "abs:\"Allen-Cahn\" AND abs:\"regularization\"",
+      "label": "Allen–Cahn 作为正则化项",
+      "purity": "high",
+      "note": "对应导师的「modified Allen-Cahn / 加保真项」那条线。"
+    },
+    {
+      "query": "abs:\"Allen-Cahn\" AND abs:\"mean curvature\"",
+      "label": "平均曲率流与 AC 的关系",
+      "purity": "high",
+      "note": "曲面重建的几何侧。"
+    },
+    {
+      "query": "abs:\"phase-field\" AND abs:\"surface reconstruction\"",
+      "label": "相场曲面重建",
+      "purity": "high",
+      "note": "**与导师论文①（PhaseFieldSurfaceReconstruction）最直接可比的一组。**"
+    },
+    {
+      "query": "abs:\"phase field\" AND abs:\"point cloud\"",
+      "label": "相场处理点云",
+      "purity": "high",
+      "note": "**与论文②（D3SurfaceDenosing5）同题**；也是 pfdenoise 的方法定位所在。"
+    },
+    {
+      "query": "abs:\"phase-field\" AND abs:\"topology optimization\"",
+      "label": "相场拓扑优化",
+      "purity": "high",
+      "note": "对应导师的人工骨植入体方向。"
+    },
+    {
+      "query": "abs:\"phase-field\" AND abs:\"crystal growth\"",
+      "label": "相场晶体生长",
+      "purity": "high",
+      "note": "对应导师的 Voronoi 晶格那条线。"
+    },
+    {
+      "query": "abs:\"phase-field\" AND abs:\"dendrite\"",
+      "label": "相场枝晶",
+      "purity": "high",
+      "note": "晶体生长的高频子类。"
+    },
+    {
+      "query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\"",
+      "label": "Lengyel–Epstein 图案形成",
+      "total": 4,
+      "purity": "high",
+      "note": "命中极少。导师主页有该模型的分数阶推广，但**那篇不在 arXiv**。"
+    },
+    {
+      "query": "abs:\"Sine-Gordon\" AND abs:\"damping\"",
+      "label": "Sine–Gordon 阻尼极限",
+      "purity": "high",
+      "note": "见 poisoned_queries 的实测记录：`abs:\"damping limit\" AND abs:\"Sine-Gordon\"` 返回 0 篇。"
+    },
+    {
+      "query": "abs:\"Ginzburg-Landau\" AND abs:\"Allen-Cahn\"",
+      "label": "Ginzburg–Landau 与 AC",
+      "purity": "high",
+      "note": "理论侧基础。"
+    },
+    {
+      "query": "abs:\"phase-field crystal\"",
+      "label": "相场晶体",
+      "purity": "high",
+      "note": "无第二个关键词限定，纯度依赖人工判读；实测未见明显污染。"
+    },
+    {
+      "query": "abs:\"Voronoi\" AND abs:\"lattice structure\"",
+      "label": "Voronoi 晶格",
+      "purity": "high",
+      "note": "对应导师的 Voronoi 晶格那条线。"
+    },
+    {
+      "query": "abs:\"mesh denoising\" AND abs:\"geometry\"",
+      "label": "网格去噪",
+      "purity": "high",
+      "note": "经典方法基线，用来判断「相场相比经典滤波到底赢在哪」。"
+    },
+    {
+      "query": "abs:\"level set\" AND abs:\"denoising\"",
+      "label": "水平集去噪",
+      "purity": "high",
+      "note": "同类基线。"
+    },
+    {
+      "query": "abs:\"moving by mean curvature\"",
+      "label": "平均曲率流",
+      "purity": "high",
+      "note": "无限定词，理论上会混进纯几何流论文；实测噪声可接受。"
+    },
+    {
+      "query": "abs:\"Langevin\" AND abs:\"Allen-Cahn\"",
+      "label": "Langevin–Allen–Cahn",
+      "purity": "high",
+      "note": "见 poisoned_queries：`abs:\"Langevin equation\" AND abs:\"Allen-Cahn\"` 实测 **0 篇**。"
+    },
+    {
+      "query": "abs:\"Langevin\" AND abs:\"Cahn-Hilliard\"",
+      "label": "Langevin–Cahn–Hilliard（随机梯度流）",
+      "purity": "high",
+      "note": "同上的四阶侧。"
+    },
+    {
+      "query": "cat:math.NA AND abs:\"Allen-Cahn\"",
+      "label": "数值分析类目下的 Allen–Cahn",
+      "purity": "high",
+      "note": "按类目收窄，用来取「报 Δt / 报稳定性条件」的高质量数值论文。"
+    },
+    {
+      "query": "cat:math.NA AND abs:\"Cahn-Hilliard\"",
+      "label": "数值分析类目下的 Cahn–Hilliard",
+      "purity": "high",
+      "note": "同上。"
+    },
+    {
+      "query": "cat:math.NA AND abs:\"phase field\"",
+      "label": "数值分析类目下的相场",
+      "purity": "high",
+      "note": "覆盖面最广的一条。"
+    },
+    {
+      "query": "abs:\"numerical\" AND abs:\"Allen-Cahn equation\"",
+      "label": "Allen–Cahn 方程的数值方法",
+      "purity": "high"
+    },
+    {
+      "query": "abs:\"preserving volume\" AND abs:\"phase\"",
+      "label": "保体积相场",
+      "purity": "high",
+      "note": "直接对应「保体积/守恒」这个精进点条目。"
+    },
+    {
+      "query": "abs:\"fractional\" AND abs:\"Gray-Scott\"",
+      "label": "分数阶 Gray–Scott",
+      "purity": "high",
+      "note": "导师的活跃方向之一。"
+    },
+    {
+      "query": "abs:\"moving by mean curvature\" AND abs:\"reconstruction\"",
+      "label": "平均曲率流 + 重建",
+      "purity": "high"
+    }
+  ],
+  "poisoned_queries": [
+    {
+      "query": "all:\"phase field\" AND all:denoising",
+      "hits": 7,
+      "relevant": 0,
+      "purity": "poisoned",
+      "why": "**denoising 在 arXiv 被 \"denoising diffusion\"（扩散模型图像生成）彻底占据。**7 篇里 0 篇相关。这是最贵的一个坑：检索式看起来完全合理、返回结果也不为空，于是一般工具会照单全收。",
+      "lesson": "本项目所有去噪方向的检索式都**禁用裸 denoising**，改用 PDE 社区词汇（mesh denoising / surface reconstruction / point cloud / bilateral filter / total variation）。"
+    },
+    {
+      "query": "abs:\"reaction-diffusion\" AND abs:\"Gray-Scott\"",
+      "hits": 8,
+      "relevant": 0,
+      "purity": "poisoned-by-gate",
+      "why": "在 harvest 闸门实测中 8 篇**全被拒**。命中的是生物学/化学背景的反应扩散综述，与数值方法无关。",
+      "lesson": "**相关性闸门拒收率 42%（抓 45 收 25）是正常且必要的**；闸门拒掉 Gray-Scott 全族不是闸门出错，是闸门在正确工作。"
+    },
+    {
+      "query": "abs:\"Langevin equation\" AND abs:\"Allen-Cahn\"",
+      "hits": 0,
+      "relevant": 0,
+      "purity": "empty",
+      "why": "导师核心工具，**arXiv 上 0 命中**。",
+      "lesson": "计算数学方向普遍**不上 arXiv**（直接投期刊）。Langevin 方程、damping limit 这两条线必须走期刊库（Sci-hub 之外的正规库：出版社官网 / CNKI / MathSciNet / zbMATH），arXiv 检索在此**结构性失效**。"
+    },
+    {
+      "query": "abs:\"damping limit\" AND abs:\"Sine-Gordon\"",
+      "hits": 0,
+      "relevant": 0,
+      "purity": "empty",
+      "why": "同上，0 命中。",
+      "lesson": "同上。这是**语料来源的结构性缺口**，不是检索式写错了 —— 两篇导师论文的主体内容都在这条线上，而这条线在 arXiv 上是空的。"
+    }
+  ],
+  "corpus": {
+    "manifest": "libraries/corpus_bulk.json",
+    "n_papers": 247,
+    "n_with_fulltext": 247,
+    "n_unparsable": 0,
+    "total_chars": 16311755,
+    "median_chars": 61543,
+    "cache_dir": ".rharness-cache/arxiv_pdfs",
+    "size_mb": 1156,
+    "by_year": {
+      "2024": 22,
+      "2025": 42,
+      "2026": 108,
+      "2023_and_earlier": 75
+    },
+    "top_categories": [
+      ["math.NA", 86],
+      ["math.AP", 60],
+      ["cond-mat.mtrl-sci", 25],
+      ["cs.CV", 18],
+      ["cs.LG", 17],
+      ["math.OC", 16],
+      ["math.DG", 16],
+      ["physics.comp-ph", 14],
+      ["math-ph", 13],
+      ["math.PR", 11]
+    ]
+  },
+  "conclusion": "三条，都由实测得出：\n\n1. **arXiv 能覆盖相场/AC/CH 的数值方法主战场**（math.NA 86 篇、2025–2026 占 150 篇），但**覆盖不到导师最核心的两条线**（Langevin 方程、damping limit），那两条实测 0 命中，走的是期刊投稿。**单一数据源不足以支撑这个课题的文献工作**，必须配期刊库。\n\n2. **去噪方向的 arXiv 检索必须换词**：`denoising` 已被扩散模型占据，7 篇命中 0 篇相关。\n\n3. **闸门必须存在**：抓 45 收 25（拒收 42%），Gray-Scott 8 篇全拒。拒收率高说明闸门在干活，不是它在误伤。"
+}

@@ -1,0 +1,15 @@
+{
+  "query": "bumpy / realistic / n=6000",
+  "created": "2026-10-01T11:20:00Z",
+  "noise": "realistic (Gaussian 0.008 + Protrusion + Outlier)",
+  "res_floor": 0.027,
+  "rows": [
+    {"solver": "none",         "chamfer": 0.0125, "radius_drift": -0.00},
+    {"solver": "laplacian",    "chamfer": 0.0160, "radius_drift": -0.03},
+    {"solver": "bilateral",    "chamfer": 0.0196, "radius_drift": -0.05},
+    {"solver": "pf_ac",        "chamfer": 0.0861, "radius_drift": -0.97},
+    {"solver": "pf_ac_fidelity","chamfer": 0.0807, "radius_drift": 0.05},
+    {"solver": "pf_ac_barrier","chamfer": 0.0882, "radius_drift": -1.21},
+    {"solver": "cahn_hilliard","chamfer": 0.0657, "radius_drift": 0.25}
+  ]
+}

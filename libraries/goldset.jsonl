@@ -1,0 +1,55 @@
+{"item":"报分辨率","paper":"2503.17945","label":0,"evidence":"命中句全部为「high-resolution optical micro-」「micro and nanometer resolutions」「magnification and resolution of the image」——指光学显微/放大倍率，与网格步长无关","judged_by":"human-read-2026-10-02"}
+{"item":"报分辨率","paper":"2604.06881","label":0,"evidence":"命中句为「high resolutions when trained on low-resolution data」「resolution invariance」——指数据分辨率/泛化性，非数值网格","judged_by":"human-read-2026-10-02"}
+{"item":"报分辨率","paper":"2607.10429","label":0,"evidence":"命中句为「spatial resolution of the feature map」「256×256 pixels」——指神经网络特征图，非体素网格","judged_by":"human-read-2026-10-02"}
+{"item":"报分辨率","paper":"2607.11971","label":1,"evidence":"「yielding an element size h = 0.0025 mm」——明确给出单元尺寸 h，是真正的数值分辨率报告","judged_by":"human-read-2026-10-02"}
+{"item":"报分辨率","paper":"2605.01177","label":0,"evidence":"全文未见任何网格尺寸/分辨率表述","judged_by":"human-read-2026-10-02"}
+{"item":"报噪声模型","paper":"2503.17945","label":0,"evidence":"全文未见噪声模型描述","judged_by":"human-read-2026-10-02"}
+{"item":"报噪声模型","paper":"2604.06881","label":0,"evidence":"「run-specific random seeds controlling the stochastic perturbations」提到随机扰动，但未声明噪声分布族/统计性质，不足以支撑可迁移性评估","judged_by":"human-read-2026-10-02"}
+{"item":"报噪声模型","paper":"2607.10429","label":1,"evidence":"「y-dependent Gaussian noise N(0, Hy)」明确给出噪声族与协方差结构","judged_by":"human-read-2026-10-02"}
+{"item":"报噪声模型","paper":"2607.11971","label":0,"evidence":"「independent sample of Gaussian noise」提到高斯，但未说明用于何种扰动/是否为零均值假设依赖，不足以构成噪声模型声明","judged_by":"human-read-2026-10-02"}
+{"item":"报噪声模型","paper":"2605.01177","label":0,"evidence":"全文未见噪声模型","judged_by":"human-read-2026-10-02"}
+{"item":"报时间步","paper":"2605.01177","label":1,"evidence":"「Notations for the time-discretization Let τ > 0 be a time step size」——明确引入时间步符号","judged_by":"human-read-2026-10-02"}
+{"item":"报时间步","paper":"2604.06881","label":0,"evidence":"「at time step k」是序列索引，不是数值格式的时间步长","judged_by":"human-read-2026-10-02"}
+{"item":"报时间步","paper":"2607.10429","label":0,"evidence":"「maintains a sufficiently small timestep to obey physical constraints」提到 timestep 概念但未给出格式/数值，不构成可复现报告","judged_by":"human-read-2026-10-02"}
+{"item":"报时间步","paper":"2607.11971","label":0,"evidence":"「measured at 101 time steps」「At each time step t」为采样/序列步，非数值格式 Δt","judged_by":"human-read-2026-10-02"}
+{"item":"报时间步","paper":"2503.17945","label":0,"evidence":"全文未见时间步","judged_by":"human-read-2026-10-02"}
+{"item":"报稳定条件","paper":"2503.17945","label":0,"evidence":"「The local free energy term f determines the stability of」——指自由能的物理稳定性，不是格式的数值稳定性","judged_by":"human-read-2026-10-02"}
+{"item":"报稳定条件","paper":"2604.06881","label":0,"evidence":"「training stability and generative performance」「training instability」——指训练稳定性","judged_by":"human-read-2026-10-02"}
+{"item":"报稳定条件","paper":"2607.10429","label":0,"evidence":"「austenite becomes more stable」——指奥氏体/马氏体相变热力学稳定性","judged_by":"human-read-2026-10-02"}
+{"item":"报稳定条件","paper":"2607.11971","label":0,"evidence":"「long-horizon stability」「temporal stability」——指自回归 rollout 的预测稳定性","judged_by":"human-read-2026-10-02"}
+{"item":"报稳定条件","paper":"2605.01177","label":0,"evidence":"全文未见任何稳定性/收敛性条件表述","judged_by":"human-read-2026-10-02"}
+{"item":"保体积/守恒","paper":"2503.17945","label":1,"evidence":"「conserved order parameters η1, η2,...,ηQ」——明确声明守恒型序参量","judged_by":"human-read-2026-10-02"}
+{"item":"保体积/守恒","paper":"2604.06881","label":0,"evidence":"「it learns mass conservation and incompressibility only statistically」——是模型学出来的统计性质，不是格式的守恒保证","judged_by":"human-read-2026-10-02"}
+{"item":"保体积/守恒","paper":"2607.10429","label":0,"evidence":"全文未见体积/质量守恒表述","judged_by":"human-read-2026-10-02"}
+{"item":"保体积/守恒","paper":"2607.11971","label":0,"evidence":"全文未见体积守恒表述","judged_by":"human-read-2026-10-02"}
+{"item":"保体积/守恒","paper":"2605.01177","label":0,"evidence":"全文未见体积守恒表述","judged_by":"human-read-2026-10-02"}
+{"item":"开源自复现","paper":"2604.06881","label":1,"evidence":"「In this section, we give all the relevant experiment settings for reproducibility」——提供复现所需设置","judged_by":"human-read-2026-10-02"}
+{"item":"开源自复现","paper":"2607.10429","label":0,"evidence":"命中句「//github.com/huggingface/accelerate, 2022」是被引用的第三方库，不是本文代码","judged_by":"human-read-2026-10-02"}
+{"item":"开源自复现","paper":"2607.11971","label":0,"evidence":"全文未见本文代码可得性声明","judged_by":"human-read-2026-10-02"}
+{"item":"开源自复现","paper":"2503.17945","label":0,"evidence":"全文未见","judged_by":"human-read-2026-10-02"}
+{"item":"开源自复现","paper":"2605.01177","label":0,"evidence":"全文未见","judged_by":"human-read-2026-10-02"}
+{"item":"报分辨率","paper":"P1-recon","label":1,"evidence":"「The grid sizes are given by Nx, Ny and Nz… the uniform mesh size is defined as h = (b−a)/Nx」且 N = Nx = Ny = Nz = 100 —— 完整的数值网格定义","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"报时间步","paper":"P1-recon","label":1,"evidence":"「the time step is ∆t = T/Nt」—— 明确给出 Δt 定义式","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"报稳定条件","paper":"P1-recon","label":0,"evidence":"有收敛性测试（first-order convergence）与 ∆t/∆t_ref 对比，但全文未给出 CFL 或本文格式的稳定条件。这正是复现风险的来源","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"保体积/守恒","paper":"P1-recon","label":0,"evidence":"文中 volume 一律指三维区域（3D volume reconstruction、point cloud data volume），是词义假朋友；评价指标为 σ/d_max/d_mean/CPU/顶点数，无体积漂移量","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"报噪声模型","paper":"P1-recon","label":0,"evidence":"唯一命中句是边缘指示函数里的高斯核 G_σ，与数据噪声无关；本文用程序生成的点云而非加性噪声","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"开源自复现","paper":"P1-recon","label":0,"evidence":"全文无代码可得性声明","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"报分辨率","paper":"P2-denoise","label":1,"evidence":"「with N = Nx = Ny representing the grid size」「The constant grid dimension h is established as h = (Xr−Xl)/N」并给出 N=32~128","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"报时间步","paper":"P2-denoise","label":1,"evidence":"「∆t = 0.05h2」「∆t = αh2」—— 明确给出时间步","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"报稳定条件","paper":"P2-denoise","label":0,"evidence":"命中句均为相关工作中他人方法的稳定性（「alleviating stability constraints [20]」「S-SAV … energy stability」），本文未做稳定条件分析。硬负例：相关工作里的 stability 不算","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"保体积/守恒","paper":"P2-denoise","label":1,"evidence":"「its exceptional ability to conserve the volume of objects」+ 摘要「trade-offs between accuracy and volume preserving」—— 显式保体积声明","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"报噪声模型","paper":"P2-denoise","label":1,"evidence":"「Gaussian and protrusion noise to the surfaces to test the model's resilience」—— 点名两类噪声族","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"开源自复现","paper":"P2-denoise","label":0,"evidence":"全文无本文代码可得性声明","judged_by":"author-2026-10-02","confidence":"high","corpus":"target"}
+{"item":"报分辨率","paper":"2609.21512","label":1,"evidence":"「N, with h = 1/N, zero boundary values」—— 给出网格步长定义","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"报时间步","paper":"2609.21512","label":0,"evidence":"仅出现「no accumulated time-stepping error」「float32 for the time stepping」；该文用 Mittag-Leffler 解析传播子，**本就不做时间步进**，因此未报 Δt 是正确的","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"报噪声模型","paper":"2609.21512","label":0,"evidence":"全文未见噪声模型（神经算子回归任务，非去噪实验）","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"报稳定条件","paper":"2609.21512","label":0,"evidence":"全文未见 CFL / 无条件稳定 / 格式稳定性表述","judged_by":"author-2026-10-02","confidence":"medium","corpus":"field"}
+{"item":"保体积/守恒","paper":"2609.21512","label":0,"evidence":"未见体积/质量守恒表述","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"开源自复现","paper":"2609.21512","label":0,"evidence":"全文未见本文代码可得性声明","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"报分辨率","paper":"2606.12799","label":1,"evidence":"「a uniform spatial mesh of M = 128 grid points」—— 明确给出网格点数","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"报时间步","paper":"2606.12799","label":1,"evidence":"本文核心贡献即变步长时间推进格式（「variable time-step … scheme」「time-stepping schemes are proved to achieve O(τα)」），数值实验必然给出 Δt","judged_by":"author-2026-10-02","confidence":"medium","corpus":"field"}
+{"item":"报稳定条件","paper":"2606.12799","label":1,"evidence":"「prove the discrete energy stability of the scheme to be proposed」—— 给出本文格式的离散能量稳定性论证","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"保体积/守恒","paper":"2606.12799","label":0,"evidence":"未见体积/质量守恒表述（保的是 MBP 结构性质，不是体积）","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"报噪声模型","paper":"2606.12799","label":0,"evidence":"全文未见噪声模型","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"开源自复现","paper":"2606.12799","label":0,"evidence":"全文未见本文代码可得性声明","judged_by":"author-2026-10-02","confidence":"high","corpus":"field"}
+{"item":"报分辨率","paper":"2603.11696","label":0,"evidence":"唯一命中是「mixed finite element method for the spatial discretization」这类**方法描述**，不是分辨率报告。按 v4 收紧后的判据应记为未报告","judged_by":"author-2026-10-02","confidence":"low","corpus":"field"}

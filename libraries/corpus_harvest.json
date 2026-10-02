@@ -1,0 +1,152 @@
+{
+  "generated": "2026-10-01T12:56:37Z",
+  "fingerprint": "sha256:792b033de99c6db3  papers=5  with_fulltext=0",
+  "gate": {
+    "require_term": true,
+    "core_categories": [
+      "cond-mat.mtrl-sci",
+      "cond-mat.stat-mech",
+      "cs.CE",
+      "cs.CV",
+      "cs.NA",
+      "eess.IV",
+      "math-ph",
+      "math.AP",
+      "math.DS",
+      "math.NA",
+      "math.PR",
+      "math.SP"
+    ],
+    "ml_categories": [
+      "cs.AI",
+      "cs.CL",
+      "cs.LG"
+    ],
+    "n_strong_terms": 24,
+    "n_weak_terms": 6
+  },
+  "counts": {
+    "queries": 3,
+    "fetched": 6,
+    "accepted": 5,
+    "rejected": 1,
+    "with_fulltext": 0,
+    "downloaded": 0,
+    "cached": 0,
+    "parsed": 0,
+    "failed": 0
+  },
+  "papers": [
+    {
+      "id": "2609.21512v1",
+      "title": "FrFNO:Injecting the analytic Mittag-Leffler propagator into a resolution-robust neural operator for space-time fractional PDEs",
+      "published": "2026-09-18",
+      "categories": [
+        "math.NA",
+        "math-ph"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2606.12799v1",
+      "title": "A variable time-step, second-order, and MBP-preserving linear stabilized scheme for the time-fractional Allen-Cahn equation",
+      "published": "2026-06-11",
+      "categories": [
+        "math.NA"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2609.08969v1",
+      "title": "Singular Turing bifurcations and spatial canard solutions in nonlinear reaction-diffusion systems",
+      "published": "2026-09-08",
+      "categories": [
+        "math.DS"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2504.13967v1",
+      "title": "Maze-Bubble Pattern Magnetic Domain Simulation Based on the Lengyel-Epstein Model",
+      "published": "2025-04-17",
+      "categories": [
+        "cond-mat.mtrl-sci",
+        "math.AP"
+      ],
+      "has_fulltext": false
+    },
+    {
+      "id": "2508.08309v1",
+      "title": "Variational volume reconstruction with the Deep Ritz Method",
+      "published": "2025-08-08",
+      "categories": [
+        "eess.IV",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "has_fulltext": false
+    }
+  ],
+  "per_query": [
+    {
+      "query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\"",
+      "label": "时间分数阶 Allen-Cahn（导师 2025-2026 最活跃的线）",
+      "fetched": 2,
+      "accepted": [
+        {
+          "id": "2609.21512v1",
+          "title": "FrFNO:Injecting the analytic Mittag-Leffler propagator into a resolution-robust neural operator for space-time",
+          "reason": "通过（强术语 ['time[- ]fractional']，分类 ['math-ph', 'math.NA']；⚠ 命中 ML 词 ['neural\\\\s+operator', 'convolutional']，但有强术语+核心分类，保留待人审",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        },
+        {
+          "id": "2606.12799v1",
+          "title": "A variable time-step, second-order, and MBP-preserving linear stabilized scheme for the time-fractional Allen-",
+          "reason": "通过（强术语 ['time[- ]fractional']，分类 ['math.NA']",
+          "via_query": "abs:\"time-fractional\" AND abs:\"Allen-Cahn\""
+        }
+      ],
+      "rejected": []
+    },
+    {
+      "query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\"",
+      "label": "反应扩散 / Lengyel-Epstein 图案形成",
+      "fetched": 2,
+      "accepted": [
+        {
+          "id": "2609.08969v1",
+          "title": "Singular Turing bifurcations and spatial canard solutions in nonlinear reaction-diffusion systems",
+          "reason": "通过（仅弱术语 ['reaction[- ]diffusion']，但分类 ['math.DS'] 且无 ML 特征）",
+          "via_query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\""
+        },
+        {
+          "id": "2504.13967v1",
+          "title": "Maze-Bubble Pattern Magnetic Domain Simulation Based on the Lengyel-Epstein Model",
+          "reason": "通过（仅弱术语 ['reaction[- ]diffusion']，但分类 ['cond-mat.mtrl-sci', 'math.AP'] 且无 ML 特征）",
+          "via_query": "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\""
+        }
+      ],
+      "rejected": []
+    },
+    {
+      "query": "abs:\"Cahn-Hilliard\" AND abs:\"image segmentation\"",
+      "label": "CH 图像分割（对应组里 Neural Networks / TIP / TPAMI 那几篇）",
+      "fetched": 2,
+      "accepted": [
+        {
+          "id": "2508.08309v1",
+          "title": "Variational volume reconstruction with the Deep Ritz Method",
+          "reason": "通过（强术语 ['volume\\\\s+reconstruction']，分类 ['cs.CV', 'eess.IV']；⚠ 命中 ML 词 ['neural\\\\s+network']，但有强术语+核心分类，保留待人审",
+          "via_query": "abs:\"Cahn-Hilliard\" AND abs:\"image segmentation\""
+        }
+      ],
+      "rejected": [
+        {
+          "id": "2505.05806v2",
+          "title": "Image Segmentation via Variational Model Based Tailored UNet: A Deep Variational Framework",
+          "reason": "词法闸门：未命中任何核心术语"
+        }
+      ]
+    }
+  ]
+}
