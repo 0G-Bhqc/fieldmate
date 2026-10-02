@@ -1,0 +1,17 @@
+{
+  "name": "dev-fieldmate-local",
+  "plugins": [
+    {
+      "name": "fieldmate",
+      "source": "./fieldmate",
+      "version": "0.1.0",
+      "description": "Phase-field / geometry-processing research copilot shipped as a skill + sub-agent over the fieldmate CLI.",
+      "displayName": "fieldmate",
+      "displayName_i18n": { "zh-CN": "fieldmate 科研助手" },
+      "description_i18n": {
+        "zh-CN": "相场/几何处理方向科研助手：文献横向对比、五槽阅读卡、精进点挖掘（带证据分级）、语料自检、实验预注册与结果三态核验。安装后自动注册 skill（fieldmate）与同名子 Agent。"
+      },
+      "category": "productivity"
+    }
+  ]
+}

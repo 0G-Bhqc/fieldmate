@@ -1,0 +1,13 @@
+{
+  "name": "fieldmate",
+  "version": "0.1.0",
+  "description": "Phase-field / geometry-processing research copilot: cross-paper comparison, gap mining, corpus audits, preregistered experiment verification. Deterministic core (fieldmate CLI) + harness-side judgment.",
+  "description_i18n": {
+    "en": "Phase-field / geometry-processing research copilot: cross-paper comparison, five-slot reading cards, gap mining with evidence grading, corpus audits, preregistered experiment verification. Ships as a skill + sub-agent; the deterministic core is the fieldmate CLI.",
+    "zh-CN": "相场/几何处理方向科研助手：文献横向对比、五槽阅读卡、精进点挖掘（带证据分级）、语料自检、实验预注册与结果三态核验。判定归脚本（fieldmate CLI），判断归宿主模型。"
+  },
+  "author": { "name": "fieldmate contributors" },
+  "license": "MIT",
+  "skills": "skills",
+  "agents": "agents"
+}

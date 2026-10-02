@@ -160,3 +160,23 @@ L2 时间分数阶反应扩散（arXiv 可自动扩，重启成本最低）→ L
 
 Phase 0 五件事（更名、打包、编码、git/CI、README）都是小时级工作量，方案已定稿，
 按此执行即可。
+
+## 9. 执行进度（2026-10-02）
+
+**已完成**：
+- ✅ git 仓库建立（基线 → 更名 → 编码修复，历史干净，缓存不进库）
+- ✅ 更名 fieldmate 全量落地（包、CLI、环境变量 `FIELDMATE_QUERY`、缓存目录
+  `.fieldmate-cache/`、文档），145 测试全绿
+- ✅ stdout/stderr 强制 UTF-8 + ASCII 管道回归测试（宿主 subprocess 在 GBK
+  控制台不再崩）
+- ✅ **skill 包提前交付**（Phase 2 的 ①③ 项）：`plugins/fieldmate/` 为 ZCode
+  插件源（`.zcode-plugin/plugin.json` + `skills/fieldmate/SKILL.md` 四步闭环
+  剧本 + `agents/fieldmate.md` 子 Agent 定义），`plugins/marketplace.json`
+  为本地测试市场
+
+**待办**：
+- Phase 0 余项：数据文件进包 + `importlib.resources` + wheel 冒烟测试、GitHub
+  远端与 CI
+- Phase 1/2/3 按 §4 推进（gold set 扩容、OpenAlex 元数据后端、`doctor` 子命令、
+  候选 schema 化）
+- 用户手动完成插件市场添加与安装（见交付说明），试用验收后回填结论
