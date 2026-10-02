@@ -135,6 +135,22 @@ def available_backends() -> list[str]:
     return [name for name, _ in _EXTRACTORS]
 
 
+def _sanitize_extracted_text(txt: str) -> str:
+    """清掉 PDF 抽取产物中的孤立代理字符（\\udcXX）。
+
+    pypdf/pdfminer 对某些字体与自 制 CMap 的抽取会留下这类字符，它们**无法用
+    UTF-8 编码**：不消毒则解析缓存落盘、`--out` 的 JSON 落盘、任何严格编码的
+    下游全部 UnicodeEncodeError（真实测试 2026-10-02：干净 venv 只装 pypdf
+    首次解析 corpus_bulk 即崩；老环境没炸只是因为 fitz 的缓存早已存在）。
+    语义 = 「该字符不可表示」，替换为 ?，与 CLI 输出流的 errors='replace' 约定一致。
+    """
+    try:
+        txt.encode("utf-8")
+    except UnicodeEncodeError:
+        txt = txt.encode("utf-8", "replace").decode("utf-8")
+    return txt
+
+
 def parse_pdf(path: str | Path, max_chars: int = 2_000_000) -> tuple[str | None, str]:
     """返回 (text, backend)。解析失败返回 (None, 原因)。
 
@@ -152,7 +168,7 @@ def parse_pdf(path: str | Path, max_chars: int = 2_000_000) -> tuple[str | None,
             if txt and len(txt) > max_chars:
                 txt = txt[:max_chars]
             if txt and txt.strip():
-                return txt, name
+                return _sanitize_extracted_text(txt), name
             errs.append(f"{name}:空文本")
         except Exception as e:                          # noqa: BLE001, PERF203
             errs.append(f"{name}:{type(e).__name__}")

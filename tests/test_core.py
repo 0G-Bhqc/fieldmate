@@ -621,6 +621,25 @@ def test_manifest_relative_cache_dir_resolves_against_manifest_location(tmp_path
         Path(".fieldmate-cache") / "arxiv_pdfs"
 
 
+def test_parse_pdf_sanitizes_lone_surrogates(tmp_path, monkeypatch):
+    """回归（真实测试 2026-10-02 抓到）：pypdf 抽取某些 PDF 会留下孤立代理字符
+    \\udcXX，无法 UTF-8 编码 —— 解析缓存落盘、--out 的 JSON 落盘全部
+    UnicodeEncodeError。parse_pdf 的成功出口必须消毒。"""
+    import fieldmate.sources.local as loc
+
+    pdf = tmp_path / "fake.pdf"
+    pdf.write_bytes(b"%PDF-1.4 fake")
+    monkeypatch.setattr(loc, "_EXTRACTORS",
+                        [("fake", lambda p: "正文\udc80含坏字符\udcff结尾")])
+    txt, backend = loc.parse_pdf(pdf)
+    assert backend == "fake"
+    txt.encode("utf-8")                      # 必须可严格编码
+    assert txt == "正文?含坏字符?结尾"
+    # 干净文本原样通过
+    monkeypatch.setattr(loc, "_EXTRACTORS", [("fake", lambda p: "clean ✓")])
+    assert loc.parse_pdf(pdf)[0] == "clean ✓"
+
+
 def test_cli_survives_non_utf8_output_pipe():
     """回归：宿主 harness 在 Windows 上用 subprocess 捕获输出时，管道编码跟随
     locale（中文系统 = GBK/cp936），而 CLI 输出含 ✔/✖/🟡/² 等字符 ——
