@@ -293,23 +293,34 @@ def _quote(q: str) -> str:
 
 # ---------------------------------------------------------- manifest 语料
 def _resolve_cache_dir(raw: str | Path | None, manifest_path: Path) -> Path:
-    """manifest 里相对 cache_dir 的解析锚点。
+    """缓存目录的解析锚点（对 cwd 无关，H1 契约）。
 
-    旧实现 `Path(mf["cache_dir"])` 相对**当前工作目录**解析 —— 宿主 harness 从
-    任意 cwd 调 CLI 时（这正是 H1 契约承诺的场景），相对路径静默落空，
-    240 篇全文全部变「无缓存」，且没有任何报错（实测 2026-10-02）。
+    旧实现等价于 `Path(raw or default_cache())`，全部相对**当前工作目录**解析
+    —— 宿主 harness 从任意 cwd 调 CLI 时（这正是 H1 承诺的场景），相对路径
+    静默落空，240 篇全文全部变「无缓存」，且没有任何报错
+    （真实测试 2026-10-02 抓到，且 corpus_bulk.json 压根没写 cache_dir 字段）。
 
-    解析顺序：绝对路径原样返回；相对路径依次尝试 manifest 所在目录、
-    其父目录（manifest 在 <repo>/libraries/ 时即仓库根），取第一个真实存在的；
-    都不存在才退回旧的 cwd 相对行为（保持「先建 manifest 后建缓存」的用法可用）。
+    解析顺序：
+    * 显式绝对路径 → 原样返回；
+    * manifest 显式给了相对 cache_dir → 依次尝试 manifest 所在目录、其父目录
+      （manifest 在 <repo>/libraries/ 时即仓库根），取第一个真实存在的；
+      都不存在则原样返回（「先建 manifest 后建缓存」的用法仍可用）；
+    * manifest 没给 cache_dir → 先试 cwd 下的默认名（旧用法：在哪儿跑就在哪儿
+      建缓存），再按 manifest 位置向上找已有缓存（离线复用），最后退回 cwd 相对。
     """
-    if raw is None:
-        return default_cache()
-    c = Path(raw)
-    if c.is_absolute():
-        return c
     mp = manifest_path.resolve().parent
-    for base in (mp, mp.parent):
+    if raw is not None:
+        c = Path(raw)
+        if c.is_absolute():
+            return c
+        for base in (mp, mp.parent):
+            if (base / c).exists():
+                return base / c
+        return c
+    c = default_cache()
+    if c.exists():
+        return c
+    for base in (mp.parent, mp):
         if (base / c).exists():
             return base / c
     return c

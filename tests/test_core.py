@@ -586,7 +586,7 @@ def test_package_is_importable_from_any_working_directory(tmp_path):
     assert "ok" in r.stdout
 
 
-def test_manifest_relative_cache_dir_resolves_against_manifest_location(tmp_path):
+def test_manifest_relative_cache_dir_resolves_against_manifest_location(tmp_path, monkeypatch):
     """回归（真实测试 2026-10-02 抓到）：manifest 的 cache_dir 是相对路径时，
     旧实现相对**当前工作目录**解析 —— 宿主从任意 cwd 调 CLI，240 篇全文静默
     全部变「无缓存」，且没有任何报错。正确锚点是 manifest 自己的位置：
@@ -609,6 +609,16 @@ def test_manifest_relative_cache_dir_resolves_against_manifest_location(tmp_path
     # 两级都不存在 → 退回 cwd 相对（保持旧行为可用），不抛错
     bare = tmp_path / "nowhere" / "cache"
     assert _resolve_cache_dir(str(bare), manifest) == bare
+    # manifest 没写 cache_dir 字段（corpus_bulk.json 的真实情况）：cwd 下没有
+    # 缓存时，按 manifest 位置向上锚定到已有缓存 —— 这正是真实测试抓到的场景
+    import fieldmate.sources.fulltext as _ft
+    monkeypatch.chdir(tmp_path)                      # cwd 下无 .fieldmate-cache
+    assert _ft._resolve_cache_dir(None, manifest) == \
+        (repo / ".fieldmate-cache" / "arxiv_pdfs")
+    # cwd 下已有缓存 → 就近使用（旧用法：在哪儿跑就在哪儿建缓存）
+    (tmp_path / ".fieldmate-cache" / "arxiv_pdfs").mkdir(parents=True)
+    assert _ft._resolve_cache_dir(None, manifest) == \
+        Path(".fieldmate-cache") / "arxiv_pdfs"
 
 
 def test_cli_survives_non_utf8_output_pipe():

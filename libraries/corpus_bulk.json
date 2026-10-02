@@ -1,2654 +1,2655 @@
 {
-  "generated": "2026-10-01T12:45:31Z",
-  "n_papers": 248,
-  "n_with_fulltext": 248,
-  "queries": [
-    "abs:\"time-fractional\" AND abs:\"Allen-Cahn\"",
-    "abs:\"time-fractional\" AND abs:\"Cahn-Hilliard\"",
-    "abs:\"time-fractional\" AND abs:\"reaction-diffusion\"",
-    "abs:\"Cahn-Hilliard\" AND abs:\"segmentation\"",
-    "abs:\"Cahn-Hilliard\" AND abs:\"image\"",
-    "abs:\"Allen-Cahn\" AND abs:\"regularization\"",
-    "abs:\"Allen-Cahn\" AND abs:\"mean curvature\"",
-    "abs:\"phase-field\" AND abs:\"surface reconstruction\"",
-    "abs:\"phase field\" AND abs:\"point cloud\"",
-    "abs:\"phase-field\" AND abs:\"topology optimization\"",
-    "abs:\"phase-field\" AND abs:\"crystal growth\"",
-    "abs:\"phase-field\" AND abs:\"dendrite\"",
-    "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\"",
-    "abs:\"reaction-diffusion\" AND abs:\"Gray-Scott\"",
-    "abs:\"Sine-Gordon\" AND abs:\"damping\"",
-    "abs:\"Langevin\" AND abs:\"Allen-Cahn\"",
-    "abs:\"Langevin\" AND abs:\"Cahn-Hilliard\"",
-    "abs:\"Ginzburg-Landau\" AND abs:\"Allen-Cahn\"",
-    "abs:\"phase-field crystal\"",
-    "abs:\"Voronoi\" AND abs:\"lattice structure\"",
-    "abs:\"mesh denoising\" AND abs:\"geometry\"",
-    "abs:\"level set\" AND abs:\"denoising\"",
-    "abs:\"moving by mean curvature\"",
-    "cat:math.NA AND abs:\"Allen-Cahn\"",
-    "cat:math.NA AND abs:\"Cahn-Hilliard\"",
-    "cat:math.NA AND abs:\"phase field\"",
-    "abs:\"numerical\" AND abs:\"Allen-Cahn equation\"",
-    "abs:\"preserving volume\" AND abs:\"phase\"",
-    "abs:\"fractional\" AND abs:\"Gray-Scott\""
-  ],
-  "papers": [
-    {
-      "id": "2609.21512v1",
-      "title": "FrFNO:Injecting the analytic Mittag-Leffler propagator into a resolution-robust neural operator for space-time fractional PDEs",
-      "published": "2026-09-18",
-      "categories": [
-        "math.NA",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 145719
-    },
-    {
-      "id": "2606.12799v1",
-      "title": "A variable time-step, second-order, and MBP-preserving linear stabilized scheme for the time-fractional Allen-Cahn equation",
-      "published": "2026-06-11",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 53894
-    },
-    {
-      "id": "2603.11696v1",
-      "title": "Non-uniform $α$-Robust Alikhanov Mixed FEM with Optimal Convergence for the Time-Fractional Allen--Cahn Equation",
-      "published": "2026-03-12",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 56529
-    },
-    {
-      "id": "2510.16496v1",
-      "title": "A linear unconditionally structure-preserving L1 scheme for the time-fractional Allen-Cahn equation",
-      "published": "2025-10-18",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 51696
-    },
-    {
-      "id": "2509.03471v1",
-      "title": "Linear Relaxation Schemes with Asymptotically Compatible Energy Law for Time-Fractional Phase-Field Models",
-      "published": "2025-09-03",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 45910
-    },
-    {
-      "id": "2508.19965v3",
-      "title": "High-order nonuniform time-stepping and MBP-preserving linear schemes for the time-fractional Allen-Cahn equation",
-      "published": "2025-08-27",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 85330
-    },
-    {
-      "id": "2506.11817v1",
-      "title": "Second-Order Linear Relaxation Schemes for Time-Fractional Phase-Field Models",
-      "published": "2025-06-13",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 21719
-    },
-    {
-      "id": "2402.05250v2",
-      "title": "Time-fractional Allen-Cahn equations versus powers of the mean curvature",
-      "published": "2024-02-07",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 13428
-    },
-    {
-      "id": "2402.03790v1",
-      "title": "Strong approximation of the time-fractional Cahn--Hilliard equation driven by a fractionally integrated additive noise",
-      "published": "2024-02-06",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 55054
-    },
-    {
-      "id": "2401.02050v1",
-      "title": "Some Grönwall inequalities for a class of discretizations of time fractional equations on nonuniform meshes",
-      "published": "2024-01-04",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 59556
-    },
-    {
-      "id": "2311.13216v1",
-      "title": "Asymptotically compatible energy and dissipation law of the nonuniform L2-$1_σ$ scheme for time fractional Allen-Cahn model",
-      "published": "2023-11-22",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 45424
-    },
-    {
-      "id": "2302.13021v1",
-      "title": "A high-order discrete energy decay and maximum-principle preserving scheme for time fractional Allen-Cahn equation",
-      "published": "2023-02-25",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 46616
-    },
-    {
-      "id": "2508.17178v1",
-      "title": "A Relaxed Step-Ratio Constraint for Time-Fractional Cahn--Hilliard Equations: Analysis and Computation",
-      "published": "2025-08-24",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 60079
-    },
-    {
-      "id": "2210.12514v1",
-      "title": "Asymptotically compatible energy of variable-step fractional BDF2 formula for time-fractional Cahn-Hilliard model",
-      "published": "2022-10-22",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 51529
-    },
-    {
-      "id": "2202.12192v1",
-      "title": "A decreasing upper bound of energy for time-fractional phase-field equations",
-      "published": "2022-02-24",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 42262
-    },
-    {
-      "id": "2201.00920v1",
-      "title": "Energy stability of variable-step L1-type schemes for time-fractional Cahn-Hilliard model",
-      "published": "2022-01-04",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 51554
-    },
-    {
-      "id": "2108.09908v1",
-      "title": "Asymptotic Analysis on the Sharp Interface Limit of the Time-Fractional Cahn--Hilliard Equation",
-      "published": "2021-08-23",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 41444
-    },
-    {
-      "id": "2107.13160v1",
-      "title": "On the initial value problem for a class of nonlinear biharmonic equation with time-fractional derivative",
-      "published": "2021-07-28",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 74766
-    },
-    {
-      "id": "2106.11163v1",
-      "title": "Energy-dissipation for time-fractional phase-field equations",
-      "published": "2021-06-21",
-      "categories": [
-        "math.AP",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 34240
-    },
-    {
-      "id": "2104.03096v1",
-      "title": "Time-fractional Cahn-Hilliard equation: Well-posedness, degeneracy, and numerical solutions",
-      "published": "2021-04-07",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 89518
-    },
-    {
-      "id": "2102.05139v2",
-      "title": "Solving time-fractional differential equation via rational approximation",
-      "published": "2021-02-09",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 60759
-    },
-    {
-      "id": "2609.32417v1",
-      "title": "Stochastic maximal $L^p$-regularity for non-autonomous evolution equations with fractional derivative in UMD spaces",
-      "published": "2026-09-26",
-      "categories": [
-        "math.CA",
-        "math.PR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 131035
-    },
-    {
-      "id": "2609.13715v1",
-      "title": "Event-Time Order-Flow Memory, Operational-Time Impact, and Subordinated Market Observables",
-      "published": "2026-09-12",
-      "categories": [
-        "q-fin.TR",
-        "cond-mat.stat-mech",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 26712
-    },
-    {
-      "id": "2511.01704v1",
-      "title": "Learnable Fractional Reaction-Diffusion Dynamics for Under-Display ToF Imaging and Beyond",
-      "published": "2025-11-03",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 48011
-    },
-    {
-      "id": "2509.17793v1",
-      "title": "Solving time-fractional diffusion equations with Robin boundary conditions via fractional Hamiltonian boundary value methods",
-      "published": "2025-09-22",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 60000
-    },
-    {
-      "id": "2509.07862v1",
-      "title": "Duality estimates for subdiffusion problems including time-fractional porous medium type equations",
-      "published": "2025-09-09",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 55699
-    },
-    {
-      "id": "2502.00509v1",
-      "title": "Fractional differential equations of a reaction-diffusion SIR model involving the Caputo-fractional time-derivative and a nonlinear diffusion operator",
-      "published": "2025-02-01",
-      "categories": [
-        "math.OC",
-        "math.AP",
-        "q-bio.PE"
-      ],
-      "has_fulltext": true,
-      "n_chars": 56606
-    },
-    {
-      "id": "2406.09917v1",
-      "title": "Nonlinear two-component system of time-fractional PDEs in (2+1)-dimensions: Invariant subspace method combined with variable transformation",
-      "published": "2024-06-14",
-      "categories": [
-        "nlin.SI",
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 86679
-    },
-    {
-      "id": "2312.05606v1",
-      "title": "Fractional Dissipative PDEs",
-      "published": "2023-12-09",
-      "categories": [
-        "math.AP",
-        "math.DS",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 200749
-    },
-    {
-      "id": "2208.06548v1",
-      "title": "Global dynamics for a class of discrete fractional epidemic model with reaction-diffusion",
-      "published": "2022-08-13",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 57541
-    },
-    {
-      "id": "2202.04928v1",
-      "title": "Global boundedness and Allee effect for a nonlocal time fractional p-Laplacian reaction-diffusion equation",
-      "published": "2022-02-10",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 48050
-    },
-    {
-      "id": "2112.11143v1",
-      "title": "Global boundedness and Allee effect for a nonlocal time fractional reaction-diffusion equation",
-      "published": "2021-12-21",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 60481
-    },
-    {
-      "id": "2107.11773v1",
-      "title": "Initial value problem for the two-dimensional time-fractional generalized convection-reaction-diffusion-wave equation: Invariant subspaces and exact solutions",
-      "published": "2021-07-25",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 89576
-    },
-    {
-      "id": "2607.22053v1",
-      "title": "A Smooth Phase-Separation Model for Weak-Boundary Segmentation of Homogeneous Structures",
-      "published": "2026-07-24",
-      "categories": [
-        "cs.CV",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 75517
-    },
-    {
-      "id": "2512.07590v1",
-      "title": "Robust Variational Model Based Tailored UNet: Leveraging Edge Detector and Mean Curvature for Improved Image Segmentation",
-      "published": "2025-12-08",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 49760
-    },
-    {
-      "id": "2508.08309v1",
-      "title": "Variational volume reconstruction with the Deep Ritz Method",
-      "published": "2025-08-08",
-      "categories": [
-        "eess.IV",
-        "cs.CV",
-        "cs.LG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 68329
-    },
-    {
-      "id": "2505.05806v2",
-      "title": "Image Segmentation via Variational Model Based Tailored UNet: A Deep Variational Framework",
-      "published": "2025-05-09",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 61904
-    },
-    {
-      "id": "2501.08543v1",
-      "title": "Stability and convergence of relaxed scalar auxiliary variable schemes for Cahn-Hilliard systems with bounded mass source",
-      "published": "2025-01-15",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 65241
-    },
-    {
-      "id": "2106.07606v1",
-      "title": "A Physics Informed Neural Network for Time-Dependent Nonlinear and Higher Order Partial Differential Equations",
-      "published": "2021-06-04",
-      "categories": [
-        "math.NA",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 46178
-    },
-    {
-      "id": "1805.02604v2",
-      "title": "Asymptotic Behavior of Allen-Cahn Type Energies and Neumann Eigenvalues via Inner Variations",
-      "published": "2018-05-07",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 82194
-    },
-    {
-      "id": "1704.02348v1",
-      "title": "Automated Unsupervised Segmentation of Liver Lesions in CT scans via Cahn-Hilliard Phase Separation",
-      "published": "2017-04-07",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 19039
-    },
-    {
-      "id": "cond-mat/0508366v2",
-      "title": "Phase Separation and the Dual Nature of the Electronic Structure in Cuprates",
-      "published": "2005-08-16",
-      "categories": [
-        "cond-mat.supr-con",
-        "cond-mat.str-el"
-      ],
-      "has_fulltext": true,
-      "n_chars": 19472
-    },
-    {
-      "id": "2609.08479v1",
-      "title": "Cahn-Hilliard phase-field modeling of tumor growth via locally adaptive isogeometric analysis with THB-splines",
-      "published": "2026-09-08",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 64516
-    },
-    {
-      "id": "2502.03025v2",
-      "title": "Optimal control of the fidelity coefficient in a Cahn-Hilliard image inpainting model",
-      "published": "2025-02-05",
-      "categories": [
-        "math.OC",
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 97180
-    },
-    {
-      "id": "2412.12777v1",
-      "title": "Phase-field modeling of colloid-polymer mixtures in microgravity",
-      "published": "2024-12-17",
-      "categories": [
-        "cond-mat.soft"
-      ],
-      "has_fulltext": true,
-      "n_chars": 65230
-    },
-    {
-      "id": "2411.05840v1",
-      "title": "ConvNet-Based Prediction of Droplet Collision Dynamics in Microchannels",
-      "published": "2024-11-06",
-      "categories": [
-        "physics.flu-dyn"
-      ],
-      "has_fulltext": true,
-      "n_chars": 79289
-    },
-    {
-      "id": "2410.04451v1",
-      "title": "Liquid-Droplet Coalescence: CNN-based Reconstruction of Flow Fields from Concentration Fields",
-      "published": "2024-10-06",
-      "categories": [
-        "physics.flu-dyn"
-      ],
-      "has_fulltext": true,
-      "n_chars": 63199
-    },
-    {
-      "id": "2310.20383v3",
-      "title": "Navigating the Complex Landscape of Shock Filter Cahn-Hilliard Equation: From Regularized to Entropy Solutions",
-      "published": "2023-10-31",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 79931
-    },
-    {
-      "id": "2303.09450v2",
-      "title": "Diffusion-Shock Inpainting",
-      "published": "2023-03-16",
-      "categories": [
-        "eess.IV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 30015
-    },
-    {
-      "id": "2609.35196v1",
-      "title": "GAC-PINN: Geometry-Adaptive and Constraint-Enhanced Physics-Informed Neural Networks",
-      "published": "2026-09-28",
-      "categories": [
-        "math.NA",
-        "cs.AI"
-      ],
-      "has_fulltext": true,
-      "n_chars": 67219
-    },
-    {
-      "id": "2609.34012v1",
-      "title": "When Known Physics Helps Neural PDE Models: Residual Constraints Out-Regularize Generic Priors for Nonlinear Dynamics",
-      "published": "2026-09-27",
-      "categories": [
-        "cs.LG",
-        "cs.AI"
-      ],
-      "has_fulltext": true,
-      "n_chars": 55719
-    },
-    {
-      "id": "2609.26400v1",
-      "title": "Routes to chaos in a mass-conserving two-species reaction-diffusion model",
-      "published": "2026-09-22",
-      "categories": [
-        "nlin.PS",
-        "nlin.CD"
-      ],
-      "has_fulltext": true,
-      "n_chars": 80472
-    },
-    {
-      "id": "2609.21680v1",
-      "title": "Stable De Giorgi conjecture of the Allen--Cahn equation in $\\mathbb{R}^3$",
-      "published": "2026-09-18",
-      "categories": [
-        "math.AP",
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 121047
-    },
-    {
-      "id": "2609.18403v1",
-      "title": "Constrained weak identification of Allen--Cahn free energies with surface-tension calibration",
-      "published": "2026-09-16",
-      "categories": [
-        "math.NA",
-        "cs.CE",
-        "nlin.PS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 71818
-    },
-    {
-      "id": "2609.18201v1",
-      "title": "Relaxation and Steady-State Entropy Production for Langevin SPDEs: A Dirichlet-Form Approach",
-      "published": "2026-09-16",
-      "categories": [
-        "math.PR",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 172221
-    },
-    {
-      "id": "2609.01009v1",
-      "title": "OptiXDE: A fast optical-inspired solver for differential equations",
-      "published": "2026-09-01",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 61076
-    },
-    {
-      "id": "2609.00739v1",
-      "title": "Boundary asymptotics for two-dimensional vectorial Allen-Cahn systems",
-      "published": "2026-09-01",
-      "categories": [
-        "math.AP",
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 68583
-    },
-    {
-      "id": "2608.23540v1",
-      "title": "A Stochastic Flow for the Stochastic Allen-Cahn Equation with Multiplicative Noise",
-      "published": "2026-08-24",
-      "categories": [
-        "math.PR",
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 158031
-    },
-    {
-      "id": "2607.25694v1",
-      "title": "Parameter Estimation of the Stochastic Allen--Cahn Equation via variations",
-      "published": "2026-07-28",
-      "categories": [
-        "math.PR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 44692
-    },
-    {
-      "id": "2607.21789v2",
-      "title": "Equivariant Allen--Cahn Solutions and the Existence of Cohomogeneity $2$ Minimal Surfaces",
-      "published": "2026-07-23",
-      "categories": [
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 134260
-    },
-    {
-      "id": "2607.17410v1",
-      "title": "Phase-Field Models, Sharp Interface Limits, and Numerical Schemes for Contact Line Dynamics",
-      "published": "2026-07-19",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 73303
-    },
-    {
-      "id": "2609.35666v1",
-      "title": "Interacting fronts in the strongly nonlocal Allen--Cahn equation",
-      "published": "2026-09-28",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 80617
-    },
-    {
-      "id": "2609.32829v1",
-      "title": "Second order estimates on transition layers for the Allen-Cahn equation with homogeneous Neumann boundary conditions: Part I - Boundary-orthogonal transition layers",
-      "published": "2026-09-26",
-      "categories": [
-        "math.AP",
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 248855
-    },
-    {
-      "id": "2609.27596v1",
-      "title": "Asymptotics for two-dimensional parabolic vectorial Allen-Cahn systems",
-      "published": "2026-09-23",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 118094
-    },
-    {
-      "id": "2608.27257v1",
-      "title": "Rigidity and existence of Busemann profiles for the Allen--Cahn equation on Cartan--Hadamard manifolds",
-      "published": "2026-08-27",
-      "categories": [
-        "math.AP",
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 82897
-    },
-    {
-      "id": "2608.26842v2",
-      "title": "Convergence of a vector-valued Allen-Cahn system to Brakke's multiphase mean curvature flow",
-      "published": "2026-08-27",
-      "categories": [
-        "math.AP",
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 89804
-    },
-    {
-      "id": "2608.11695v1",
-      "title": "Generalised stochastic curvature flow in $d \\geq 2$, and sharp interface limit for the stochastic Allen-Cahn equation with nonlinear diffusion",
-      "published": "2026-08-12",
-      "categories": [
-        "math.PR",
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 92373
-    },
-    {
-      "id": "2606.30532v2",
-      "title": "Higher Order Convergence for the Sharp Interface Limit of 3D Navier--Stokes/Allen--Cahn Systems",
-      "published": "2026-06-29",
-      "categories": [
-        "math.AP",
-        "physics.flu-dyn"
-      ],
-      "has_fulltext": true,
-      "n_chars": 142387
-    },
-    {
-      "id": "2604.23920v1",
-      "title": "Survey on topological methods for Allen--Cahn equations and systems",
-      "published": "2026-04-27",
-      "categories": [
-        "math.AP",
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 119925
-    },
-    {
-      "id": "2604.11597v1",
-      "title": "Sharp Interface Limit for a Mass-Conserving Navier-Stokes/Allen-Cahn System with Different Viscosities",
-      "published": "2026-04-13",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 73467
-    },
-    {
-      "id": "2602.11485v2",
-      "title": "The sharp-interface limit of the matrix-valued Allen--Cahn equation",
-      "published": "2026-02-12",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 41897
-    },
-    {
-      "id": "2512.14437v2",
-      "title": "Parabolic free boundary phase transition and mean curvature flow",
-      "published": "2025-12-16",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 50911
-    },
-    {
-      "id": "2510.14356v2",
-      "title": "Sequential water wave reconstruction in VOF-based numerical wave tanks with the EnKF approach",
-      "published": "2025-10-16",
-      "categories": [
-        "physics.flu-dyn"
-      ],
-      "has_fulltext": true,
-      "n_chars": 74060
-    },
-    {
-      "id": "2309.16378v2",
-      "title": "Meshless interface tracking for the simulation of dendrite envelope growth",
-      "published": "2023-09-28",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 95428
-    },
-    {
-      "id": "2202.12593v1",
-      "title": "A sharp-interface mesoscopic model for dendritic growth",
-      "published": "2022-02-25",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 18167
-    },
-    {
-      "id": "2606.23834v2",
-      "title": "Efficient model-order reduction via graph autoencoders and operator learning for systems with sharp gradients using a novel point cloud error metric for performance assessment",
-      "published": "2026-06-22",
-      "categories": [
-        "cs.CE"
-      ],
-      "has_fulltext": true,
-      "n_chars": 100559
-    },
-    {
-      "id": "2605.25503v1",
-      "title": "Metric--Phase Fields: Decoupling Distance and Sign for Thin-Structure Reconstruction from Unoriented Point Clouds",
-      "published": "2026-05-25",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 72541
-    },
-    {
-      "id": "2604.16512v2",
-      "title": "Medial Axis Aware Learning of Signed Distance Functions",
-      "published": "2026-04-15",
-      "categories": [
-        "cs.CV",
-        "cs.CG",
-        "cs.GR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 59894
-    },
-    {
-      "id": "2601.13293v2",
-      "title": "Long-time behavior of solutions to a fluid dynamic shape optimization problem via phase-field method",
-      "published": "2026-01-19",
-      "categories": [
-        "math.OC",
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 87219
-    },
-    {
-      "id": "2512.14226v1",
-      "title": "Shape design with phase field methods for structural hemivariational inequalities in contact problems",
-      "published": "2025-12-16",
-      "categories": [
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 86582
-    },
-    {
-      "id": "2511.14623v2",
-      "title": "A Unified Phase-Field Fourier Neural Network Framework for Topology Optimization",
-      "published": "2025-11-18",
-      "categories": [
-        "math.OC",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 106804
-    },
-    {
-      "id": "2510.19192v1",
-      "title": "Topology optimization for microfluidic mixers by a phase field method",
-      "published": "2025-10-22",
-      "categories": [
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 53738
-    },
-    {
-      "id": "2509.06971v1",
-      "title": "PeTTO: Leveraging GPUs to Accelerate Topology Optimization with the Pseudo-Transient Methods",
-      "published": "2025-08-25",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 45034
-    },
-    {
-      "id": "2508.02613v2",
-      "title": "Jacobi-accelerated FFT-based solver for smooth high-contrast data",
-      "published": "2025-08-04",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 79111
-    },
-    {
-      "id": "2508.02206v2",
-      "title": "Multi-material structural optimization for additive manufacturing based on a phase field approach",
-      "published": "2025-08-04",
-      "categories": [
-        "math.OC",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 68804
-    },
-    {
-      "id": "2507.16519v1",
-      "title": "A robust and stable phase field method for structural topology optimization",
-      "published": "2025-07-22",
-      "categories": [
-        "math.OC",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 50737
-    },
-    {
-      "id": "2505.13776v1",
-      "title": "Convergence Analysis of an Adaptive Nonconforming FEM for Phase-Field Dependent Topology Optimization in Stokes Flow",
-      "published": "2025-05-19",
-      "categories": [
-        "math.NA",
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 78885
-    },
-    {
-      "id": "2505.04120v1",
-      "title": "On the Crouzeix-Raviart Finite Element Approximation of Phase-Field Dependent Topology Optimization in Stokes Flow",
-      "published": "2025-05-07",
-      "categories": [
-        "math.NA",
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 57745
-    },
-    {
-      "id": "2405.05098v1",
-      "title": "Energy stable gradient flow schemes for shape and topology optimization in Navier-Stokes flows",
-      "published": "2024-05-08",
-      "categories": [
-        "math.NA",
-        "math.OC",
-        "physics.flu-dyn"
-      ],
-      "has_fulltext": true,
-      "n_chars": 57788
-    },
-    {
-      "id": "2401.12675v1",
-      "title": "Analysis of a combined Filtered/phase-field approach to topology optimization in elasticit",
-      "published": "2024-01-23",
-      "categories": [
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 38805
-    },
-    {
-      "id": "2606.25345v2",
-      "title": "Decoupled energy-stable Runge-Kutta schemes of arbitrary order for the anisotropic phase-field dendritic crystal growth model",
-      "published": "2026-06-24",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 73027
-    },
-    {
-      "id": "2511.21407v1",
-      "title": "Controlled nucleation in methylamine-treated perovskite films by artificial seeding and phase-field simulations",
-      "published": "2025-11-26",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 68853
-    },
-    {
-      "id": "2510.11475v1",
-      "title": "An adaptive time-stepping strategy for the modified phase field crystal model with a strong nonlinear vacancy potential",
-      "published": "2025-10-13",
-      "categories": [
-        "math.NA",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 71232
-    },
-    {
-      "id": "2407.17283v1",
-      "title": "Hybrid-PFC: coupling the phase-field crystal model and its amplitude-equation formulation",
-      "published": "2024-07-24",
-      "categories": [
-        "cond-mat.mtrl-sci",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 78603
-    },
-    {
-      "id": "2407.15156v1",
-      "title": "Computational and analytical studies of a new nonlocal phase-field crystal model in two dimensions",
-      "published": "2024-07-21",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 76001
-    },
-    {
-      "id": "2403.14206v2",
-      "title": "A finite element method for anisotropic crystal growth on surfaces",
-      "published": "2024-03-21",
-      "categories": [
-        "math.NA",
-        "cond-mat.mtrl-sci",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 50250
-    },
-    {
-      "id": "2402.15394v1",
-      "title": "Dendrites with corners",
-      "published": "2024-02-23",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 18897
-    },
-    {
-      "id": "2310.10506v1",
-      "title": "An efficient numerical method for the anisotropic phase field dendritic crystal growth model",
-      "published": "2023-10-16",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 44268
-    },
-    {
-      "id": "2211.08309v3",
-      "title": "Scaling laws for two-dimensional dendritic crystal growth in a narrow channel",
-      "published": "2022-11-15",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 39651
-    },
-    {
-      "id": "2211.04966v1",
-      "title": "Thermodynamically consistent dynamic boundary conditions of phase field models",
-      "published": "2022-11-08",
-      "categories": [
-        "cond-mat.stat-mech"
-      ],
-      "has_fulltext": true,
-      "n_chars": 72262
-    },
-    {
-      "id": "2205.07952v2",
-      "title": "Convective effects on columnar dendritic solidification -- A multiscale dendritic needle network study",
-      "published": "2022-05-16",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 86170
-    },
-    {
-      "id": "2201.09937v1",
-      "title": "On the crystallization Kinetics in Natural Rubber",
-      "published": "2022-01-24",
-      "categories": [
-        "cond-mat.soft",
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 23443
-    },
-    {
-      "id": "2608.26908v1",
-      "title": "A novel Grand-Potential Phase-Field Lattice-Boltzmann model for multi-phase solidification with convection",
-      "published": "2026-08-27",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 64876
-    },
-    {
-      "id": "2607.17370v1",
-      "title": "Response-function-optimized phase field modeling of solute trapping and solute drag in rapid alloy solidification",
-      "published": "2026-07-19",
-      "categories": [
-        "cond-mat.mtrl-sci",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 112946
-    },
-    {
-      "id": "2607.15387v2",
-      "title": "Phase-Field Simulation of Dendrite Evolution in All-Solid-State Sodium Batteries during Cycling",
-      "published": "2026-07-16",
-      "categories": [
-        "cond-mat.mtrl-sci",
-        "cond-mat.mes-hall"
-      ],
-      "has_fulltext": true,
-      "n_chars": 55210
-    },
-    {
-      "id": "2605.25834v1",
-      "title": "Dealloying by peritectic melting",
-      "published": "2026-05-25",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 60987
-    },
-    {
-      "id": "2604.18261v1",
-      "title": "DeepRitzSplit Neural Operator for Phase-Field Models via Energy Splitting",
-      "published": "2026-04-20",
-      "categories": [
-        "math.AP",
-        "cs.LG",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 67288
-    },
-    {
-      "id": "2603.09693v1",
-      "title": "Physics-informed neural operator for predictive parametric phase-field modelling",
-      "published": "2026-03-10",
-      "categories": [
-        "cs.LG",
-        "cond-mat.mtrl-sci",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 90145
-    },
-    {
-      "id": "2603.02968v1",
-      "title": "Phase-field investigation of non-isothermal solidification coupled with melt flow dynamics",
-      "published": "2026-03-03",
-      "categories": [
-        "physics.flu-dyn",
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 39052
-    },
-    {
-      "id": "2603.06627v1",
-      "title": "Phase field as a front propagation method for modeling grain growth in additive manufacturing",
-      "published": "2026-02-22",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 28538
-    },
-    {
-      "id": "2603.00093v1",
-      "title": "Adaptive Uncertainty-Guided Surrogates for Efficient phase field Modeling of Dendritic Solidification",
-      "published": "2026-02-17",
-      "categories": [
-        "physics.comp-ph",
-        "cs.AI",
-        "cs.LG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 114899
-    },
-    {
-      "id": "2602.10316v2",
-      "title": "Benchmarking of Massively Parallel Phase-Field Codes for Directional Solidification",
-      "published": "2026-02-10",
-      "categories": [
-        "cond-mat.mtrl-sci",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 77465
-    },
-    {
-      "id": "2511.03884v1",
-      "title": "Scalable Autoregressive Deep Surrogates for Dendritic Microstructure Dynamics",
-      "published": "2025-11-05",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 80783
-    },
-    {
-      "id": "2609.08969v1",
-      "title": "Singular Turing bifurcations and spatial canard solutions in nonlinear reaction-diffusion systems",
-      "published": "2026-09-08",
-      "categories": [
-        "math.DS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 148286
-    },
-    {
-      "id": "2504.13967v1",
-      "title": "Maze-Bubble Pattern Magnetic Domain Simulation Based on the Lengyel-Epstein Model",
-      "published": "2025-04-17",
-      "categories": [
-        "cond-mat.mtrl-sci",
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 34823
-    },
-    {
-      "id": "2412.15531v1",
-      "title": "Spatiotemporal pattern formations in a two-layer coupled reaction-diffusion Lengyel-Epstein system",
-      "published": "2024-12-20",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 87151
-    },
-    {
-      "id": "1711.00976v2",
-      "title": "The global existence of solutions and asymptotic stability of a reaction-diffusion system",
-      "published": "2017-11-02",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 29081
-    },
-    {
-      "id": "2607.21630v1",
-      "title": "Evolving Self-Organising Agents Without Fitness: Three Falsifiable Experiments from Constraint-Driven Selection to Developmental Encoding",
-      "published": "2026-07-18",
-      "categories": [
-        "cs.NE"
-      ],
-      "has_fulltext": true,
-      "n_chars": 15826
-    },
-    {
-      "id": "2607.02715v1",
-      "title": "LiNO: Lifting based multiresolution neural operator",
-      "published": "2026-07-02",
-      "categories": [
-        "cs.LG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 49464
-    },
-    {
-      "id": "2606.30681v1",
-      "title": "Pattern formation in a Reaction-Diffusion Model for Amyloid-$β$ and Tau Interactions in Alzheimer's Disease",
-      "published": "2026-06-27",
-      "categories": [
-        "q-bio.QM",
-        "nlin.PS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 68905
-    },
-    {
-      "id": "2606.11258v1",
-      "title": "Loss Landscape Diagnosis for Gradient-Based Gray-Scott System Inversion: Disentangling the Roles of PINN Components",
-      "published": "2026-06-09",
-      "categories": [
-        "cs.LG",
-        "nlin.PS",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 42143
-    },
-    {
-      "id": "2606.07417v2",
-      "title": "An optimal local theory for reaction-diffusion equations driven by non-trace-class noise",
-      "published": "2026-06-05",
-      "categories": [
-        "math.AP",
-        "math.PR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 139384
-    },
-    {
-      "id": "2606.01615v1",
-      "title": "Turing Patterns for Multimedia: Reaction-Diffusion Multi-Modal Fusion for Language-Guided Video Moment Retrieval",
-      "published": "2026-06-01",
-      "categories": [
-        "cs.CV",
-        "cs.MM"
-      ],
-      "has_fulltext": true,
-      "n_chars": 63946
-    },
-    {
-      "id": "2604.23727v1",
-      "title": "Data-driven reconstruction of spatiotemporal phase dynamics for traveling and oscillating patterns via Bayesian inference",
-      "published": "2026-04-26",
-      "categories": [
-        "nlin.AO",
-        "physics.data-an"
-      ],
-      "has_fulltext": true,
-      "n_chars": 64434
-    },
-    {
-      "id": "2603.28350v1",
-      "title": "Inverse source problems with reduced interior data for a coupled reaction-diffusion system",
-      "published": "2026-03-30",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 44338
-    },
-    {
-      "id": "2602.09487v1",
-      "title": "Adaptive recurrent flow map operator learning for reaction diffusion dynamics",
-      "published": "2026-02-10",
-      "categories": [
-        "cs.LG",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 61883
-    },
-    {
-      "id": "2601.16145v3",
-      "title": "On the Ginzburg-Landau approximation for quasilinear pattern forming reaction-diffusion-advection systems",
-      "published": "2026-01-22",
-      "categories": [
-        "math.AP",
-        "math.DS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 30261
-    },
-    {
-      "id": "2601.00834v3",
-      "title": "Intrinsic-Metric Physics-Informed Neural Networks (IM-PINN) for Reaction-Diffusion Dynamics on Complex Riemannian Manifolds",
-      "published": "2025-12-26",
-      "categories": [
-        "cs.LG",
-        "cs.AI"
-      ],
-      "has_fulltext": true,
-      "n_chars": 77659
-    },
-    {
-      "id": "2608.14108v1",
-      "title": "Spectral stability and slow--fast structure of traveling waves in a regularized sine--Gordon equation",
-      "published": "2026-08-14",
-      "categories": [
-        "nlin.PS",
-        "math.AP",
-        "math.DS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 64602
-    },
-    {
-      "id": "2607.06242v2",
-      "title": "Exponential mixing and Freidlin--Wentzell large deviation principle for Markov cocycles",
-      "published": "2026-07-07",
-      "categories": [
-        "math.PR",
-        "math.AP",
-        "math.DS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 111793
-    },
-    {
-      "id": "2605.13313v1",
-      "title": "A Guide to Applications of $k$-Contact Geometry in Dissipative Field Equations",
-      "published": "2026-05-13",
-      "categories": [
-        "math-ph",
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 88928
-    },
-    {
-      "id": "2504.00386v1",
-      "title": "Perturbation Analysis and Neural Network-Based Initial Condition Estimation for the Sine-Gordon Equation",
-      "published": "2025-04-01",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 37842
-    },
-    {
-      "id": "2406.08912v1",
-      "title": "The Dissipative Effect of Caputo--Time-Fractional Derivatives and its Implications for the Solutions of Nonlinear Wave Equations",
-      "published": "2024-06-13",
-      "categories": [
-        "nlin.PS",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 37936
-    },
-    {
-      "id": "2203.06312v1",
-      "title": "Stability for nonlinear wave motions damped by time-dependent frictions",
-      "published": "2022-03-12",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 23538
-    },
-    {
-      "id": "2111.06713v2",
-      "title": "Adaptive output error feedback for a class of nonlinear infinite-dimensional systems",
-      "published": "2021-11-12",
-      "categories": [
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 50345
-    },
-    {
-      "id": "2105.10558v1",
-      "title": "A quasi-periodic route to chaos in a parametrically driven nonlinear medium",
-      "published": "2021-05-21",
-      "categories": [
-        "nlin.CD",
-        "nlin.PS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 42540
-    },
-    {
-      "id": "2102.04087v1",
-      "title": "Generation of wave packets and breathers by oscillating kinks in the sine-Gordon system",
-      "published": "2021-02-08",
-      "categories": [
-        "nlin.PS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 45497
-    },
-    {
-      "id": "2102.02949v3",
-      "title": "Bistability and nonequilibrium condensation in a driven-dissipative Josephson array: a c-field model",
-      "published": "2021-02-05",
-      "categories": [
-        "cond-mat.quant-gas"
-      ],
-      "has_fulltext": true,
-      "n_chars": 63941
-    },
-    {
-      "id": "2010.00144v1",
-      "title": "Quantum hydrodynamics of spin winding",
-      "published": "2020-09-30",
-      "categories": [
-        "cond-mat.mes-hall"
-      ],
-      "has_fulltext": true,
-      "n_chars": 39277
-    },
-    {
-      "id": "2001.09275v1",
-      "title": "Invariant Gibbs dynamics for the dynamical sine-Gordon model",
-      "published": "2020-01-25",
-      "categories": [
-        "math.AP",
-        "math.PR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 39029
-    },
-    {
-      "id": "2604.20052v2",
-      "title": "Annealed Langevin Monte Carlo for Flow ODE Sampling",
-      "published": "2026-04-21",
-      "categories": [
-        "stat.CO"
-      ],
-      "has_fulltext": true,
-      "n_chars": 58402
-    },
-    {
-      "id": "2603.02039v1",
-      "title": "Graph neural network force fields for adiabatic dynamics of lattice Hamiltonians",
-      "published": "2026-03-02",
-      "categories": [
-        "cond-mat.str-el",
-        "cs.LG",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 91740
-    },
-    {
-      "id": "1310.0293v1",
-      "title": "Periodic structures in binary mixtures enforced by Janus particles",
-      "published": "2013-10-01",
-      "categories": [
-        "cond-mat.soft",
-        "nlin.PS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 21967
-    },
-    {
-      "id": "cond-mat/0504716v1",
-      "title": "Generalized Fokker-Planck equations and effective thermodynamics",
-      "published": "2005-04-27",
-      "categories": [
-        "cond-mat.stat-mech"
-      ],
-      "has_fulltext": true,
-      "n_chars": 19461
-    },
-    {
-      "id": "hep-ph/0411207v2",
-      "title": "Phenomenological approach to the critical dynamics of the QCD phase transition revisited",
-      "published": "2004-11-16",
-      "categories": [
-        "hep-ph",
-        "cond-mat.stat-mech",
-        "nucl-th"
-      ],
-      "has_fulltext": true,
-      "n_chars": 31287
-    },
-    {
-      "id": "cond-mat/0010319v1",
-      "title": "Dynamics of ferromagnetic spherical spin models with power law interactions: exact solution",
-      "published": "2000-10-20",
-      "categories": [
-        "cond-mat.stat-mech"
-      ],
-      "has_fulltext": true,
-      "n_chars": 25117
-    },
-    {
-      "id": "2607.13341v1",
-      "title": "Existence, Uniqueness, and Pathwise Regularity for Multidimensional Semilinear SPDEs with Locally Lipschitz Coefficients and Rough Initial Data",
-      "published": "2026-07-15",
-      "categories": [
-        "math.AP",
-        "math.FA",
-        "math.PR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 115559
-    },
-    {
-      "id": "2607.02414v1",
-      "title": "Weak and strong solutions for a class of quasilinear Allen--Cahn systems",
-      "published": "2026-07-02",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 62799
-    },
-    {
-      "id": "2512.21033v2",
-      "title": "Quantum Homotopy Algorithm for Solving Nonlinear PDEs and Flow Problems",
-      "published": "2025-12-24",
-      "categories": [
-        "quant-ph",
-        "cs.CE",
-        "physics.app-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 98104
-    },
-    {
-      "id": "2512.10536v4",
-      "title": "Large deviations for invariant measure of stochastic Allen-Cahn equation with inhomogeneous boundary conditions and multiplicative noise",
-      "published": "2025-12-11",
-      "categories": [
-        "math.PR",
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 68253
-    },
-    {
-      "id": "2510.13283v1",
-      "title": "An Allen-Cahn tumor growth model with temperature",
-      "published": "2025-10-15",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 49234
-    },
-    {
-      "id": "2507.19820v2",
-      "title": "A further remark on the density estimate for degenerate Allen-Cahn equations: $Δ_{p}$-type equations for $1<p<\\frac{n}{n-1}$ with rough coefficients",
-      "published": "2025-07-26",
-      "categories": [
-        "math.AP",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 19786
-    },
-    {
-      "id": "2506.17000v1",
-      "title": "Density estimates for Ginzburg-Landau energies with degenerate double-well potentials",
-      "published": "2025-06-20",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 23148
-    },
-    {
-      "id": "2506.06647v1",
-      "title": "Existence of traveling waves for vector valued gradient flows",
-      "published": "2025-06-07",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 32885
-    },
-    {
-      "id": "2501.16371v6",
-      "title": "Optimizing the Optimizer for Physics-Informed Neural Networks and Kolmogorov-Arnold Networks",
-      "published": "2025-01-22",
-      "categories": [
-        "cs.LG",
-        "cs.AI",
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 139561
-    },
-    {
-      "id": "2609.11988v1",
-      "title": "Disordered hyperuniform modulated phases and the cosmic web from one free energy",
-      "published": "2026-09-08",
-      "categories": [
-        "cond-mat.stat-mech"
-      ],
-      "has_fulltext": true,
-      "n_chars": 49703
-    },
-    {
-      "id": "2607.25177v2",
-      "title": "A Convex Splitting Spectral Method for the Phase Field Crystal Equation: Energy Stability, Computational Stability Maps, and Three-Dimensional GPU Simulations",
-      "published": "2026-07-28",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 60896
-    },
-    {
-      "id": "2607.12997v1",
-      "title": "Surface Phase-Field-Crystal-Helfrich model for out-of-plane deformations in thin crystalline sheets with lattice mismatch",
-      "published": "2026-07-14",
-      "categories": [
-        "cond-mat.mtrl-sci",
-        "cond-mat.mes-hall"
-      ],
-      "has_fulltext": true,
-      "n_chars": 27700
-    },
-    {
-      "id": "2607.01284v2",
-      "title": "On the limits of the energetic coupling between field dislocation mechanics and phase field crystal",
-      "published": "2026-07-01",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 78779
-    },
-    {
-      "id": "2603.26818v1",
-      "title": "Multi-GPU fast Fourier transforms in MATLAB (for large-scale phase-field crystal simulations)",
-      "published": "2026-03-26",
-      "categories": [
-        "cs.MS",
-        "cond-mat.mtrl-sci",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 19048
-    },
-    {
-      "id": "2603.00268v1",
-      "title": "An unconditionally stable hybridizable-embedded discontinuous Galerkin method for the phase field crystal equation",
-      "published": "2026-02-27",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 61371
-    },
-    {
-      "id": "2602.16158v3",
-      "title": "Dislocation-ledge coupling governs semicoherent precipitate growth",
-      "published": "2026-02-18",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 57828
-    },
-    {
-      "id": "2602.14348v1",
-      "title": "Dislocation dynamics on deformable surfaces",
-      "published": "2026-02-15",
-      "categories": [
-        "cond-mat.soft",
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 42590
-    },
-    {
-      "id": "2601.13965v1",
-      "title": "Grain-Growth Stagnation from Vacancy-Diffusion-Limited Disconnection Climb",
-      "published": "2026-01-20",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 30763
-    },
-    {
-      "id": "2601.05780v1",
-      "title": "Stability and convergence analysis of unconditionally original energy dissipative implicit-explicit Runge--Kutta methods for the phase field crystal models without Lipschitz assumptions",
-      "published": "2026-01-09",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 59872
-    },
-    {
-      "id": "2506.21954v1",
-      "title": "Prediction of A15 Tilt Grain Boundary Structures",
-      "published": "2025-06-27",
-      "categories": [
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 30459
-    },
-    {
-      "id": "2604.06125v1",
-      "title": "Multilevel Coset Codes on Lattices",
-      "published": "2026-04-07",
-      "categories": [
-        "cs.IT"
-      ],
-      "has_fulltext": true,
-      "n_chars": 28868
-    },
-    {
-      "id": "2411.02424v1",
-      "title": "Set-based queries for multiscale shape-material modeling",
-      "published": "2024-10-22",
-      "categories": [
-        "cs.CE",
-        "cs.GR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 58188
-    },
-    {
-      "id": "2404.09055v2",
-      "title": "The Cellular Potts Model on Disordered Lattices",
-      "published": "2024-04-13",
-      "categories": [
-        "cond-mat.soft"
-      ],
-      "has_fulltext": true,
-      "n_chars": 107174
-    },
-    {
-      "id": "2211.13036v1",
-      "title": "A Morphological, Topological and Mechanical Investigation of Gyroid, Spinodoid and Dual-Lattice Algorithms as Structural Models of Trabecular Bone",
-      "published": "2022-11-23",
-      "categories": [
-        "physics.med-ph",
-        "physics.bio-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 66301
-    },
-    {
-      "id": "2110.14237v1",
-      "title": "Learning Graph Cellular Automata",
-      "published": "2021-10-27",
-      "categories": [
-        "cs.LG",
-        "cs.AI"
-      ],
-      "has_fulltext": true,
-      "n_chars": 54578
-    },
-    {
-      "id": "1807.00592v3",
-      "title": "Neural Lattice Decoders",
-      "published": "2018-07-02",
-      "categories": [
-        "cs.IT"
-      ],
-      "has_fulltext": true,
-      "n_chars": 25958
-    },
-    {
-      "id": "1712.00363v1",
-      "title": "Subconvexity Bound for Hecke character $L$-Functions of Imaginary quadratic Number fields",
-      "published": "2017-11-30",
-      "categories": [
-        "math.NT"
-      ],
-      "has_fulltext": true,
-      "n_chars": 53551
-    },
-    {
-      "id": "2405.06536v1",
-      "title": "Mesh Denoising Transformer",
-      "published": "2024-05-10",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 68349
-    },
-    {
-      "id": "2209.00841v1",
-      "title": "Geometric and Learning-based Mesh Denoising: A Comprehensive Survey",
-      "published": "2022-09-02",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 89837
-    },
-    {
-      "id": "2108.05128v1",
-      "title": "GCN-Denoiser: Mesh Denoising with Graph Convolutional Networks",
-      "published": "2021-08-11",
-      "categories": [
-        "cs.GR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 70123
-    },
-    {
-      "id": "2007.00842v1",
-      "title": "Surface Denoising based on Normal Filtering in a Robust Statistics Framework",
-      "published": "2020-07-02",
-      "categories": [
-        "cs.GR",
-        "cs.CG",
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 70069
-    },
-    {
-      "id": "2006.15510v1",
-      "title": "DNF-Net: a Deep Normal Filtering Network for Mesh Denoising",
-      "published": "2020-06-28",
-      "categories": [
-        "cs.GR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 61543
-    },
-    {
-      "id": "1908.07916v1",
-      "title": "Discrete Total Variation of the Normal Vector Field as Shape Prior with Applications in Geometric Inverse Problems",
-      "published": "2019-08-20",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 55195
-    },
-    {
-      "id": "1903.04015v2",
-      "title": "NormalNet: Learning-based Normal Filtering for Mesh Denoising",
-      "published": "2019-03-10",
-      "categories": [
-        "cs.GR",
-        "cs.CG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 44762
-    },
-    {
-      "id": "1712.03574v2",
-      "title": "Static/Dynamic Filtering for Mesh Geometry",
-      "published": "2017-12-10",
-      "categories": [
-        "cs.GR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 61642
-    },
-    {
-      "id": "2607.24579v1",
-      "title": "Denoising 3D images: robustness of persistent homology measures",
-      "published": "2026-07-27",
-      "categories": [
-        "cs.CG",
-        "cs.CV",
-        "math.AT"
-      ],
-      "has_fulltext": true,
-      "n_chars": 82667
-    },
-    {
-      "id": "2509.09667v1",
-      "title": "Geometric Neural Distance Fields for Learning Human Motion Priors",
-      "published": "2025-09-11",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 83046
-    },
-    {
-      "id": "2505.04338v3",
-      "title": "Riemannian Denoising Diffusion Probabilistic Models",
-      "published": "2025-05-07",
-      "categories": [
-        "cs.LG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 75295
-    },
-    {
-      "id": "2402.19172v2",
-      "title": "Point Processes and spatial statistics in time-frequency analysis",
-      "published": "2024-02-29",
-      "categories": [
-        "eess.SP",
-        "cs.SD",
-        "eess.AS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 107684
-    },
-    {
-      "id": "2401.10083v3",
-      "title": "A locally statistical active contour model for SAR image segmentation can be solved by denoising algorithms",
-      "published": "2024-01-10",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 30519
-    },
-    {
-      "id": "2312.08135v2",
-      "title": "A New Perspective On Denoising Based On Optimal Transport",
-      "published": "2023-12-13",
-      "categories": [
-        "math.ST",
-        "cs.LG",
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 99420
-    },
-    {
-      "id": "2312.08376v3",
-      "title": "A global optimization SAR image segmentation model can be easily transformed to a general ROF denoising model",
-      "published": "2023-12-08",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 39815
-    },
-    {
-      "id": "2307.15489v1",
-      "title": "Uncertainty Quantification for Scale-Space Blob Detection",
-      "published": "2023-07-28",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 74797
-    },
-    {
-      "id": "2207.13807v1",
-      "title": "Pose-NDF: Modeling Human Pose Manifolds with Neural Distance Fields",
-      "published": "2022-07-27",
-      "categories": [
-        "cs.CV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 49624
-    },
-    {
-      "id": "2204.09815v3",
-      "title": "Parametric Level-sets Enhanced To Improve Reconstruction (PaLEnTIR)",
-      "published": "2022-04-21",
-      "categories": [
-        "math.NA",
-        "cs.CV",
-        "eess.IV"
-      ],
-      "has_fulltext": true,
-      "n_chars": 78555
-    },
-    {
-      "id": "2201.13281v2",
-      "title": "Convergence of level sets in fractional Laplacian regularization",
-      "published": "2022-01-31",
-      "categories": [
-        "math.AP",
-        "math.OC"
-      ],
-      "has_fulltext": true,
-      "n_chars": 73803
-    },
-    {
-      "id": "2108.00450v2",
-      "title": "Fractional total variation denoising model with $L^1$ fidelity",
-      "published": "2021-08-01",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 52958
-    },
-    {
-      "id": "2608.05496v1",
-      "title": "Morphology of frozen labyrinths from irreversible threshold dynamics",
-      "published": "2026-08-06",
-      "categories": [
-        "cond-mat.stat-mech"
-      ],
-      "has_fulltext": true,
-      "n_chars": 65278
-    },
-    {
-      "id": "2601.21133v1",
-      "title": "Singularities of Mean Curvature Flow of Surfaces",
-      "published": "2026-01-29",
-      "categories": [
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 50165
-    },
-    {
-      "id": "2401.13966v3",
-      "title": "The Avoidance Principle for Noncompact Hypersurfaces Moving by Mean Curvature Flow",
-      "published": "2024-01-25",
-      "categories": [
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 36019
-    },
-    {
-      "id": "2204.01983v3",
-      "title": "The Boundary Term in Huisken's Monotonicity Formula and the Entropy of Translators",
-      "published": "2022-04-05",
-      "categories": [
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 16979
-    },
-    {
-      "id": "1901.03008v4",
-      "title": "Mean Curvature Flow with Boundary",
-      "published": "2019-01-10",
-      "categories": [
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 79794
-    },
-    {
-      "id": "1802.05038v1",
-      "title": "Motion of interfaces for a damped hyperbolic Allen-Cahn equation",
-      "published": "2018-02-14",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 88140
-    },
-    {
-      "id": "1601.02467v2",
-      "title": "Convergence of thresholding schemes incorporating bulk effects",
-      "published": "2016-01-11",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 73484
-    },
-    {
-      "id": "1411.6249v4",
-      "title": "An example of a mean-convex mean curvature flow developing infinitely many singular epochs",
-      "published": "2014-11-23",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 17349
-    },
-    {
-      "id": "1309.3231v1",
-      "title": "On Brendle's estimate for the inscribed radius under mean curvature flow",
-      "published": "2013-09-12",
-      "categories": [
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 6505
-    },
-    {
-      "id": "1103.1469v3",
-      "title": "Subsequent Singularities in Mean-Convex Mean Curvature Flow",
-      "published": "2011-03-08",
-      "categories": [
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 30359
-    },
-    {
-      "id": "1101.1138v2",
-      "title": "Lagrangian angles of family of Lagrangian fibrations under mean curvature flow",
-      "published": "2011-01-06",
-      "categories": [
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 13454
-    },
-    {
-      "id": "0809.0636v1",
-      "title": "Mean Curvature Motion of Triple Junctions of Graphs in Two Dimensions",
-      "published": "2008-09-03",
-      "categories": [
-        "math.AP",
-        "math.DG"
-      ],
-      "has_fulltext": true,
-      "n_chars": 47913
-    },
-    {
-      "id": "2609.36216v1",
-      "title": "Preconditioned Physics-Informed Neural Operator Training",
-      "published": "2026-09-28",
-      "categories": [
-        "cs.LG",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 70931
-    },
-    {
-      "id": "2609.25489v1",
-      "title": "High-Order Variable-Scaled Energetic Variational Neural Networks for Phase-Field Gradient Flows",
-      "published": "2026-09-21",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 71922
-    },
-    {
-      "id": "2609.21920v1",
-      "title": "High-Moment Stability and Error Analysis of a Fully Discrete LDG-IMEX Method for High Dimensional Nonlinear Stochastic Convection-Diffusion Equations",
-      "published": "2026-09-18",
-      "categories": [
-        "math.NA",
-        "math.PR"
-      ],
-      "has_fulltext": true,
-      "n_chars": 115438
-    },
-    {
-      "id": "2609.21820v1",
-      "title": "A Second-Order Maximum-Bound-Preserving and Energy-Stable Exponential Time-Differencing Method for Allen--Cahn-Type Gradient Flows",
-      "published": "2026-09-18",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 72831
-    },
-    {
-      "id": "2609.21295v1",
-      "title": "Kernel-free Boundary Integral Methods for Allen-Cahn and Cahn-Hilliard Equations on Irregular Domains",
-      "published": "2026-09-18",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 64967
-    },
-    {
-      "id": "2609.01915v1",
-      "title": "Bounds-Constrained Finite Element Approximation of Time-Dependent Partial Differential Equations",
-      "published": "2026-09-01",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 60836
-    },
-    {
-      "id": "2608.00293v1",
-      "title": "A Phase-Field Method for Curvature Flow of Networks with Triple Junction Drag",
-      "published": "2026-07-31",
-      "categories": [
-        "math.AP",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 58080
-    },
-    {
-      "id": "2607.29217v1",
-      "title": "Certified Seventh-Order Two-Derivative Hermite Deferred Correction via Node-Sweep Co-Design",
-      "published": "2026-07-31",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 59073
-    },
-    {
-      "id": "2609.39053v1",
-      "title": "Structure-preserving Fourier Neural Operators for Long-time Cahn-Hilliard Dynamics under Coarse Temporal Supervision",
-      "published": "2026-09-30",
-      "categories": [
-        "math.NA",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 93322
-    },
-    {
-      "id": "2609.36719v1",
-      "title": "Structure-preserving upwind Lagrange multiplier schemes for solid-state dewetting with a logarithmic Flory--Huggins potential",
-      "published": "2026-09-29",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 75201
-    },
-    {
-      "id": "2609.28954v1",
-      "title": "Convergence analysis of a numerical scheme for the Cahn-Hilliard-Navier-Stokes system with dynamical boundary condition and its application to moving contact line problem",
-      "published": "2026-09-24",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 80561
-    },
-    {
-      "id": "2609.22689v1",
-      "title": "Efficient Rigorous Continuation via Chebyshev Series Expansion I",
-      "published": "2026-09-19",
-      "categories": [
-        "math.NA",
-        "math.DS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 108234
-    },
-    {
-      "id": "2609.21328v1",
-      "title": "History-Compatible Energy-Stable Finite Element Schemes for Variable-Density Cahn--Hilliard--Navier--Stokes Flows on Evolving Meshes",
-      "published": "2026-09-18",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 105286
-    },
-    {
-      "id": "2609.11167v1",
-      "title": "Mixed Hybrid High-Order Methods for Sixth-Order Problems: Fully Non-conforming and $C^0$-Conforming Discretizations",
-      "published": "2026-09-10",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 63595
-    },
-    {
-      "id": "2609.06092v1",
-      "title": "A Second Order Positivity-Preserving Scheme for the Nonlocal Cahn-Hilliard System with Variable Mobility and Logarithmic Flory-Huggins Potential",
-      "published": "2026-09-05",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 69322
-    },
-    {
-      "id": "2608.26046v1",
-      "title": "A family of second order, linear, unconditionally stable methods for the Cahn-Hilliard-Navier-Stokes equations",
-      "published": "2026-08-26",
-      "categories": [
-        "math.NA",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 54430
-    },
-    {
-      "id": "2608.24030v2",
-      "title": "A sharp-diffuse interface model for intermittent and isolated topological transitions",
-      "published": "2026-08-25",
-      "categories": [
-        "physics.comp-ph",
-        "math.NA",
-        "physics.flu-dyn"
-      ],
-      "has_fulltext": true,
-      "n_chars": 85178
-    },
-    {
-      "id": "2609.24871v2",
-      "title": "GradAgent: A Knowledge-Guided Multi-Agent System for Structure-Preserving Gradient-Flow Computation with an Application to Multicomponent Vesicle Dynamics",
-      "published": "2026-09-21",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 162854
-    },
-    {
-      "id": "2609.23990v1",
-      "title": "MGRD: Compact morphology-gated residual diffusion for variance-aware cross-domain neurite forecasting",
-      "published": "2026-09-21",
-      "categories": [
-        "cs.LG",
-        "math.NA",
-        "physics.bio-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 97503
-    },
-    {
-      "id": "2609.10168v1",
-      "title": "A Thermodynamically Consistent Model for Multicomponent Vesicles",
-      "published": "2026-09-09",
-      "categories": [
-        "math.NA",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 64875
-    },
-    {
-      "id": "2608.26297v1",
-      "title": "Generalised dissipative solutions for a non-isothermal phase-field system: existence, weak-strong uniqueness, and long-time behaviour",
-      "published": "2026-08-26",
-      "categories": [
-        "math.AP",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 92164
-    },
-    {
-      "id": "2608.24126v1",
-      "title": "A mesh-free multiresolution deep energy method with phase-field modeling of brittle fracture",
-      "published": "2026-08-25",
-      "categories": [
-        "cs.LG",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 150461
-    },
-    {
-      "id": "2608.18766v2",
-      "title": "A shifted energy barrier approach for phase-field modeling of tensile-dominated brittle fracture",
-      "published": "2026-08-19",
-      "categories": [
-        "math.NA",
-        "cond-mat.mtrl-sci"
-      ],
-      "has_fulltext": true,
-      "n_chars": 97279
-    },
-    {
-      "id": "2609.05458v1",
-      "title": "Assessing Nonlinear Elimination Preconditioning for Trust-Region Phase-Field Fracture",
-      "published": "2026-08-09",
-      "categories": [
-        "cs.CE",
-        "math.AP",
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 90836
-    },
-    {
-      "id": "2608.06099v1",
-      "title": "A Thermodynamically Consistent Cahn-Hilliard-Navier-Stokes Model for Tumor Growth",
-      "published": "2026-08-06",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 65683
-    },
-    {
-      "id": "2607.27795v1",
-      "title": "A Unified Discrete Gradient-SAV Framework for Structure-Preserving Integration",
-      "published": "2026-07-30",
-      "categories": [
-        "math.NA",
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 80536
-    },
-    {
-      "id": "2606.22514v1",
-      "title": "PI-DOSnet: A Physics-Informed Deep Operator-Splitting Network for Evolution Partial Differential Equations",
-      "published": "2026-06-21",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 72580
-    },
-    {
-      "id": "2606.09173v2",
-      "title": "Uniform-in-time Strong Error Estimates of Tamed-FEM to Superlinear SPDEs driven by Multiplicative Noise",
-      "published": "2026-06-08",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 47292
-    },
-    {
-      "id": "2605.30272v1",
-      "title": "IGA-ODIL: Optimizing DIscretre robust Loss with Isogeometric Analysis to solve forward and inverse problems faster using machine learning tools",
-      "published": "2026-05-28",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 57166
-    },
-    {
-      "id": "2605.26623v1",
-      "title": "An Unconditionally Linearly Convergent ADMM Approach for the Allen-Cahn Equation with Flory-Huggins Potential",
-      "published": "2026-05-26",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 57344
-    },
-    {
-      "id": "2605.24387v2",
-      "title": "Spectral analysis and sine transform based preconditioning for a structure preserving stabilized scheme approximating the space-fractional Allen Cahn equation with logarithmic potential",
-      "published": "2026-05-23",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 42232
-    },
-    {
-      "id": "2405.07410v3",
-      "title": "Non-unique Hamiltonians for Discrete Symplectic Dynamics",
-      "published": "2024-05-13",
-      "categories": [
-        "math-ph",
-        "physics.chem-ph",
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 26083
-    },
-    {
-      "id": "2012.13709v2",
-      "title": "Generalization of Hamiltonian Mechanics to a Three Dimensional Phase Space",
-      "published": "2020-12-26",
-      "categories": [
-        "math-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 53413
-    },
-    {
-      "id": "1811.06450v1",
-      "title": "Time-Reversible, Symplectic, Angular Velocity Based Integrator for Rigid Linear Molecules",
-      "published": "2018-11-15",
-      "categories": [
-        "physics.comp-ph"
-      ],
-      "has_fulltext": true,
-      "n_chars": 18963
-    },
-    {
-      "id": "1805.11713v1",
-      "title": "Volume-preserving exponential integrators",
-      "published": "2018-05-29",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 48865
-    },
-    {
-      "id": "1507.00535v1",
-      "title": "Volume Preservation by Runge-Kutta Methods",
-      "published": "2015-07-02",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 40327
-    },
-    {
-      "id": "2601.21422v2",
-      "title": "Wellposedness and dynamics of two types of reaction--nonlocal diffusion systems under the inhomogeneous spectral fractional Laplacian",
-      "published": "2026-01-29",
-      "categories": [
-        "math.AP"
-      ],
-      "has_fulltext": true,
-      "n_chars": 65059
-    },
-    {
-      "id": "2510.19827v1",
-      "title": "Fractional Vegetation-Water Model in Arid and Semi-Arid Environments: Pattern Formation and Numerical Simulations",
-      "published": "2025-10-06",
-      "categories": [
-        "nlin.PS"
-      ],
-      "has_fulltext": true,
-      "n_chars": 53038
-    },
-    {
-      "id": "2003.13569v1",
-      "title": "Fast and accurate high-order method for high dimensional space-fractional reaction-diffusion equation with general boundary conditions",
-      "published": "2020-03-30",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 49621
-    },
-    {
-      "id": "1904.07651v1",
-      "title": "A stabilized semi-implicit Fourier spectral method for nonlinear space-fractional reaction-diffusion equations",
-      "published": "2019-04-16",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 42811
-    },
-    {
-      "id": "1808.02615v2",
-      "title": "Numerical approximations for the tempered fractional Laplacian: Error analysis and applications",
-      "published": "2018-08-08",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 54023
-    },
-    {
-      "id": "1806.07980v1",
-      "title": "Fractional Gray-Scott Model: Well-posedness, Discretization, and Simulations",
-      "published": "2018-06-20",
-      "categories": [
-        "math.NA"
-      ],
-      "has_fulltext": true,
-      "n_chars": 51042
-    },
-    {
-      "id": "2601.06079",
-      "title": "(待取元数据 2601.06079)",
-      "published": "",
-      "categories": [],
-      "has_fulltext": true,
-      "n_chars": 103014,
-      "added_by": "topics-audit-gap",
-      "added_reason": "JAX-PF：JAX-FEM 上的可微相场，含 AC/CH/耦合四个 benchmark、显式+隐式两套时间积分、Eshelby 包含。topics 审计报「可微求解器 1 篇」且那篇不是可微相场，这是同方向最对口的公开实现。"
-    }
-  ],
-  "updated": "2026-10-01T12:45:31Z",
-  "n_unparsable": 0,
-  "n_missing": 0,
-  "provenance": [
-    {
-      "id": "2601.06079",
-      "reason": "JAX-PF：JAX-FEM 上的可微相场，含 AC/CH/耦合四个 benchmark、显式+隐式两套时间积分、Eshelby 包含。topics 审计报「可微求解器 1 篇」且那篇不是可微相场，这是同方向最对口的公开实现。",
-      "added": "2026-10-02"
-    }
-  ]
+ "generated": "2026-10-01T12:45:31Z",
+ "cache_dir": ".fieldmate-cache/arxiv_pdfs",
+ "n_papers": 248,
+ "n_with_fulltext": 248,
+ "queries": [
+  "abs:\"time-fractional\" AND abs:\"Allen-Cahn\"",
+  "abs:\"time-fractional\" AND abs:\"Cahn-Hilliard\"",
+  "abs:\"time-fractional\" AND abs:\"reaction-diffusion\"",
+  "abs:\"Cahn-Hilliard\" AND abs:\"segmentation\"",
+  "abs:\"Cahn-Hilliard\" AND abs:\"image\"",
+  "abs:\"Allen-Cahn\" AND abs:\"regularization\"",
+  "abs:\"Allen-Cahn\" AND abs:\"mean curvature\"",
+  "abs:\"phase-field\" AND abs:\"surface reconstruction\"",
+  "abs:\"phase field\" AND abs:\"point cloud\"",
+  "abs:\"phase-field\" AND abs:\"topology optimization\"",
+  "abs:\"phase-field\" AND abs:\"crystal growth\"",
+  "abs:\"phase-field\" AND abs:\"dendrite\"",
+  "abs:\"reaction-diffusion\" AND abs:\"Lengyel-Epstein\"",
+  "abs:\"reaction-diffusion\" AND abs:\"Gray-Scott\"",
+  "abs:\"Sine-Gordon\" AND abs:\"damping\"",
+  "abs:\"Langevin\" AND abs:\"Allen-Cahn\"",
+  "abs:\"Langevin\" AND abs:\"Cahn-Hilliard\"",
+  "abs:\"Ginzburg-Landau\" AND abs:\"Allen-Cahn\"",
+  "abs:\"phase-field crystal\"",
+  "abs:\"Voronoi\" AND abs:\"lattice structure\"",
+  "abs:\"mesh denoising\" AND abs:\"geometry\"",
+  "abs:\"level set\" AND abs:\"denoising\"",
+  "abs:\"moving by mean curvature\"",
+  "cat:math.NA AND abs:\"Allen-Cahn\"",
+  "cat:math.NA AND abs:\"Cahn-Hilliard\"",
+  "cat:math.NA AND abs:\"phase field\"",
+  "abs:\"numerical\" AND abs:\"Allen-Cahn equation\"",
+  "abs:\"preserving volume\" AND abs:\"phase\"",
+  "abs:\"fractional\" AND abs:\"Gray-Scott\""
+ ],
+ "papers": [
+  {
+   "id": "2609.21512v1",
+   "title": "FrFNO:Injecting the analytic Mittag-Leffler propagator into a resolution-robust neural operator for space-time fractional PDEs",
+   "published": "2026-09-18",
+   "categories": [
+    "math.NA",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 145719
+  },
+  {
+   "id": "2606.12799v1",
+   "title": "A variable time-step, second-order, and MBP-preserving linear stabilized scheme for the time-fractional Allen-Cahn equation",
+   "published": "2026-06-11",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 53894
+  },
+  {
+   "id": "2603.11696v1",
+   "title": "Non-uniform $α$-Robust Alikhanov Mixed FEM with Optimal Convergence for the Time-Fractional Allen--Cahn Equation",
+   "published": "2026-03-12",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 56529
+  },
+  {
+   "id": "2510.16496v1",
+   "title": "A linear unconditionally structure-preserving L1 scheme for the time-fractional Allen-Cahn equation",
+   "published": "2025-10-18",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 51696
+  },
+  {
+   "id": "2509.03471v1",
+   "title": "Linear Relaxation Schemes with Asymptotically Compatible Energy Law for Time-Fractional Phase-Field Models",
+   "published": "2025-09-03",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 45910
+  },
+  {
+   "id": "2508.19965v3",
+   "title": "High-order nonuniform time-stepping and MBP-preserving linear schemes for the time-fractional Allen-Cahn equation",
+   "published": "2025-08-27",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 85330
+  },
+  {
+   "id": "2506.11817v1",
+   "title": "Second-Order Linear Relaxation Schemes for Time-Fractional Phase-Field Models",
+   "published": "2025-06-13",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 21719
+  },
+  {
+   "id": "2402.05250v2",
+   "title": "Time-fractional Allen-Cahn equations versus powers of the mean curvature",
+   "published": "2024-02-07",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 13428
+  },
+  {
+   "id": "2402.03790v1",
+   "title": "Strong approximation of the time-fractional Cahn--Hilliard equation driven by a fractionally integrated additive noise",
+   "published": "2024-02-06",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 55054
+  },
+  {
+   "id": "2401.02050v1",
+   "title": "Some Grönwall inequalities for a class of discretizations of time fractional equations on nonuniform meshes",
+   "published": "2024-01-04",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 59556
+  },
+  {
+   "id": "2311.13216v1",
+   "title": "Asymptotically compatible energy and dissipation law of the nonuniform L2-$1_σ$ scheme for time fractional Allen-Cahn model",
+   "published": "2023-11-22",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 45424
+  },
+  {
+   "id": "2302.13021v1",
+   "title": "A high-order discrete energy decay and maximum-principle preserving scheme for time fractional Allen-Cahn equation",
+   "published": "2023-02-25",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 46616
+  },
+  {
+   "id": "2508.17178v1",
+   "title": "A Relaxed Step-Ratio Constraint for Time-Fractional Cahn--Hilliard Equations: Analysis and Computation",
+   "published": "2025-08-24",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 60079
+  },
+  {
+   "id": "2210.12514v1",
+   "title": "Asymptotically compatible energy of variable-step fractional BDF2 formula for time-fractional Cahn-Hilliard model",
+   "published": "2022-10-22",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 51529
+  },
+  {
+   "id": "2202.12192v1",
+   "title": "A decreasing upper bound of energy for time-fractional phase-field equations",
+   "published": "2022-02-24",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 42262
+  },
+  {
+   "id": "2201.00920v1",
+   "title": "Energy stability of variable-step L1-type schemes for time-fractional Cahn-Hilliard model",
+   "published": "2022-01-04",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 51554
+  },
+  {
+   "id": "2108.09908v1",
+   "title": "Asymptotic Analysis on the Sharp Interface Limit of the Time-Fractional Cahn--Hilliard Equation",
+   "published": "2021-08-23",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 41444
+  },
+  {
+   "id": "2107.13160v1",
+   "title": "On the initial value problem for a class of nonlinear biharmonic equation with time-fractional derivative",
+   "published": "2021-07-28",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 74766
+  },
+  {
+   "id": "2106.11163v1",
+   "title": "Energy-dissipation for time-fractional phase-field equations",
+   "published": "2021-06-21",
+   "categories": [
+    "math.AP",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 34240
+  },
+  {
+   "id": "2104.03096v1",
+   "title": "Time-fractional Cahn-Hilliard equation: Well-posedness, degeneracy, and numerical solutions",
+   "published": "2021-04-07",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 89518
+  },
+  {
+   "id": "2102.05139v2",
+   "title": "Solving time-fractional differential equation via rational approximation",
+   "published": "2021-02-09",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 60759
+  },
+  {
+   "id": "2609.32417v1",
+   "title": "Stochastic maximal $L^p$-regularity for non-autonomous evolution equations with fractional derivative in UMD spaces",
+   "published": "2026-09-26",
+   "categories": [
+    "math.CA",
+    "math.PR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 131035
+  },
+  {
+   "id": "2609.13715v1",
+   "title": "Event-Time Order-Flow Memory, Operational-Time Impact, and Subordinated Market Observables",
+   "published": "2026-09-12",
+   "categories": [
+    "q-fin.TR",
+    "cond-mat.stat-mech",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 26712
+  },
+  {
+   "id": "2511.01704v1",
+   "title": "Learnable Fractional Reaction-Diffusion Dynamics for Under-Display ToF Imaging and Beyond",
+   "published": "2025-11-03",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 48011
+  },
+  {
+   "id": "2509.17793v1",
+   "title": "Solving time-fractional diffusion equations with Robin boundary conditions via fractional Hamiltonian boundary value methods",
+   "published": "2025-09-22",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 60000
+  },
+  {
+   "id": "2509.07862v1",
+   "title": "Duality estimates for subdiffusion problems including time-fractional porous medium type equations",
+   "published": "2025-09-09",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 55699
+  },
+  {
+   "id": "2502.00509v1",
+   "title": "Fractional differential equations of a reaction-diffusion SIR model involving the Caputo-fractional time-derivative and a nonlinear diffusion operator",
+   "published": "2025-02-01",
+   "categories": [
+    "math.OC",
+    "math.AP",
+    "q-bio.PE"
+   ],
+   "has_fulltext": true,
+   "n_chars": 56606
+  },
+  {
+   "id": "2406.09917v1",
+   "title": "Nonlinear two-component system of time-fractional PDEs in (2+1)-dimensions: Invariant subspace method combined with variable transformation",
+   "published": "2024-06-14",
+   "categories": [
+    "nlin.SI",
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 86679
+  },
+  {
+   "id": "2312.05606v1",
+   "title": "Fractional Dissipative PDEs",
+   "published": "2023-12-09",
+   "categories": [
+    "math.AP",
+    "math.DS",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 200749
+  },
+  {
+   "id": "2208.06548v1",
+   "title": "Global dynamics for a class of discrete fractional epidemic model with reaction-diffusion",
+   "published": "2022-08-13",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 57541
+  },
+  {
+   "id": "2202.04928v1",
+   "title": "Global boundedness and Allee effect for a nonlocal time fractional p-Laplacian reaction-diffusion equation",
+   "published": "2022-02-10",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 48050
+  },
+  {
+   "id": "2112.11143v1",
+   "title": "Global boundedness and Allee effect for a nonlocal time fractional reaction-diffusion equation",
+   "published": "2021-12-21",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 60481
+  },
+  {
+   "id": "2107.11773v1",
+   "title": "Initial value problem for the two-dimensional time-fractional generalized convection-reaction-diffusion-wave equation: Invariant subspaces and exact solutions",
+   "published": "2021-07-25",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 89576
+  },
+  {
+   "id": "2607.22053v1",
+   "title": "A Smooth Phase-Separation Model for Weak-Boundary Segmentation of Homogeneous Structures",
+   "published": "2026-07-24",
+   "categories": [
+    "cs.CV",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 75517
+  },
+  {
+   "id": "2512.07590v1",
+   "title": "Robust Variational Model Based Tailored UNet: Leveraging Edge Detector and Mean Curvature for Improved Image Segmentation",
+   "published": "2025-12-08",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 49760
+  },
+  {
+   "id": "2508.08309v1",
+   "title": "Variational volume reconstruction with the Deep Ritz Method",
+   "published": "2025-08-08",
+   "categories": [
+    "eess.IV",
+    "cs.CV",
+    "cs.LG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 68329
+  },
+  {
+   "id": "2505.05806v2",
+   "title": "Image Segmentation via Variational Model Based Tailored UNet: A Deep Variational Framework",
+   "published": "2025-05-09",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 61904
+  },
+  {
+   "id": "2501.08543v1",
+   "title": "Stability and convergence of relaxed scalar auxiliary variable schemes for Cahn-Hilliard systems with bounded mass source",
+   "published": "2025-01-15",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 65241
+  },
+  {
+   "id": "2106.07606v1",
+   "title": "A Physics Informed Neural Network for Time-Dependent Nonlinear and Higher Order Partial Differential Equations",
+   "published": "2021-06-04",
+   "categories": [
+    "math.NA",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 46178
+  },
+  {
+   "id": "1805.02604v2",
+   "title": "Asymptotic Behavior of Allen-Cahn Type Energies and Neumann Eigenvalues via Inner Variations",
+   "published": "2018-05-07",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 82194
+  },
+  {
+   "id": "1704.02348v1",
+   "title": "Automated Unsupervised Segmentation of Liver Lesions in CT scans via Cahn-Hilliard Phase Separation",
+   "published": "2017-04-07",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 19039
+  },
+  {
+   "id": "cond-mat/0508366v2",
+   "title": "Phase Separation and the Dual Nature of the Electronic Structure in Cuprates",
+   "published": "2005-08-16",
+   "categories": [
+    "cond-mat.supr-con",
+    "cond-mat.str-el"
+   ],
+   "has_fulltext": true,
+   "n_chars": 19472
+  },
+  {
+   "id": "2609.08479v1",
+   "title": "Cahn-Hilliard phase-field modeling of tumor growth via locally adaptive isogeometric analysis with THB-splines",
+   "published": "2026-09-08",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 64516
+  },
+  {
+   "id": "2502.03025v2",
+   "title": "Optimal control of the fidelity coefficient in a Cahn-Hilliard image inpainting model",
+   "published": "2025-02-05",
+   "categories": [
+    "math.OC",
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 97180
+  },
+  {
+   "id": "2412.12777v1",
+   "title": "Phase-field modeling of colloid-polymer mixtures in microgravity",
+   "published": "2024-12-17",
+   "categories": [
+    "cond-mat.soft"
+   ],
+   "has_fulltext": true,
+   "n_chars": 65230
+  },
+  {
+   "id": "2411.05840v1",
+   "title": "ConvNet-Based Prediction of Droplet Collision Dynamics in Microchannels",
+   "published": "2024-11-06",
+   "categories": [
+    "physics.flu-dyn"
+   ],
+   "has_fulltext": true,
+   "n_chars": 79289
+  },
+  {
+   "id": "2410.04451v1",
+   "title": "Liquid-Droplet Coalescence: CNN-based Reconstruction of Flow Fields from Concentration Fields",
+   "published": "2024-10-06",
+   "categories": [
+    "physics.flu-dyn"
+   ],
+   "has_fulltext": true,
+   "n_chars": 63199
+  },
+  {
+   "id": "2310.20383v3",
+   "title": "Navigating the Complex Landscape of Shock Filter Cahn-Hilliard Equation: From Regularized to Entropy Solutions",
+   "published": "2023-10-31",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 79931
+  },
+  {
+   "id": "2303.09450v2",
+   "title": "Diffusion-Shock Inpainting",
+   "published": "2023-03-16",
+   "categories": [
+    "eess.IV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 30015
+  },
+  {
+   "id": "2609.35196v1",
+   "title": "GAC-PINN: Geometry-Adaptive and Constraint-Enhanced Physics-Informed Neural Networks",
+   "published": "2026-09-28",
+   "categories": [
+    "math.NA",
+    "cs.AI"
+   ],
+   "has_fulltext": true,
+   "n_chars": 67219
+  },
+  {
+   "id": "2609.34012v1",
+   "title": "When Known Physics Helps Neural PDE Models: Residual Constraints Out-Regularize Generic Priors for Nonlinear Dynamics",
+   "published": "2026-09-27",
+   "categories": [
+    "cs.LG",
+    "cs.AI"
+   ],
+   "has_fulltext": true,
+   "n_chars": 55719
+  },
+  {
+   "id": "2609.26400v1",
+   "title": "Routes to chaos in a mass-conserving two-species reaction-diffusion model",
+   "published": "2026-09-22",
+   "categories": [
+    "nlin.PS",
+    "nlin.CD"
+   ],
+   "has_fulltext": true,
+   "n_chars": 80472
+  },
+  {
+   "id": "2609.21680v1",
+   "title": "Stable De Giorgi conjecture of the Allen--Cahn equation in $\\mathbb{R}^3$",
+   "published": "2026-09-18",
+   "categories": [
+    "math.AP",
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 121047
+  },
+  {
+   "id": "2609.18403v1",
+   "title": "Constrained weak identification of Allen--Cahn free energies with surface-tension calibration",
+   "published": "2026-09-16",
+   "categories": [
+    "math.NA",
+    "cs.CE",
+    "nlin.PS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 71818
+  },
+  {
+   "id": "2609.18201v1",
+   "title": "Relaxation and Steady-State Entropy Production for Langevin SPDEs: A Dirichlet-Form Approach",
+   "published": "2026-09-16",
+   "categories": [
+    "math.PR",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 172221
+  },
+  {
+   "id": "2609.01009v1",
+   "title": "OptiXDE: A fast optical-inspired solver for differential equations",
+   "published": "2026-09-01",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 61076
+  },
+  {
+   "id": "2609.00739v1",
+   "title": "Boundary asymptotics for two-dimensional vectorial Allen-Cahn systems",
+   "published": "2026-09-01",
+   "categories": [
+    "math.AP",
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 68583
+  },
+  {
+   "id": "2608.23540v1",
+   "title": "A Stochastic Flow for the Stochastic Allen-Cahn Equation with Multiplicative Noise",
+   "published": "2026-08-24",
+   "categories": [
+    "math.PR",
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 158031
+  },
+  {
+   "id": "2607.25694v1",
+   "title": "Parameter Estimation of the Stochastic Allen--Cahn Equation via variations",
+   "published": "2026-07-28",
+   "categories": [
+    "math.PR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 44692
+  },
+  {
+   "id": "2607.21789v2",
+   "title": "Equivariant Allen--Cahn Solutions and the Existence of Cohomogeneity $2$ Minimal Surfaces",
+   "published": "2026-07-23",
+   "categories": [
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 134260
+  },
+  {
+   "id": "2607.17410v1",
+   "title": "Phase-Field Models, Sharp Interface Limits, and Numerical Schemes for Contact Line Dynamics",
+   "published": "2026-07-19",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 73303
+  },
+  {
+   "id": "2609.35666v1",
+   "title": "Interacting fronts in the strongly nonlocal Allen--Cahn equation",
+   "published": "2026-09-28",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 80617
+  },
+  {
+   "id": "2609.32829v1",
+   "title": "Second order estimates on transition layers for the Allen-Cahn equation with homogeneous Neumann boundary conditions: Part I - Boundary-orthogonal transition layers",
+   "published": "2026-09-26",
+   "categories": [
+    "math.AP",
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 248855
+  },
+  {
+   "id": "2609.27596v1",
+   "title": "Asymptotics for two-dimensional parabolic vectorial Allen-Cahn systems",
+   "published": "2026-09-23",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 118094
+  },
+  {
+   "id": "2608.27257v1",
+   "title": "Rigidity and existence of Busemann profiles for the Allen--Cahn equation on Cartan--Hadamard manifolds",
+   "published": "2026-08-27",
+   "categories": [
+    "math.AP",
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 82897
+  },
+  {
+   "id": "2608.26842v2",
+   "title": "Convergence of a vector-valued Allen-Cahn system to Brakke's multiphase mean curvature flow",
+   "published": "2026-08-27",
+   "categories": [
+    "math.AP",
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 89804
+  },
+  {
+   "id": "2608.11695v1",
+   "title": "Generalised stochastic curvature flow in $d \\geq 2$, and sharp interface limit for the stochastic Allen-Cahn equation with nonlinear diffusion",
+   "published": "2026-08-12",
+   "categories": [
+    "math.PR",
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 92373
+  },
+  {
+   "id": "2606.30532v2",
+   "title": "Higher Order Convergence for the Sharp Interface Limit of 3D Navier--Stokes/Allen--Cahn Systems",
+   "published": "2026-06-29",
+   "categories": [
+    "math.AP",
+    "physics.flu-dyn"
+   ],
+   "has_fulltext": true,
+   "n_chars": 142387
+  },
+  {
+   "id": "2604.23920v1",
+   "title": "Survey on topological methods for Allen--Cahn equations and systems",
+   "published": "2026-04-27",
+   "categories": [
+    "math.AP",
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 119925
+  },
+  {
+   "id": "2604.11597v1",
+   "title": "Sharp Interface Limit for a Mass-Conserving Navier-Stokes/Allen-Cahn System with Different Viscosities",
+   "published": "2026-04-13",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 73467
+  },
+  {
+   "id": "2602.11485v2",
+   "title": "The sharp-interface limit of the matrix-valued Allen--Cahn equation",
+   "published": "2026-02-12",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 41897
+  },
+  {
+   "id": "2512.14437v2",
+   "title": "Parabolic free boundary phase transition and mean curvature flow",
+   "published": "2025-12-16",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 50911
+  },
+  {
+   "id": "2510.14356v2",
+   "title": "Sequential water wave reconstruction in VOF-based numerical wave tanks with the EnKF approach",
+   "published": "2025-10-16",
+   "categories": [
+    "physics.flu-dyn"
+   ],
+   "has_fulltext": true,
+   "n_chars": 74060
+  },
+  {
+   "id": "2309.16378v2",
+   "title": "Meshless interface tracking for the simulation of dendrite envelope growth",
+   "published": "2023-09-28",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 95428
+  },
+  {
+   "id": "2202.12593v1",
+   "title": "A sharp-interface mesoscopic model for dendritic growth",
+   "published": "2022-02-25",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 18167
+  },
+  {
+   "id": "2606.23834v2",
+   "title": "Efficient model-order reduction via graph autoencoders and operator learning for systems with sharp gradients using a novel point cloud error metric for performance assessment",
+   "published": "2026-06-22",
+   "categories": [
+    "cs.CE"
+   ],
+   "has_fulltext": true,
+   "n_chars": 100559
+  },
+  {
+   "id": "2605.25503v1",
+   "title": "Metric--Phase Fields: Decoupling Distance and Sign for Thin-Structure Reconstruction from Unoriented Point Clouds",
+   "published": "2026-05-25",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 72541
+  },
+  {
+   "id": "2604.16512v2",
+   "title": "Medial Axis Aware Learning of Signed Distance Functions",
+   "published": "2026-04-15",
+   "categories": [
+    "cs.CV",
+    "cs.CG",
+    "cs.GR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 59894
+  },
+  {
+   "id": "2601.13293v2",
+   "title": "Long-time behavior of solutions to a fluid dynamic shape optimization problem via phase-field method",
+   "published": "2026-01-19",
+   "categories": [
+    "math.OC",
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 87219
+  },
+  {
+   "id": "2512.14226v1",
+   "title": "Shape design with phase field methods for structural hemivariational inequalities in contact problems",
+   "published": "2025-12-16",
+   "categories": [
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 86582
+  },
+  {
+   "id": "2511.14623v2",
+   "title": "A Unified Phase-Field Fourier Neural Network Framework for Topology Optimization",
+   "published": "2025-11-18",
+   "categories": [
+    "math.OC",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 106804
+  },
+  {
+   "id": "2510.19192v1",
+   "title": "Topology optimization for microfluidic mixers by a phase field method",
+   "published": "2025-10-22",
+   "categories": [
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 53738
+  },
+  {
+   "id": "2509.06971v1",
+   "title": "PeTTO: Leveraging GPUs to Accelerate Topology Optimization with the Pseudo-Transient Methods",
+   "published": "2025-08-25",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 45034
+  },
+  {
+   "id": "2508.02613v2",
+   "title": "Jacobi-accelerated FFT-based solver for smooth high-contrast data",
+   "published": "2025-08-04",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 79111
+  },
+  {
+   "id": "2508.02206v2",
+   "title": "Multi-material structural optimization for additive manufacturing based on a phase field approach",
+   "published": "2025-08-04",
+   "categories": [
+    "math.OC",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 68804
+  },
+  {
+   "id": "2507.16519v1",
+   "title": "A robust and stable phase field method for structural topology optimization",
+   "published": "2025-07-22",
+   "categories": [
+    "math.OC",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 50737
+  },
+  {
+   "id": "2505.13776v1",
+   "title": "Convergence Analysis of an Adaptive Nonconforming FEM for Phase-Field Dependent Topology Optimization in Stokes Flow",
+   "published": "2025-05-19",
+   "categories": [
+    "math.NA",
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 78885
+  },
+  {
+   "id": "2505.04120v1",
+   "title": "On the Crouzeix-Raviart Finite Element Approximation of Phase-Field Dependent Topology Optimization in Stokes Flow",
+   "published": "2025-05-07",
+   "categories": [
+    "math.NA",
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 57745
+  },
+  {
+   "id": "2405.05098v1",
+   "title": "Energy stable gradient flow schemes for shape and topology optimization in Navier-Stokes flows",
+   "published": "2024-05-08",
+   "categories": [
+    "math.NA",
+    "math.OC",
+    "physics.flu-dyn"
+   ],
+   "has_fulltext": true,
+   "n_chars": 57788
+  },
+  {
+   "id": "2401.12675v1",
+   "title": "Analysis of a combined Filtered/phase-field approach to topology optimization in elasticit",
+   "published": "2024-01-23",
+   "categories": [
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 38805
+  },
+  {
+   "id": "2606.25345v2",
+   "title": "Decoupled energy-stable Runge-Kutta schemes of arbitrary order for the anisotropic phase-field dendritic crystal growth model",
+   "published": "2026-06-24",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 73027
+  },
+  {
+   "id": "2511.21407v1",
+   "title": "Controlled nucleation in methylamine-treated perovskite films by artificial seeding and phase-field simulations",
+   "published": "2025-11-26",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 68853
+  },
+  {
+   "id": "2510.11475v1",
+   "title": "An adaptive time-stepping strategy for the modified phase field crystal model with a strong nonlinear vacancy potential",
+   "published": "2025-10-13",
+   "categories": [
+    "math.NA",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 71232
+  },
+  {
+   "id": "2407.17283v1",
+   "title": "Hybrid-PFC: coupling the phase-field crystal model and its amplitude-equation formulation",
+   "published": "2024-07-24",
+   "categories": [
+    "cond-mat.mtrl-sci",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 78603
+  },
+  {
+   "id": "2407.15156v1",
+   "title": "Computational and analytical studies of a new nonlocal phase-field crystal model in two dimensions",
+   "published": "2024-07-21",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 76001
+  },
+  {
+   "id": "2403.14206v2",
+   "title": "A finite element method for anisotropic crystal growth on surfaces",
+   "published": "2024-03-21",
+   "categories": [
+    "math.NA",
+    "cond-mat.mtrl-sci",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 50250
+  },
+  {
+   "id": "2402.15394v1",
+   "title": "Dendrites with corners",
+   "published": "2024-02-23",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 18897
+  },
+  {
+   "id": "2310.10506v1",
+   "title": "An efficient numerical method for the anisotropic phase field dendritic crystal growth model",
+   "published": "2023-10-16",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 44268
+  },
+  {
+   "id": "2211.08309v3",
+   "title": "Scaling laws for two-dimensional dendritic crystal growth in a narrow channel",
+   "published": "2022-11-15",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 39651
+  },
+  {
+   "id": "2211.04966v1",
+   "title": "Thermodynamically consistent dynamic boundary conditions of phase field models",
+   "published": "2022-11-08",
+   "categories": [
+    "cond-mat.stat-mech"
+   ],
+   "has_fulltext": true,
+   "n_chars": 72262
+  },
+  {
+   "id": "2205.07952v2",
+   "title": "Convective effects on columnar dendritic solidification -- A multiscale dendritic needle network study",
+   "published": "2022-05-16",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 86170
+  },
+  {
+   "id": "2201.09937v1",
+   "title": "On the crystallization Kinetics in Natural Rubber",
+   "published": "2022-01-24",
+   "categories": [
+    "cond-mat.soft",
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 23443
+  },
+  {
+   "id": "2608.26908v1",
+   "title": "A novel Grand-Potential Phase-Field Lattice-Boltzmann model for multi-phase solidification with convection",
+   "published": "2026-08-27",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 64876
+  },
+  {
+   "id": "2607.17370v1",
+   "title": "Response-function-optimized phase field modeling of solute trapping and solute drag in rapid alloy solidification",
+   "published": "2026-07-19",
+   "categories": [
+    "cond-mat.mtrl-sci",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 112946
+  },
+  {
+   "id": "2607.15387v2",
+   "title": "Phase-Field Simulation of Dendrite Evolution in All-Solid-State Sodium Batteries during Cycling",
+   "published": "2026-07-16",
+   "categories": [
+    "cond-mat.mtrl-sci",
+    "cond-mat.mes-hall"
+   ],
+   "has_fulltext": true,
+   "n_chars": 55210
+  },
+  {
+   "id": "2605.25834v1",
+   "title": "Dealloying by peritectic melting",
+   "published": "2026-05-25",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 60987
+  },
+  {
+   "id": "2604.18261v1",
+   "title": "DeepRitzSplit Neural Operator for Phase-Field Models via Energy Splitting",
+   "published": "2026-04-20",
+   "categories": [
+    "math.AP",
+    "cs.LG",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 67288
+  },
+  {
+   "id": "2603.09693v1",
+   "title": "Physics-informed neural operator for predictive parametric phase-field modelling",
+   "published": "2026-03-10",
+   "categories": [
+    "cs.LG",
+    "cond-mat.mtrl-sci",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 90145
+  },
+  {
+   "id": "2603.02968v1",
+   "title": "Phase-field investigation of non-isothermal solidification coupled with melt flow dynamics",
+   "published": "2026-03-03",
+   "categories": [
+    "physics.flu-dyn",
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 39052
+  },
+  {
+   "id": "2603.06627v1",
+   "title": "Phase field as a front propagation method for modeling grain growth in additive manufacturing",
+   "published": "2026-02-22",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 28538
+  },
+  {
+   "id": "2603.00093v1",
+   "title": "Adaptive Uncertainty-Guided Surrogates for Efficient phase field Modeling of Dendritic Solidification",
+   "published": "2026-02-17",
+   "categories": [
+    "physics.comp-ph",
+    "cs.AI",
+    "cs.LG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 114899
+  },
+  {
+   "id": "2602.10316v2",
+   "title": "Benchmarking of Massively Parallel Phase-Field Codes for Directional Solidification",
+   "published": "2026-02-10",
+   "categories": [
+    "cond-mat.mtrl-sci",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 77465
+  },
+  {
+   "id": "2511.03884v1",
+   "title": "Scalable Autoregressive Deep Surrogates for Dendritic Microstructure Dynamics",
+   "published": "2025-11-05",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 80783
+  },
+  {
+   "id": "2609.08969v1",
+   "title": "Singular Turing bifurcations and spatial canard solutions in nonlinear reaction-diffusion systems",
+   "published": "2026-09-08",
+   "categories": [
+    "math.DS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 148286
+  },
+  {
+   "id": "2504.13967v1",
+   "title": "Maze-Bubble Pattern Magnetic Domain Simulation Based on the Lengyel-Epstein Model",
+   "published": "2025-04-17",
+   "categories": [
+    "cond-mat.mtrl-sci",
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 34823
+  },
+  {
+   "id": "2412.15531v1",
+   "title": "Spatiotemporal pattern formations in a two-layer coupled reaction-diffusion Lengyel-Epstein system",
+   "published": "2024-12-20",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 87151
+  },
+  {
+   "id": "1711.00976v2",
+   "title": "The global existence of solutions and asymptotic stability of a reaction-diffusion system",
+   "published": "2017-11-02",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 29081
+  },
+  {
+   "id": "2607.21630v1",
+   "title": "Evolving Self-Organising Agents Without Fitness: Three Falsifiable Experiments from Constraint-Driven Selection to Developmental Encoding",
+   "published": "2026-07-18",
+   "categories": [
+    "cs.NE"
+   ],
+   "has_fulltext": true,
+   "n_chars": 15826
+  },
+  {
+   "id": "2607.02715v1",
+   "title": "LiNO: Lifting based multiresolution neural operator",
+   "published": "2026-07-02",
+   "categories": [
+    "cs.LG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 49464
+  },
+  {
+   "id": "2606.30681v1",
+   "title": "Pattern formation in a Reaction-Diffusion Model for Amyloid-$β$ and Tau Interactions in Alzheimer's Disease",
+   "published": "2026-06-27",
+   "categories": [
+    "q-bio.QM",
+    "nlin.PS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 68905
+  },
+  {
+   "id": "2606.11258v1",
+   "title": "Loss Landscape Diagnosis for Gradient-Based Gray-Scott System Inversion: Disentangling the Roles of PINN Components",
+   "published": "2026-06-09",
+   "categories": [
+    "cs.LG",
+    "nlin.PS",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 42143
+  },
+  {
+   "id": "2606.07417v2",
+   "title": "An optimal local theory for reaction-diffusion equations driven by non-trace-class noise",
+   "published": "2026-06-05",
+   "categories": [
+    "math.AP",
+    "math.PR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 139384
+  },
+  {
+   "id": "2606.01615v1",
+   "title": "Turing Patterns for Multimedia: Reaction-Diffusion Multi-Modal Fusion for Language-Guided Video Moment Retrieval",
+   "published": "2026-06-01",
+   "categories": [
+    "cs.CV",
+    "cs.MM"
+   ],
+   "has_fulltext": true,
+   "n_chars": 63946
+  },
+  {
+   "id": "2604.23727v1",
+   "title": "Data-driven reconstruction of spatiotemporal phase dynamics for traveling and oscillating patterns via Bayesian inference",
+   "published": "2026-04-26",
+   "categories": [
+    "nlin.AO",
+    "physics.data-an"
+   ],
+   "has_fulltext": true,
+   "n_chars": 64434
+  },
+  {
+   "id": "2603.28350v1",
+   "title": "Inverse source problems with reduced interior data for a coupled reaction-diffusion system",
+   "published": "2026-03-30",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 44338
+  },
+  {
+   "id": "2602.09487v1",
+   "title": "Adaptive recurrent flow map operator learning for reaction diffusion dynamics",
+   "published": "2026-02-10",
+   "categories": [
+    "cs.LG",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 61883
+  },
+  {
+   "id": "2601.16145v3",
+   "title": "On the Ginzburg-Landau approximation for quasilinear pattern forming reaction-diffusion-advection systems",
+   "published": "2026-01-22",
+   "categories": [
+    "math.AP",
+    "math.DS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 30261
+  },
+  {
+   "id": "2601.00834v3",
+   "title": "Intrinsic-Metric Physics-Informed Neural Networks (IM-PINN) for Reaction-Diffusion Dynamics on Complex Riemannian Manifolds",
+   "published": "2025-12-26",
+   "categories": [
+    "cs.LG",
+    "cs.AI"
+   ],
+   "has_fulltext": true,
+   "n_chars": 77659
+  },
+  {
+   "id": "2608.14108v1",
+   "title": "Spectral stability and slow--fast structure of traveling waves in a regularized sine--Gordon equation",
+   "published": "2026-08-14",
+   "categories": [
+    "nlin.PS",
+    "math.AP",
+    "math.DS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 64602
+  },
+  {
+   "id": "2607.06242v2",
+   "title": "Exponential mixing and Freidlin--Wentzell large deviation principle for Markov cocycles",
+   "published": "2026-07-07",
+   "categories": [
+    "math.PR",
+    "math.AP",
+    "math.DS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 111793
+  },
+  {
+   "id": "2605.13313v1",
+   "title": "A Guide to Applications of $k$-Contact Geometry in Dissipative Field Equations",
+   "published": "2026-05-13",
+   "categories": [
+    "math-ph",
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 88928
+  },
+  {
+   "id": "2504.00386v1",
+   "title": "Perturbation Analysis and Neural Network-Based Initial Condition Estimation for the Sine-Gordon Equation",
+   "published": "2025-04-01",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 37842
+  },
+  {
+   "id": "2406.08912v1",
+   "title": "The Dissipative Effect of Caputo--Time-Fractional Derivatives and its Implications for the Solutions of Nonlinear Wave Equations",
+   "published": "2024-06-13",
+   "categories": [
+    "nlin.PS",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 37936
+  },
+  {
+   "id": "2203.06312v1",
+   "title": "Stability for nonlinear wave motions damped by time-dependent frictions",
+   "published": "2022-03-12",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 23538
+  },
+  {
+   "id": "2111.06713v2",
+   "title": "Adaptive output error feedback for a class of nonlinear infinite-dimensional systems",
+   "published": "2021-11-12",
+   "categories": [
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 50345
+  },
+  {
+   "id": "2105.10558v1",
+   "title": "A quasi-periodic route to chaos in a parametrically driven nonlinear medium",
+   "published": "2021-05-21",
+   "categories": [
+    "nlin.CD",
+    "nlin.PS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 42540
+  },
+  {
+   "id": "2102.04087v1",
+   "title": "Generation of wave packets and breathers by oscillating kinks in the sine-Gordon system",
+   "published": "2021-02-08",
+   "categories": [
+    "nlin.PS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 45497
+  },
+  {
+   "id": "2102.02949v3",
+   "title": "Bistability and nonequilibrium condensation in a driven-dissipative Josephson array: a c-field model",
+   "published": "2021-02-05",
+   "categories": [
+    "cond-mat.quant-gas"
+   ],
+   "has_fulltext": true,
+   "n_chars": 63941
+  },
+  {
+   "id": "2010.00144v1",
+   "title": "Quantum hydrodynamics of spin winding",
+   "published": "2020-09-30",
+   "categories": [
+    "cond-mat.mes-hall"
+   ],
+   "has_fulltext": true,
+   "n_chars": 39277
+  },
+  {
+   "id": "2001.09275v1",
+   "title": "Invariant Gibbs dynamics for the dynamical sine-Gordon model",
+   "published": "2020-01-25",
+   "categories": [
+    "math.AP",
+    "math.PR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 39029
+  },
+  {
+   "id": "2604.20052v2",
+   "title": "Annealed Langevin Monte Carlo for Flow ODE Sampling",
+   "published": "2026-04-21",
+   "categories": [
+    "stat.CO"
+   ],
+   "has_fulltext": true,
+   "n_chars": 58402
+  },
+  {
+   "id": "2603.02039v1",
+   "title": "Graph neural network force fields for adiabatic dynamics of lattice Hamiltonians",
+   "published": "2026-03-02",
+   "categories": [
+    "cond-mat.str-el",
+    "cs.LG",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 91740
+  },
+  {
+   "id": "1310.0293v1",
+   "title": "Periodic structures in binary mixtures enforced by Janus particles",
+   "published": "2013-10-01",
+   "categories": [
+    "cond-mat.soft",
+    "nlin.PS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 21967
+  },
+  {
+   "id": "cond-mat/0504716v1",
+   "title": "Generalized Fokker-Planck equations and effective thermodynamics",
+   "published": "2005-04-27",
+   "categories": [
+    "cond-mat.stat-mech"
+   ],
+   "has_fulltext": true,
+   "n_chars": 19461
+  },
+  {
+   "id": "hep-ph/0411207v2",
+   "title": "Phenomenological approach to the critical dynamics of the QCD phase transition revisited",
+   "published": "2004-11-16",
+   "categories": [
+    "hep-ph",
+    "cond-mat.stat-mech",
+    "nucl-th"
+   ],
+   "has_fulltext": true,
+   "n_chars": 31287
+  },
+  {
+   "id": "cond-mat/0010319v1",
+   "title": "Dynamics of ferromagnetic spherical spin models with power law interactions: exact solution",
+   "published": "2000-10-20",
+   "categories": [
+    "cond-mat.stat-mech"
+   ],
+   "has_fulltext": true,
+   "n_chars": 25117
+  },
+  {
+   "id": "2607.13341v1",
+   "title": "Existence, Uniqueness, and Pathwise Regularity for Multidimensional Semilinear SPDEs with Locally Lipschitz Coefficients and Rough Initial Data",
+   "published": "2026-07-15",
+   "categories": [
+    "math.AP",
+    "math.FA",
+    "math.PR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 115559
+  },
+  {
+   "id": "2607.02414v1",
+   "title": "Weak and strong solutions for a class of quasilinear Allen--Cahn systems",
+   "published": "2026-07-02",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 62799
+  },
+  {
+   "id": "2512.21033v2",
+   "title": "Quantum Homotopy Algorithm for Solving Nonlinear PDEs and Flow Problems",
+   "published": "2025-12-24",
+   "categories": [
+    "quant-ph",
+    "cs.CE",
+    "physics.app-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 98104
+  },
+  {
+   "id": "2512.10536v4",
+   "title": "Large deviations for invariant measure of stochastic Allen-Cahn equation with inhomogeneous boundary conditions and multiplicative noise",
+   "published": "2025-12-11",
+   "categories": [
+    "math.PR",
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 68253
+  },
+  {
+   "id": "2510.13283v1",
+   "title": "An Allen-Cahn tumor growth model with temperature",
+   "published": "2025-10-15",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 49234
+  },
+  {
+   "id": "2507.19820v2",
+   "title": "A further remark on the density estimate for degenerate Allen-Cahn equations: $Δ_{p}$-type equations for $1<p<\\frac{n}{n-1}$ with rough coefficients",
+   "published": "2025-07-26",
+   "categories": [
+    "math.AP",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 19786
+  },
+  {
+   "id": "2506.17000v1",
+   "title": "Density estimates for Ginzburg-Landau energies with degenerate double-well potentials",
+   "published": "2025-06-20",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 23148
+  },
+  {
+   "id": "2506.06647v1",
+   "title": "Existence of traveling waves for vector valued gradient flows",
+   "published": "2025-06-07",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 32885
+  },
+  {
+   "id": "2501.16371v6",
+   "title": "Optimizing the Optimizer for Physics-Informed Neural Networks and Kolmogorov-Arnold Networks",
+   "published": "2025-01-22",
+   "categories": [
+    "cs.LG",
+    "cs.AI",
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 139561
+  },
+  {
+   "id": "2609.11988v1",
+   "title": "Disordered hyperuniform modulated phases and the cosmic web from one free energy",
+   "published": "2026-09-08",
+   "categories": [
+    "cond-mat.stat-mech"
+   ],
+   "has_fulltext": true,
+   "n_chars": 49703
+  },
+  {
+   "id": "2607.25177v2",
+   "title": "A Convex Splitting Spectral Method for the Phase Field Crystal Equation: Energy Stability, Computational Stability Maps, and Three-Dimensional GPU Simulations",
+   "published": "2026-07-28",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 60896
+  },
+  {
+   "id": "2607.12997v1",
+   "title": "Surface Phase-Field-Crystal-Helfrich model for out-of-plane deformations in thin crystalline sheets with lattice mismatch",
+   "published": "2026-07-14",
+   "categories": [
+    "cond-mat.mtrl-sci",
+    "cond-mat.mes-hall"
+   ],
+   "has_fulltext": true,
+   "n_chars": 27700
+  },
+  {
+   "id": "2607.01284v2",
+   "title": "On the limits of the energetic coupling between field dislocation mechanics and phase field crystal",
+   "published": "2026-07-01",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 78779
+  },
+  {
+   "id": "2603.26818v1",
+   "title": "Multi-GPU fast Fourier transforms in MATLAB (for large-scale phase-field crystal simulations)",
+   "published": "2026-03-26",
+   "categories": [
+    "cs.MS",
+    "cond-mat.mtrl-sci",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 19048
+  },
+  {
+   "id": "2603.00268v1",
+   "title": "An unconditionally stable hybridizable-embedded discontinuous Galerkin method for the phase field crystal equation",
+   "published": "2026-02-27",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 61371
+  },
+  {
+   "id": "2602.16158v3",
+   "title": "Dislocation-ledge coupling governs semicoherent precipitate growth",
+   "published": "2026-02-18",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 57828
+  },
+  {
+   "id": "2602.14348v1",
+   "title": "Dislocation dynamics on deformable surfaces",
+   "published": "2026-02-15",
+   "categories": [
+    "cond-mat.soft",
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 42590
+  },
+  {
+   "id": "2601.13965v1",
+   "title": "Grain-Growth Stagnation from Vacancy-Diffusion-Limited Disconnection Climb",
+   "published": "2026-01-20",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 30763
+  },
+  {
+   "id": "2601.05780v1",
+   "title": "Stability and convergence analysis of unconditionally original energy dissipative implicit-explicit Runge--Kutta methods for the phase field crystal models without Lipschitz assumptions",
+   "published": "2026-01-09",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 59872
+  },
+  {
+   "id": "2506.21954v1",
+   "title": "Prediction of A15 Tilt Grain Boundary Structures",
+   "published": "2025-06-27",
+   "categories": [
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 30459
+  },
+  {
+   "id": "2604.06125v1",
+   "title": "Multilevel Coset Codes on Lattices",
+   "published": "2026-04-07",
+   "categories": [
+    "cs.IT"
+   ],
+   "has_fulltext": true,
+   "n_chars": 28868
+  },
+  {
+   "id": "2411.02424v1",
+   "title": "Set-based queries for multiscale shape-material modeling",
+   "published": "2024-10-22",
+   "categories": [
+    "cs.CE",
+    "cs.GR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 58188
+  },
+  {
+   "id": "2404.09055v2",
+   "title": "The Cellular Potts Model on Disordered Lattices",
+   "published": "2024-04-13",
+   "categories": [
+    "cond-mat.soft"
+   ],
+   "has_fulltext": true,
+   "n_chars": 107174
+  },
+  {
+   "id": "2211.13036v1",
+   "title": "A Morphological, Topological and Mechanical Investigation of Gyroid, Spinodoid and Dual-Lattice Algorithms as Structural Models of Trabecular Bone",
+   "published": "2022-11-23",
+   "categories": [
+    "physics.med-ph",
+    "physics.bio-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 66301
+  },
+  {
+   "id": "2110.14237v1",
+   "title": "Learning Graph Cellular Automata",
+   "published": "2021-10-27",
+   "categories": [
+    "cs.LG",
+    "cs.AI"
+   ],
+   "has_fulltext": true,
+   "n_chars": 54578
+  },
+  {
+   "id": "1807.00592v3",
+   "title": "Neural Lattice Decoders",
+   "published": "2018-07-02",
+   "categories": [
+    "cs.IT"
+   ],
+   "has_fulltext": true,
+   "n_chars": 25958
+  },
+  {
+   "id": "1712.00363v1",
+   "title": "Subconvexity Bound for Hecke character $L$-Functions of Imaginary quadratic Number fields",
+   "published": "2017-11-30",
+   "categories": [
+    "math.NT"
+   ],
+   "has_fulltext": true,
+   "n_chars": 53551
+  },
+  {
+   "id": "2405.06536v1",
+   "title": "Mesh Denoising Transformer",
+   "published": "2024-05-10",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 68349
+  },
+  {
+   "id": "2209.00841v1",
+   "title": "Geometric and Learning-based Mesh Denoising: A Comprehensive Survey",
+   "published": "2022-09-02",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 89837
+  },
+  {
+   "id": "2108.05128v1",
+   "title": "GCN-Denoiser: Mesh Denoising with Graph Convolutional Networks",
+   "published": "2021-08-11",
+   "categories": [
+    "cs.GR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 70123
+  },
+  {
+   "id": "2007.00842v1",
+   "title": "Surface Denoising based on Normal Filtering in a Robust Statistics Framework",
+   "published": "2020-07-02",
+   "categories": [
+    "cs.GR",
+    "cs.CG",
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 70069
+  },
+  {
+   "id": "2006.15510v1",
+   "title": "DNF-Net: a Deep Normal Filtering Network for Mesh Denoising",
+   "published": "2020-06-28",
+   "categories": [
+    "cs.GR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 61543
+  },
+  {
+   "id": "1908.07916v1",
+   "title": "Discrete Total Variation of the Normal Vector Field as Shape Prior with Applications in Geometric Inverse Problems",
+   "published": "2019-08-20",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 55195
+  },
+  {
+   "id": "1903.04015v2",
+   "title": "NormalNet: Learning-based Normal Filtering for Mesh Denoising",
+   "published": "2019-03-10",
+   "categories": [
+    "cs.GR",
+    "cs.CG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 44762
+  },
+  {
+   "id": "1712.03574v2",
+   "title": "Static/Dynamic Filtering for Mesh Geometry",
+   "published": "2017-12-10",
+   "categories": [
+    "cs.GR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 61642
+  },
+  {
+   "id": "2607.24579v1",
+   "title": "Denoising 3D images: robustness of persistent homology measures",
+   "published": "2026-07-27",
+   "categories": [
+    "cs.CG",
+    "cs.CV",
+    "math.AT"
+   ],
+   "has_fulltext": true,
+   "n_chars": 82667
+  },
+  {
+   "id": "2509.09667v1",
+   "title": "Geometric Neural Distance Fields for Learning Human Motion Priors",
+   "published": "2025-09-11",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 83046
+  },
+  {
+   "id": "2505.04338v3",
+   "title": "Riemannian Denoising Diffusion Probabilistic Models",
+   "published": "2025-05-07",
+   "categories": [
+    "cs.LG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 75295
+  },
+  {
+   "id": "2402.19172v2",
+   "title": "Point Processes and spatial statistics in time-frequency analysis",
+   "published": "2024-02-29",
+   "categories": [
+    "eess.SP",
+    "cs.SD",
+    "eess.AS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 107684
+  },
+  {
+   "id": "2401.10083v3",
+   "title": "A locally statistical active contour model for SAR image segmentation can be solved by denoising algorithms",
+   "published": "2024-01-10",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 30519
+  },
+  {
+   "id": "2312.08135v2",
+   "title": "A New Perspective On Denoising Based On Optimal Transport",
+   "published": "2023-12-13",
+   "categories": [
+    "math.ST",
+    "cs.LG",
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 99420
+  },
+  {
+   "id": "2312.08376v3",
+   "title": "A global optimization SAR image segmentation model can be easily transformed to a general ROF denoising model",
+   "published": "2023-12-08",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 39815
+  },
+  {
+   "id": "2307.15489v1",
+   "title": "Uncertainty Quantification for Scale-Space Blob Detection",
+   "published": "2023-07-28",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 74797
+  },
+  {
+   "id": "2207.13807v1",
+   "title": "Pose-NDF: Modeling Human Pose Manifolds with Neural Distance Fields",
+   "published": "2022-07-27",
+   "categories": [
+    "cs.CV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 49624
+  },
+  {
+   "id": "2204.09815v3",
+   "title": "Parametric Level-sets Enhanced To Improve Reconstruction (PaLEnTIR)",
+   "published": "2022-04-21",
+   "categories": [
+    "math.NA",
+    "cs.CV",
+    "eess.IV"
+   ],
+   "has_fulltext": true,
+   "n_chars": 78555
+  },
+  {
+   "id": "2201.13281v2",
+   "title": "Convergence of level sets in fractional Laplacian regularization",
+   "published": "2022-01-31",
+   "categories": [
+    "math.AP",
+    "math.OC"
+   ],
+   "has_fulltext": true,
+   "n_chars": 73803
+  },
+  {
+   "id": "2108.00450v2",
+   "title": "Fractional total variation denoising model with $L^1$ fidelity",
+   "published": "2021-08-01",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 52958
+  },
+  {
+   "id": "2608.05496v1",
+   "title": "Morphology of frozen labyrinths from irreversible threshold dynamics",
+   "published": "2026-08-06",
+   "categories": [
+    "cond-mat.stat-mech"
+   ],
+   "has_fulltext": true,
+   "n_chars": 65278
+  },
+  {
+   "id": "2601.21133v1",
+   "title": "Singularities of Mean Curvature Flow of Surfaces",
+   "published": "2026-01-29",
+   "categories": [
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 50165
+  },
+  {
+   "id": "2401.13966v3",
+   "title": "The Avoidance Principle for Noncompact Hypersurfaces Moving by Mean Curvature Flow",
+   "published": "2024-01-25",
+   "categories": [
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 36019
+  },
+  {
+   "id": "2204.01983v3",
+   "title": "The Boundary Term in Huisken's Monotonicity Formula and the Entropy of Translators",
+   "published": "2022-04-05",
+   "categories": [
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 16979
+  },
+  {
+   "id": "1901.03008v4",
+   "title": "Mean Curvature Flow with Boundary",
+   "published": "2019-01-10",
+   "categories": [
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 79794
+  },
+  {
+   "id": "1802.05038v1",
+   "title": "Motion of interfaces for a damped hyperbolic Allen-Cahn equation",
+   "published": "2018-02-14",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 88140
+  },
+  {
+   "id": "1601.02467v2",
+   "title": "Convergence of thresholding schemes incorporating bulk effects",
+   "published": "2016-01-11",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 73484
+  },
+  {
+   "id": "1411.6249v4",
+   "title": "An example of a mean-convex mean curvature flow developing infinitely many singular epochs",
+   "published": "2014-11-23",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 17349
+  },
+  {
+   "id": "1309.3231v1",
+   "title": "On Brendle's estimate for the inscribed radius under mean curvature flow",
+   "published": "2013-09-12",
+   "categories": [
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 6505
+  },
+  {
+   "id": "1103.1469v3",
+   "title": "Subsequent Singularities in Mean-Convex Mean Curvature Flow",
+   "published": "2011-03-08",
+   "categories": [
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 30359
+  },
+  {
+   "id": "1101.1138v2",
+   "title": "Lagrangian angles of family of Lagrangian fibrations under mean curvature flow",
+   "published": "2011-01-06",
+   "categories": [
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 13454
+  },
+  {
+   "id": "0809.0636v1",
+   "title": "Mean Curvature Motion of Triple Junctions of Graphs in Two Dimensions",
+   "published": "2008-09-03",
+   "categories": [
+    "math.AP",
+    "math.DG"
+   ],
+   "has_fulltext": true,
+   "n_chars": 47913
+  },
+  {
+   "id": "2609.36216v1",
+   "title": "Preconditioned Physics-Informed Neural Operator Training",
+   "published": "2026-09-28",
+   "categories": [
+    "cs.LG",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 70931
+  },
+  {
+   "id": "2609.25489v1",
+   "title": "High-Order Variable-Scaled Energetic Variational Neural Networks for Phase-Field Gradient Flows",
+   "published": "2026-09-21",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 71922
+  },
+  {
+   "id": "2609.21920v1",
+   "title": "High-Moment Stability and Error Analysis of a Fully Discrete LDG-IMEX Method for High Dimensional Nonlinear Stochastic Convection-Diffusion Equations",
+   "published": "2026-09-18",
+   "categories": [
+    "math.NA",
+    "math.PR"
+   ],
+   "has_fulltext": true,
+   "n_chars": 115438
+  },
+  {
+   "id": "2609.21820v1",
+   "title": "A Second-Order Maximum-Bound-Preserving and Energy-Stable Exponential Time-Differencing Method for Allen--Cahn-Type Gradient Flows",
+   "published": "2026-09-18",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 72831
+  },
+  {
+   "id": "2609.21295v1",
+   "title": "Kernel-free Boundary Integral Methods for Allen-Cahn and Cahn-Hilliard Equations on Irregular Domains",
+   "published": "2026-09-18",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 64967
+  },
+  {
+   "id": "2609.01915v1",
+   "title": "Bounds-Constrained Finite Element Approximation of Time-Dependent Partial Differential Equations",
+   "published": "2026-09-01",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 60836
+  },
+  {
+   "id": "2608.00293v1",
+   "title": "A Phase-Field Method for Curvature Flow of Networks with Triple Junction Drag",
+   "published": "2026-07-31",
+   "categories": [
+    "math.AP",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 58080
+  },
+  {
+   "id": "2607.29217v1",
+   "title": "Certified Seventh-Order Two-Derivative Hermite Deferred Correction via Node-Sweep Co-Design",
+   "published": "2026-07-31",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 59073
+  },
+  {
+   "id": "2609.39053v1",
+   "title": "Structure-preserving Fourier Neural Operators for Long-time Cahn-Hilliard Dynamics under Coarse Temporal Supervision",
+   "published": "2026-09-30",
+   "categories": [
+    "math.NA",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 93322
+  },
+  {
+   "id": "2609.36719v1",
+   "title": "Structure-preserving upwind Lagrange multiplier schemes for solid-state dewetting with a logarithmic Flory--Huggins potential",
+   "published": "2026-09-29",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 75201
+  },
+  {
+   "id": "2609.28954v1",
+   "title": "Convergence analysis of a numerical scheme for the Cahn-Hilliard-Navier-Stokes system with dynamical boundary condition and its application to moving contact line problem",
+   "published": "2026-09-24",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 80561
+  },
+  {
+   "id": "2609.22689v1",
+   "title": "Efficient Rigorous Continuation via Chebyshev Series Expansion I",
+   "published": "2026-09-19",
+   "categories": [
+    "math.NA",
+    "math.DS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 108234
+  },
+  {
+   "id": "2609.21328v1",
+   "title": "History-Compatible Energy-Stable Finite Element Schemes for Variable-Density Cahn--Hilliard--Navier--Stokes Flows on Evolving Meshes",
+   "published": "2026-09-18",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 105286
+  },
+  {
+   "id": "2609.11167v1",
+   "title": "Mixed Hybrid High-Order Methods for Sixth-Order Problems: Fully Non-conforming and $C^0$-Conforming Discretizations",
+   "published": "2026-09-10",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 63595
+  },
+  {
+   "id": "2609.06092v1",
+   "title": "A Second Order Positivity-Preserving Scheme for the Nonlocal Cahn-Hilliard System with Variable Mobility and Logarithmic Flory-Huggins Potential",
+   "published": "2026-09-05",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 69322
+  },
+  {
+   "id": "2608.26046v1",
+   "title": "A family of second order, linear, unconditionally stable methods for the Cahn-Hilliard-Navier-Stokes equations",
+   "published": "2026-08-26",
+   "categories": [
+    "math.NA",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 54430
+  },
+  {
+   "id": "2608.24030v2",
+   "title": "A sharp-diffuse interface model for intermittent and isolated topological transitions",
+   "published": "2026-08-25",
+   "categories": [
+    "physics.comp-ph",
+    "math.NA",
+    "physics.flu-dyn"
+   ],
+   "has_fulltext": true,
+   "n_chars": 85178
+  },
+  {
+   "id": "2609.24871v2",
+   "title": "GradAgent: A Knowledge-Guided Multi-Agent System for Structure-Preserving Gradient-Flow Computation with an Application to Multicomponent Vesicle Dynamics",
+   "published": "2026-09-21",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 162854
+  },
+  {
+   "id": "2609.23990v1",
+   "title": "MGRD: Compact morphology-gated residual diffusion for variance-aware cross-domain neurite forecasting",
+   "published": "2026-09-21",
+   "categories": [
+    "cs.LG",
+    "math.NA",
+    "physics.bio-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 97503
+  },
+  {
+   "id": "2609.10168v1",
+   "title": "A Thermodynamically Consistent Model for Multicomponent Vesicles",
+   "published": "2026-09-09",
+   "categories": [
+    "math.NA",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 64875
+  },
+  {
+   "id": "2608.26297v1",
+   "title": "Generalised dissipative solutions for a non-isothermal phase-field system: existence, weak-strong uniqueness, and long-time behaviour",
+   "published": "2026-08-26",
+   "categories": [
+    "math.AP",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 92164
+  },
+  {
+   "id": "2608.24126v1",
+   "title": "A mesh-free multiresolution deep energy method with phase-field modeling of brittle fracture",
+   "published": "2026-08-25",
+   "categories": [
+    "cs.LG",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 150461
+  },
+  {
+   "id": "2608.18766v2",
+   "title": "A shifted energy barrier approach for phase-field modeling of tensile-dominated brittle fracture",
+   "published": "2026-08-19",
+   "categories": [
+    "math.NA",
+    "cond-mat.mtrl-sci"
+   ],
+   "has_fulltext": true,
+   "n_chars": 97279
+  },
+  {
+   "id": "2609.05458v1",
+   "title": "Assessing Nonlinear Elimination Preconditioning for Trust-Region Phase-Field Fracture",
+   "published": "2026-08-09",
+   "categories": [
+    "cs.CE",
+    "math.AP",
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 90836
+  },
+  {
+   "id": "2608.06099v1",
+   "title": "A Thermodynamically Consistent Cahn-Hilliard-Navier-Stokes Model for Tumor Growth",
+   "published": "2026-08-06",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 65683
+  },
+  {
+   "id": "2607.27795v1",
+   "title": "A Unified Discrete Gradient-SAV Framework for Structure-Preserving Integration",
+   "published": "2026-07-30",
+   "categories": [
+    "math.NA",
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 80536
+  },
+  {
+   "id": "2606.22514v1",
+   "title": "PI-DOSnet: A Physics-Informed Deep Operator-Splitting Network for Evolution Partial Differential Equations",
+   "published": "2026-06-21",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 72580
+  },
+  {
+   "id": "2606.09173v2",
+   "title": "Uniform-in-time Strong Error Estimates of Tamed-FEM to Superlinear SPDEs driven by Multiplicative Noise",
+   "published": "2026-06-08",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 47292
+  },
+  {
+   "id": "2605.30272v1",
+   "title": "IGA-ODIL: Optimizing DIscretre robust Loss with Isogeometric Analysis to solve forward and inverse problems faster using machine learning tools",
+   "published": "2026-05-28",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 57166
+  },
+  {
+   "id": "2605.26623v1",
+   "title": "An Unconditionally Linearly Convergent ADMM Approach for the Allen-Cahn Equation with Flory-Huggins Potential",
+   "published": "2026-05-26",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 57344
+  },
+  {
+   "id": "2605.24387v2",
+   "title": "Spectral analysis and sine transform based preconditioning for a structure preserving stabilized scheme approximating the space-fractional Allen Cahn equation with logarithmic potential",
+   "published": "2026-05-23",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 42232
+  },
+  {
+   "id": "2405.07410v3",
+   "title": "Non-unique Hamiltonians for Discrete Symplectic Dynamics",
+   "published": "2024-05-13",
+   "categories": [
+    "math-ph",
+    "physics.chem-ph",
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 26083
+  },
+  {
+   "id": "2012.13709v2",
+   "title": "Generalization of Hamiltonian Mechanics to a Three Dimensional Phase Space",
+   "published": "2020-12-26",
+   "categories": [
+    "math-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 53413
+  },
+  {
+   "id": "1811.06450v1",
+   "title": "Time-Reversible, Symplectic, Angular Velocity Based Integrator for Rigid Linear Molecules",
+   "published": "2018-11-15",
+   "categories": [
+    "physics.comp-ph"
+   ],
+   "has_fulltext": true,
+   "n_chars": 18963
+  },
+  {
+   "id": "1805.11713v1",
+   "title": "Volume-preserving exponential integrators",
+   "published": "2018-05-29",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 48865
+  },
+  {
+   "id": "1507.00535v1",
+   "title": "Volume Preservation by Runge-Kutta Methods",
+   "published": "2015-07-02",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 40327
+  },
+  {
+   "id": "2601.21422v2",
+   "title": "Wellposedness and dynamics of two types of reaction--nonlocal diffusion systems under the inhomogeneous spectral fractional Laplacian",
+   "published": "2026-01-29",
+   "categories": [
+    "math.AP"
+   ],
+   "has_fulltext": true,
+   "n_chars": 65059
+  },
+  {
+   "id": "2510.19827v1",
+   "title": "Fractional Vegetation-Water Model in Arid and Semi-Arid Environments: Pattern Formation and Numerical Simulations",
+   "published": "2025-10-06",
+   "categories": [
+    "nlin.PS"
+   ],
+   "has_fulltext": true,
+   "n_chars": 53038
+  },
+  {
+   "id": "2003.13569v1",
+   "title": "Fast and accurate high-order method for high dimensional space-fractional reaction-diffusion equation with general boundary conditions",
+   "published": "2020-03-30",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 49621
+  },
+  {
+   "id": "1904.07651v1",
+   "title": "A stabilized semi-implicit Fourier spectral method for nonlinear space-fractional reaction-diffusion equations",
+   "published": "2019-04-16",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 42811
+  },
+  {
+   "id": "1808.02615v2",
+   "title": "Numerical approximations for the tempered fractional Laplacian: Error analysis and applications",
+   "published": "2018-08-08",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 54023
+  },
+  {
+   "id": "1806.07980v1",
+   "title": "Fractional Gray-Scott Model: Well-posedness, Discretization, and Simulations",
+   "published": "2018-06-20",
+   "categories": [
+    "math.NA"
+   ],
+   "has_fulltext": true,
+   "n_chars": 51042
+  },
+  {
+   "id": "2601.06079",
+   "title": "(待取元数据 2601.06079)",
+   "published": "",
+   "categories": [],
+   "has_fulltext": true,
+   "n_chars": 103014,
+   "added_by": "topics-audit-gap",
+   "added_reason": "JAX-PF：JAX-FEM 上的可微相场，含 AC/CH/耦合四个 benchmark、显式+隐式两套时间积分、Eshelby 包含。topics 审计报「可微求解器 1 篇」且那篇不是可微相场，这是同方向最对口的公开实现。"
+  }
+ ],
+ "updated": "2026-10-01T12:45:31Z",
+ "n_unparsable": 0,
+ "n_missing": 0,
+ "provenance": [
+  {
+   "id": "2601.06079",
+   "reason": "JAX-PF：JAX-FEM 上的可微相场，含 AC/CH/耦合四个 benchmark、显式+隐式两套时间积分、Eshelby 包含。topics 审计报「可微求解器 1 篇」且那篇不是可微相场，这是同方向最对口的公开实现。",
+   "added": "2026-10-02"
+  }
+ ]
 }
