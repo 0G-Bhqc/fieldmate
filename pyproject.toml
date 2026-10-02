@@ -24,7 +24,11 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-pdf = ["pypdf>=4"]
+# pdf extra = 「要解析 PDF 就装这个」。真实测试（2026-10-02）发现只带 pypdf 时，
+# corpus_bulk 的 248 篇里 179 篇不可解析 —— pypdf 对科研类 PDF 太脆。
+# 抽取器顺序本来就是 fitz 优先（见 _register_extractors 的 docstring），extra 必须与之匹配：
+# pymupdf 做主力，pypdf 兜底（两者互补）。
+pdf = ["pymupdf>=1.24", "pypdf>=4"]
 pdfminer = ["pdfminer.six>=20231228"]
 mcp = ["mcp>=1.0"]
 dev = ["pytest>=7", "ruff>=0.4"]
