@@ -586,6 +586,31 @@ def test_package_is_importable_from_any_working_directory(tmp_path):
     assert "ok" in r.stdout
 
 
+def test_manifest_relative_cache_dir_resolves_against_manifest_location(tmp_path):
+    """回归（真实测试 2026-10-02 抓到）：manifest 的 cache_dir 是相对路径时，
+    旧实现相对**当前工作目录**解析 —— 宿主从任意 cwd 调 CLI，240 篇全文静默
+    全部变「无缓存」，且没有任何报错。正确锚点是 manifest 自己的位置：
+    manifest 在 <repo>/libraries/ 下时，向上找到 <repo>/ 下的真实缓存目录。"""
+    from fieldmate.sources.fulltext import _resolve_cache_dir
+
+    repo = tmp_path / "repo"
+    (repo / "libraries").mkdir(parents=True)
+    (repo / ".fieldmate-cache" / "arxiv_pdfs").mkdir(parents=True)
+    manifest = repo / "libraries" / "corpus_bulk.json"
+
+    # manifest 同级没有缓存、父级（仓库根）有 → 解析到仓库根
+    assert _resolve_cache_dir(".fieldmate-cache/arxiv_pdfs", manifest) == \
+        (repo / ".fieldmate-cache" / "arxiv_pdfs")
+    # manifest 同级就有缓存 → 就近解析
+    (repo / "libraries" / ".cache").mkdir()
+    assert _resolve_cache_dir(".cache", manifest) == repo / "libraries" / ".cache"
+    # 绝对路径原样返回
+    assert _resolve_cache_dir(str(tmp_path / "abs"), manifest) == tmp_path / "abs"
+    # 两级都不存在 → 退回 cwd 相对（保持旧行为可用），不抛错
+    bare = tmp_path / "nowhere" / "cache"
+    assert _resolve_cache_dir(str(bare), manifest) == bare
+
+
 def test_cli_survives_non_utf8_output_pipe():
     """回归：宿主 harness 在 Windows 上用 subprocess 捕获输出时，管道编码跟随
     locale（中文系统 = GBK/cp936），而 CLI 输出含 ✔/✖/🟡/² 等字符 ——

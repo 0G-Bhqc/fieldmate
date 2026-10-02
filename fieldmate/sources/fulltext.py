@@ -292,6 +292,29 @@ def _quote(q: str) -> str:
 
 
 # ---------------------------------------------------------- manifest 语料
+def _resolve_cache_dir(raw: str | Path | None, manifest_path: Path) -> Path:
+    """manifest 里相对 cache_dir 的解析锚点。
+
+    旧实现 `Path(mf["cache_dir"])` 相对**当前工作目录**解析 —— 宿主 harness 从
+    任意 cwd 调 CLI 时（这正是 H1 契约承诺的场景），相对路径静默落空，
+    240 篇全文全部变「无缓存」，且没有任何报错（实测 2026-10-02）。
+
+    解析顺序：绝对路径原样返回；相对路径依次尝试 manifest 所在目录、
+    其父目录（manifest 在 <repo>/libraries/ 时即仓库根），取第一个真实存在的；
+    都不存在才退回旧的 cwd 相对行为（保持「先建 manifest 后建缓存」的用法可用）。
+    """
+    if raw is None:
+        return default_cache()
+    c = Path(raw)
+    if c.is_absolute():
+        return c
+    mp = manifest_path.resolve().parent
+    for base in (mp, mp.parent):
+        if (base / c).exists():
+            return base / c
+    return c
+
+
 def load_manifest(path: str | Path, cache: Path | None = None,
                   verbose: bool = False) -> tuple[list[Paper], dict[str, Any]]:
     """从检索 manifest（corpus_bulk.json / corpus_arxiv.json）装载语料。
@@ -314,7 +337,7 @@ def load_manifest(path: str | Path, cache: Path | None = None,
         raise FileNotFoundError(f"manifest 不存在：{p}")
     mf = json.loads(p.read_text(encoding="utf-8"))
     entries = mf.get("papers") or []
-    cache = cache or Path(mf.get("cache_dir") or default_cache())
+    cache = cache if cache is not None else _resolve_cache_dir(mf.get("cache_dir"), p)
 
     papers: list[Paper] = []
     n_ft = n_stale = n_none = 0

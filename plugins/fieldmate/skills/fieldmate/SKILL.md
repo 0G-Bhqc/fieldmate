@@ -21,7 +21,7 @@ python -m fieldmate list
 
 - 退出码 0 且列出缺陷库 → 就绪，继续。
 - 报 `No module named fieldmate` → 提示用户一次性安装：
-  `pip install -e <fieldmate 仓库根>`（仓库根 = 含 `fieldmate/`、`libraries/`、`contracts/` 的目录），装完重跑自检。
+  `pip install -e "<fieldmate 仓库根>[pdf]"`（仓库根 = 含 `fieldmate/`、`libraries/`、`contracts/` 的目录；`[pdf]` 装 pypdf 后端，不装则 `read`/`--fulltext` 只能报「无法解析」），装完重跑自检。
 - 语料与缺陷库路径相对**仓库根**。宿主 cwd 不是仓库根时，先定位它再拼绝对路径：
   `python -c "import fieldmate,pathlib;print(pathlib.Path(fieldmate.__file__).resolve().parents[1])"`
 - 其余报错 → 原样转告用户，不要猜测原因。
