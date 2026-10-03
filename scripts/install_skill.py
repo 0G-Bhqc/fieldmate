@@ -17,7 +17,16 @@ from __future__ import annotations
 
 import argparse
 import shutil
+import sys
 from pathlib import Path
+
+# Windows 上 stdout 默认 locale 编码（gbk/cp1252），中文 print 会崩——
+# 与 fieldmate.cli.main / wheel_smoke_test 同款入口防护（CI 已两次抓到同类）。
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_SRC = ROOT / "plugins" / "fieldmate" / "skills" / "fieldmate" / "SKILL.md"
