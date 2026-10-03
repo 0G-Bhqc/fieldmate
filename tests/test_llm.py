@@ -32,14 +32,14 @@ if task == "assumption_refine":
                       "rationale": "kind 非法", "confidence": "high"})
     cands.append({"quote": "This sentence is hallucinated and never in the input.",
                   "kind": "scope", "rationale": "x", "confidence": "low"})
-    print(json.dumps({"ok": True, "result": {"candidates": cands}}, ensure_ascii=False))
+    print(json.dumps({"ok": True, "result": {"candidates": cands}}))
 elif task == "subdomain_filter":
     if "RELEVANT" in req["data"]["title"]:
         print(json.dumps({"ok": True, "result": {"relevant": True, "reason": "方法与对象一致"}},
-                         ensure_ascii=False))
+))
     else:
         print(json.dumps({"ok": True, "result": {"relevant": False, "reason": "词面沾边"}},
-                         ensure_ascii=False))
+))
 elif task == "assumption_scan":
     chunks = req["data"]["chunks"]
     cands = []
@@ -52,7 +52,7 @@ elif task == "assumption_scan":
                           "rationale": "参数取值未论证", "confidence": "medium"})
     cands.append({"quote": "Hallucinated implicit assumption not in any chunk text.",
                   "kind": "model", "rationale": "x", "confidence": "high"})
-    print(json.dumps({"ok": True, "result": {"candidates": cands}}, ensure_ascii=False))
+    print(json.dumps({"ok": True, "result": {"candidates": cands}}))
 else:
     print(json.dumps({"ok": False, "error": "unknown task"}))
 '''
