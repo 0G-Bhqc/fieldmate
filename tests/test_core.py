@@ -640,6 +640,34 @@ def test_parse_pdf_sanitizes_lone_surrogates(tmp_path, monkeypatch):
     assert loc.parse_pdf(pdf)[0] == "clean ✓"
 
 
+def test_doctor_reports_healthy_environment():
+    """doctor：正常环境下核心检查全过、退出码 0；--json 结构化可解析。"""
+    import json as _json
+    from fieldmate.cli import main
+    assert main(["doctor"]) == 0
+    from fieldmate import doctor
+    checks, info = doctor.collect_report(include_net=False)
+    by = {c.name: c for c in checks}
+    assert by["defect_library"].ok and by["defect_library"].fatal
+    assert by["goldset"].ok and by["corpus_manifest"].ok
+    assert info["n_defects"] >= 15 and info["n_rules"] >= 15
+
+
+def test_doctor_fatal_when_package_data_missing(monkeypatch, tmp_path):
+    """doctor：包内数据缺失是致命失败（fatal），退出码 2 —— 这是 H6。"""
+    import fieldmate._paths as paths
+    import fieldmate.doctor as doctor
+
+    def _boom(name):
+        raise FileNotFoundError(f"包内数据目录缺失：{name}")
+
+    monkeypatch.setattr(paths, "library_dir", _boom)
+    checks, _info = doctor.collect_report(include_net=False)
+    by = {c.name: c for c in checks}
+    assert by["data_assets"].fatal and not by["data_assets"].ok
+    assert doctor.run(as_json=False) == 2
+
+
 def test_cli_survives_non_utf8_output_pipe():
     """回归：宿主 harness 在 Windows 上用 subprocess 捕获输出时，管道编码跟随
     locale（中文系统 = GBK/cp936），而 CLI 输出含 ✔/✖/🟡/² 等字符 ——

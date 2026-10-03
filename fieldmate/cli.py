@@ -4,7 +4,8 @@
 ------------------------------------
 H1 无状态    ：所有持久化走文件系统；进程内不保存会话
 H2 契约显式  ：每个子命令有 --help；stdout 为 JSON 或 Markdown；退出码有意义
-              0 成功 / 1 校验失败 / 2 数据源失败 / 3 参数错误
+              0 成功 / 1 校验失败 / 2 数据源失败 / 3 参数错误（coverage 下 = 语料未覆盖）
+              4 gaps 无 STRONG 级精进点 / 5 verify 有假设被真推翻（逐命令表见 docs/DESIGN.md）
 H3 可脱离 LLM：`--llm none` 是默认；全流程纯 stdlib 可跑
 H6 失败显式  ：数据源不可达、库缺失、schema 不符 → 抛错并给建议，不静默降级
 
@@ -21,6 +22,9 @@ import sys
 from pathlib import Path
 
 EXIT_OK, EXIT_VALIDATION, EXIT_SOURCE, EXIT_ARGS, EXIT_NO_STRONG, EXIT_REFUTED = 0, 1, 2, 3, 4, 5
+# coverage 用 3 表示「语料存在 NO_COVERAGE 技术线」—— 与 EXIT_ARGS 同值，
+# 语义按**子命令**解释（coverage 没有位置参数冲突场景），逐命令对照表见 docs/DESIGN.md。
+EXIT_NO_COVERAGE = 3
 
 _ROOT = Path(__file__).resolve().parents[1]
 
@@ -407,7 +411,7 @@ def _cmd_gaps(args) -> int:
         Path(args.out).write_text(gaps_json(gaps, query, len(rows)), encoding="utf-8")
         print(f"[out] {args.out}", file=sys.stderr)
     # 退出码沿用「无 STRONG 级精进点」这一事实：2=不可作为立项依据
-    return EXIT_OK if any(g.strength == "STRONG" for g in gaps) else 4
+    return EXIT_OK if any(g.strength == "STRONG" for g in gaps) else EXIT_NO_STRONG
 
 
 def _cmd_topics(args) -> int:
@@ -465,7 +469,7 @@ def _cmd_coverage(args) -> int:
                                   encoding="utf-8")
         print(f"[out] {args.out}", file=sys.stderr)
     # 退出码沿用「有没有完全没覆盖的技术线」：有 = 3（提醒别拿它当证据源）
-    return EXIT_OK if not rep.by_verdict("NO_COVERAGE") else 3
+    return EXIT_OK if not rep.by_verdict("NO_COVERAGE") else EXIT_NO_COVERAGE
 
 
 def _cmd_patterns(args) -> int:
@@ -520,6 +524,12 @@ def _cmd_patterns(args) -> int:
         for i in runtime_only:
             print("  - {}  {}".format(i, by_id.get(i, {}).get("runtime_reason", "")))
     return EXIT_OK
+
+
+def _cmd_doctor(args) -> int:
+    """环境体检：包数据完整性（致命）/ 编码 / PDF 后端 / 缓存（提示）；--net 才联网。"""
+    from .doctor import run as doctor_run
+    return doctor_run(include_net=args.net, as_json=args.json)
 
 
 def _cmd_sources(args) -> int:
@@ -683,6 +693,11 @@ def main(argv: list[str] | None = None) -> int:
     w.add_argument("--show", type=int, default=4, help="每个主题列出前几篇的原文片段")
     w.add_argument("--out", default=None, help="把 JSON 结果写到该路径")
     w.set_defaults(func=_cmd_topics)
+
+    dc = sub.add_parser("doctor", help="环境体检：包数据/编码/PDF 后端/缓存；--net 探测 arXiv")
+    dc.add_argument("--net", action="store_true", help="联网探测 arXiv 可达性（默认纯离线）")
+    dc.add_argument("--json", action="store_true")
+    dc.set_defaults(func=_cmd_doctor)
 
     s = sub.add_parser("sources", help="体检数据源（arXiv / 本地 PDF）")
     s.add_argument("--query")

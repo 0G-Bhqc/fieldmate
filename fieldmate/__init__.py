@@ -2,7 +2,7 @@
 
 核心保证：**不接 LLM 也能跑**。LLM 是可插拔的外部依赖，不是前置条件。
 """
-__version__ = "0.2.0"
+__version__ = "0.4.0"
 
 from .sources.arxiv import Paper, search, collect          # noqa: F401
 from .match.patterns import load_library, load_rules, match_paper, match_all, Match  # noqa: F401
