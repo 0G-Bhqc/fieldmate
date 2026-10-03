@@ -660,6 +660,24 @@ def test_collect_read_sources_dedupes_by_resolved_path(tmp_path):
     assert src[0][0] == "P1-recon" and src[1][0] == "paper.pdf"
 
 
+def test_install_skill_copies_skillmd_into_workspace(tmp_path):
+    """install_skill.py：把插件源 SKILL.md 挂载到 <workspace>/.zcode/skills/fieldmate/，
+    幂等（重复运行内容一致），frontmatter 合法 —— 这是「挂进 Harness 即用」的零 UI 路径。"""
+    import subprocess
+    import sys as _sys
+    r = subprocess.run([_sys.executable, str(ROOT / "scripts" / "install_skill.py"),
+                        "--workspace", str(tmp_path)],
+                       capture_output=True, text=True, cwd=str(ROOT))
+    assert r.returncode == 0, r.stderr
+    dst = tmp_path / ".zcode" / "skills" / "fieldmate" / "SKILL.md"
+    assert dst.is_file(), "SKILL.md 未落盘"
+    text = dst.read_text(encoding="utf-8")
+    assert text.startswith("---") and "name: fieldmate" in text.split("---")[1]
+    src = (ROOT / "plugins" / "fieldmate" / "skills" / "fieldmate"
+           / "SKILL.md").read_text(encoding="utf-8")
+    assert text == src, "挂载副本与插件源不一致"
+
+
 def test_doctor_reports_healthy_environment():
     """doctor：正常环境下核心检查全过、退出码 0；--json 结构化可解析。"""
     from fieldmate.cli import main

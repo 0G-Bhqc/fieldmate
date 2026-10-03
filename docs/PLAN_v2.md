@@ -191,3 +191,23 @@ Phase 0 五件事（更名、打包、编码、git/CI、README）都是小时级
 - ⬜ 插件市场 UI 安装与试用验收（用户手动三步）
 - ⬜ Phase 1：gold set 扩容、缺陷库 L1 扩容、OpenAlex/Crossref 元数据后端
 - ⬜ Phase 3：`--llm-cmd`、候选 schema 化；Phase 4：verify↔pfdenoise 对接、负结果回写
+
+## 10. 能力落地状态（诚实盘点，2026-10-03）
+
+用户指出「文件名没改、能力或许没落地」后逐一核实的结论。判定标准：
+**「落地」= 在真实宿主/真实数据上跑通过并有据可查**，源码就绪不算数。
+
+| 能力 | 状态 | 证据 / 缺口 |
+|---|---|---|
+| 内核① 找精进点（gaps） | ✅ 已验证 | 真实 248 篇语料：24 条候选全 STRONG、退出码 0；缓存命中 19s |
+| 内核② 读文献（read/compare） | ✅ 已验证 | 真实相场论文 Protocol 槽抓到 `h=(b−a)/Nx`、`∆t=T/Nt`；arXiv 检索 0 命中与 README 实测一致 |
+| 内核③ 实验核验（prereg/verify） | ✅ 已验证 | 真实 pfdenoise 案例 REFUTED、退出码 5；模板闭环可用 |
+| 打包安装 | ✅ 已验证 | wheel 冒烟：干净 venv 非 editable 安装 + 无关 cwd 全通过（0.4.0，含 cp1252 最恶劣环境） |
+| **skill 挂载（零 UI）** | ✅ 已落地，待新会话实测 | `scripts/install_skill.py` 把 SKILL.md 挂进 `<workspace>/.zcode/skills/fieldmate/`（已对本工作区执行，含安装器单测）；新任务/新会话自动发现 |
+| **子 Agent 注册（插件市场）** | ⬜ 源码就绪，未在真实宿主验证 | agents/ 组件需经市场 UI 安装；待用户执行三步 |
+| 判断层（宿主 LLM 精筛候选） | ❌ 未实现（Phase 3） | `--llm-cmd` 适配层、prompts/ 候选 schema、Assumption 槽精筛——「skill 而非仅 CLI」的关键增量，目前 Assumption 槽仍 0 命中 |
+| 领域纵深（Phase 1） | ❌ 未实现 | gold set 仅 8 篇目标域、缺陷库 19 条偏去噪线、无多源检索（OpenAlex/Crossref） |
+| 文件名一致性 | ✅ 已修复 | 本地目录已更名 `fieldmate`（原 research-harness）；远端/包名/CLI/环境变量/缓存目录一致 |
+
+**结论**：内核与工程基建已验证落地；「挂进 Harness」的零 UI 路径（skill 挂载）已就位待实测；
+判断层与领域纵深是尚未开始的两块硬能力，分别对应 Phase 3 / Phase 1。
