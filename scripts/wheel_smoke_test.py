@@ -34,7 +34,8 @@ DIST = ROOT / "build" / "wheelhouse"
 
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
-    r = subprocess.run(cmd, capture_output=True, text=True, **kw)
+    r = subprocess.run(cmd, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", **kw)
     if r.returncode != 0:
         tail = (r.stdout + r.stderr)[-1500:]
         raise SystemExit(f"[smoke] 命令失败（exit {r.returncode}）："
@@ -63,8 +64,12 @@ def main() -> int:
         workdir = td / "work"
         workdir.mkdir()
         def fm(*args: str, expect: int) -> str:
+            # 子进程（fieldmate）保证 stdout 是 UTF-8（cli.main 强制）；
+            # 父侧必须显式按 UTF-8 解码 —— text=True 默认用 locale（gbk/cp1252），
+            # 解码线程会炸死并让 r.stdout 静默变 None（Windows CI 实测）。
             r = subprocess.run([str(py), "-m", "fieldmate", *args],
-                               capture_output=True, text=True, cwd=str(workdir))
+                               capture_output=True, text=True,
+                               encoding="utf-8", errors="replace", cwd=str(workdir))
             if r.returncode != expect:
                 raise SystemExit(
                     f"[smoke] fieldmate {' '.join(args)} 退出码 {r.returncode}，预期 {expect}\n"
@@ -85,16 +90,21 @@ def main() -> int:
         fm("prereg", "--prereg", str(prereg), expect=0)
         print("[smoke]    prereg --init / 自校验 ✓")
 
-        # 用冒烟 venv 里的 python 定位包内 manifest（wheel 是否真带上了 package-data）
+        # 用冒烟 venv 里的 python 定位包内 manifest（wheel 是否真带上了 package-data）。
+        # 必须 cwd=workdir：python -c 会把当前目录加进 sys.path，若继承仓库根，
+        # files('fieldmate') 会解析到源码树而非 wheel 安装副本 —— 校验就成了假阳性
+        # （实测还顺带在 Windows 上崩了：源码路径含中文，child 的 cp1252 stdout 编不出）。
         loc = run([str(py), "-c",
                    "from importlib import resources; import sys;"
                    "p = resources.files('fieldmate') / 'libraries' / 'corpus_bulk.json';"
-                   "print(p); sys.exit(0 if p.is_file() else 1)"])
+                   "print(p); sys.exit(0 if p.is_file() else 1)"],
+                  cwd=str(workdir))
         manifest = loc.stdout.strip()
         assert Path(manifest).is_file(), "包内 corpus_bulk.json 缺失（package-data 漏配）"
         # coverage 对无 PDF 缓存的 manifest 会诚实退出 3（语料未覆盖），不算失败
         cov = subprocess.run([str(py), "-m", "fieldmate", "coverage", "--corpus", manifest],
-                             capture_output=True, text=True, cwd=str(workdir))
+                             capture_output=True, text=True,
+                             encoding="utf-8", errors="replace", cwd=str(workdir))
         if cov.returncode not in (0, 3):
             raise SystemExit(f"[smoke] coverage 退出码 {cov.returncode}（预期 0/3）\n"
                              f"{(cov.stdout + cov.stderr)[-1500:]}")
