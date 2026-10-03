@@ -8,7 +8,7 @@
 
 启动：
     pip install -e ".[mcp]"
-    python adapters/mcp/server.py          # stdio transport
+    python adapters/mcp/server.py          # stdio transport（10 个工具，三项能力各有入口）
 
 在宿主里注册（示例，MCP client 配置）：
     {"mcpServers": {"fieldmate": {"command": "python",
@@ -126,7 +126,7 @@ def check_sources(query: str | None = None, paths: list[str] | None = None,
 # 根本没有 MCP 入口**。宿主 harness 挂上它，却用不上三分之二的东西。
 # 「可挂载到任意 harness」这句话在能力①③上是**不成立的**，必须补。
 
-def mine_gaps_tool(corpus: str, paths: list[str] | None = None,
+def mine_gaps(corpus: str, paths: list[str] | None = None,
                    query: str | None = None, limit: int = 20,
                    min_rate: float = 0.5, min_n: int = 5,
                    fmt: str = "markdown") -> str:
@@ -178,7 +178,7 @@ def mine_gaps_tool(corpus: str, paths: list[str] | None = None,
     return gaps_markdown(gaps, query or "", len(rows))
 
 
-def audit_coverage_tool(corpus: str, fmt: str = "markdown") -> str:
+def audit_coverage(corpus: str, fmt: str = "markdown") -> str:
     """语料覆盖审计：关键术语在语料里有没有支撑（按命中出处分层）。
 
     Args:
@@ -198,7 +198,7 @@ def audit_coverage_tool(corpus: str, fmt: str = "markdown") -> str:
     return report_markdown(rep)
 
 
-def audit_topics_tool(corpus: str, show: int = 3) -> str:
+def audit_topics(corpus: str, show: int = 3) -> str:
     """主题空间审计：哪些方向有、哪些方向几乎没有（每条命中附原文片段）。
 
     Args:
@@ -215,7 +215,7 @@ def audit_topics_tool(corpus: str, show: int = 3) -> str:
     return report_markdown(audit_topics(papers), show=show)
 
 
-def verify_result_tool(prereg: str, results: str) -> str:
+def verify_result(prereg: str, results: str) -> str:
     """能力③：对照预注册核验结果，给出 SUPPORTED / REFUTED / INCONCLUSIVE 三态判定。
 
     Args:
@@ -247,6 +247,97 @@ def verify_result_tool(prereg: str, results: str) -> str:
     return _json.dumps(out, ensure_ascii=False, indent=2)
 
 
+def prereg_init(exp_id: str = "exp-001", out: str | None = None) -> str:
+    """能力③前置：生成实验预注册模板（json）。没有预注册就不能跑 verify。
+
+    Args:
+        exp_id: 预注册 id，如 exp-001。
+        out: 写出路径；不填则只返回模板内容。
+    """
+    import json as _json
+    from fieldmate.exp.prereg import new_template, save
+    d = new_template(exp_id)
+    if out:
+        save(d, out)
+        d["written_to"] = out
+    return _json.dumps(d, ensure_ascii=False, indent=2)
+
+
+def evaluate_rules(gold: str | None = None, cache: str | None = None,
+                   fmt: str = "markdown") -> str:
+    """规则体检：用人工标注 gold set 算各检测项精确率/召回率。
+
+    Args:
+        gold: 标注集 jsonl 路径（默认包内 libraries/goldset.jsonl）。
+        cache: PDF 缓存目录（默认 cwd 下 .fieldmate-cache/arxiv_pdfs）。
+        fmt: markdown | json
+    """
+    import json as _json
+    from pathlib import Path as _Path
+    from fieldmate.compare.matrix import REPORT_ITEMS, re_search
+    from fieldmate.eval.prf import (_load_texts, evaluate_items, load_corpus,
+                                    load_goldset, prf_json, prf_markdown)
+    from fieldmate.sources.fulltext import default_cache
+
+    goldset = load_goldset(gold)
+    corpus = load_corpus()
+    c = _Path(cache) if cache else _Path(corpus.get("cache_dir") or default_cache())
+    texts = _load_texts(c, corpus)
+    need = {g["paper"] for g in goldset}
+    missing = sorted(p for p in need if not texts.get(p))
+    prf = evaluate_items(goldset, texts)
+    n_ok = sum(r.tp + r.fp + r.fn + r.tn for r in prf)
+    notes = []
+    pats = {n: p for n, p, _ in REPORT_ITEMS}
+    for g in goldset:
+        if int(g["label"]) == 0:
+            t = texts.get(g["paper"], "")
+            if t and re_search(pats.get(g["item"], "$^"), t):
+                notes.append(f"`{g['item']}` 在 {g['paper']} 上假阳性：{g.get('evidence', '')[:120]}")
+    head = (_json.dumps({"missing_fulltext": missing}, ensure_ascii=False)
+            + "\n") if missing else ""
+    body = prf_json(prf, n_ok) if fmt == "json" else prf_markdown(prf, n_ok, notes)
+    return head + body
+
+
+def read_card(paths: list[str], purpose: str = "beat", l2: bool = False,
+              per_slot: int = 4, fmt: str = "markdown") -> str:
+    """能力②：五槽阅读卡——按阅读目的渐进披露一篇论文的候选句。
+
+    Args:
+        paths: 本地 PDF 路径列表（1~5 篇为宜）。
+        purpose: implement 复现 / beat 超越 / cite 引用 / build-on 承接。
+        l2: 展开原句（默认只给一屏摘要）。
+        per_slot: 每槽最多候选句数。
+        fmt: markdown | json
+    """
+    import json as _json
+    from pathlib import Path as _Path
+    from fieldmate.extract.disclose import card_markdown, reading_card_l1, reading_card_l2
+    from fieldmate.extract.slots import extract_slots
+    from fieldmate.sources.arxiv import Paper
+    from fieldmate.sources.local import parse_pdf
+
+    cards = []
+    for p in paths:
+        text, _backend = parse_pdf(_Path(p))
+        if not text:
+            continue
+        paper = Paper(id=_Path(p).stem, title=_Path(p).stem, abstract="")
+        ps = extract_slots(paper, text, per_slot=per_slot)
+        c1 = reading_card_l1(ps)
+        if l2:
+            c1.update(reading_card_l2(ps))
+        cards.append(c1)
+    if not cards:
+        return _json.dumps({"ok": False,
+                            "error": '没有可解析的 PDF；检查路径或 pip install -e ".[pdf]"'},
+                           ensure_ascii=False)
+    if fmt == "json":
+        return _json.dumps({"ok": True, "cards": cards}, ensure_ascii=False, indent=2)
+    return card_markdown(cards, purpose=purpose, l2=l2)
+
+
 # ---------------------------------------------------------------- MCP 接线
 def _serve() -> int:
     try:
@@ -258,10 +349,13 @@ def _serve() -> int:
 
     # 三项能力都要有入口，缺一项「可挂载」就只是句空话
     srv.tool()(compare_papers)          # 能力② 横向对比
-    srv.tool()(mine_gaps_tool)          # 能力① 精进点
-    srv.tool()(verify_result_tool)      # 能力③ 实验核验
-    srv.tool()(audit_coverage_tool)     # 语料够不够（terms）
-    srv.tool()(audit_topics_tool)       # 语料够不够（topic space）
+    srv.tool()(read_card)               # 能力② 五槽阅读卡
+    srv.tool()(mine_gaps)               # 能力① 精进点
+    srv.tool()(verify_result)           # 能力③ 实验核验
+    srv.tool()(prereg_init)             # 能力③ 预注册模板
+    srv.tool()(audit_coverage)          # 语料够不够（terms）
+    srv.tool()(audit_topics)            # 语料够不够（topic space）
+    srv.tool()(evaluate_rules)          # 规则体检
     srv.tool()(list_patterns)
     srv.tool()(check_sources)
     srv.run()
@@ -269,9 +363,9 @@ def _serve() -> int:
 
 
 #: 挂进宿主时应该能看到的工具名。测试据此断言「三项能力都有入口」。
-TOOL_NAMES = ("compare_papers", "mine_gaps_tool", "verify_result_tool",
-              "audit_coverage_tool", "audit_topics_tool",
-              "list_patterns", "check_sources")
+TOOL_NAMES = ("compare_papers", "read_card", "mine_gaps", "verify_result",
+              "prereg_init", "audit_coverage", "audit_topics",
+              "evaluate_rules", "list_patterns", "check_sources")
 
 
 if __name__ == "__main__":

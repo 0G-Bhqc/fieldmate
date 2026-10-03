@@ -472,9 +472,9 @@ def test_mcp_adapter_exposes_all_three_capabilities():
     for fn in mod.TOOL_NAMES:
         assert callable(getattr(mod, fn, None)), f"{fn} 没导出"
     # 名字对得上也可能是空壳，必须真的能调
-    assert callable(mod.mine_gaps_tool), "能力① 精进点没有入口"
+    assert callable(mod.mine_gaps), "能力① 精进点没有入口"
     assert callable(mod.compare_papers), "能力② 横向对比没有入口"
-    assert callable(mod.verify_result_tool), "能力③ 实验核验没有入口"
+    assert callable(mod.verify_result), "能力③ 实验核验没有入口"
 
 
 def test_mcp_check_sources_without_arguments_reports_why():
@@ -492,7 +492,7 @@ def test_mcp_gaps_tool_runs_on_the_local_corpus():
     if not mf.exists():
         pytest.skip("目标语料不在本机")
     mod = _mcp_server()
-    out = json.loads(mod.mine_gaps_tool(str(mf), min_n=20, fmt="json"))
+    out = json.loads(mod.mine_gaps(str(mf), min_n=20, fmt="json"))
     assert "gaps" in out
     assert out["n_candidates"] > 0
     assert out["n_distinct_items"] > 0
@@ -502,7 +502,7 @@ def test_mcp_verify_tool_reports_missing_files_loudly():
     """不能对不存在的预注册返回空结果 —— 那是「无法判定」被伪装成「没问题」。"""
     import json
     mod = _mcp_server()
-    out = json.loads(mod.verify_result_tool("nope.json", "also-nope.json"))
+    out = json.loads(mod.verify_result("nope.json", "also-nope.json"))
     assert out["ok"] is False and "不存在" in out["error"]
 
 
