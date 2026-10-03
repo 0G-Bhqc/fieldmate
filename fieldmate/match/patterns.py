@@ -24,11 +24,13 @@ WEIGHTS = {"absent": 1.0, "present": 0.4, "regex": 0.4}
 
 
 def _default_library() -> Path:
-    return Path(__file__).resolve().parents[2] / "libraries"
+    from .._paths import library_dir
+    return library_dir()
 
 
 def _default_rules() -> Path:
-    return Path(__file__).resolve().parents[2] / "contracts" / "detection_rules.json"
+    from .._paths import contracts_dir
+    return contracts_dir() / "detection_rules.json"
 
 
 @dataclass

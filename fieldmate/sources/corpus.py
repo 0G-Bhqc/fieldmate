@@ -25,6 +25,8 @@ import time
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 from pathlib import Path
+
+from .._paths import data_dir as _data
 from typing import Any
 
 from .arxiv import Paper, RateLimiter, collect
@@ -145,7 +147,7 @@ def _load_queries(path: str | Path | None, only: str | None = None) -> list[dict
         'all'  含被污染的检索式 —— 用来**验证闸门是否真能拦住污染**
         其他值  按 purity 字段精确匹配
     """
-    p = Path(path) if path else Path(__file__).resolve().parents[2] / "libraries" / "queries.json"
+    p = Path(path) if path else _data("libraries") / "queries.json"
     cfg = json.loads(p.read_text(encoding="utf-8"))
     qs = list(cfg["queries"]) + list(cfg.get("poisoned_queries", []))
     if not only or only == "all":
@@ -228,7 +230,7 @@ def harvest(out: str | Path | None = None, per_query: int = 10,
         "per_query": [r.to_dict() for r in results],
     }
 
-    out_p = Path(out) if out else Path("libraries") / "corpus_harvest.json"
+    out_p = Path(out) if out else Path.cwd() / "corpus_harvest.json"
     out_p.parent.mkdir(parents=True, exist_ok=True)
     out_p.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     if verbose:

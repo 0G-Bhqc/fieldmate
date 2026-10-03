@@ -92,7 +92,7 @@ def test_gap_object_carries_related_defects_end_to_end():
 
 
 def test_rules_json_is_valid():
-    json.loads((ROOT / "contracts" / "detection_rules.json").read_text(encoding="utf-8"))
+    json.loads((ROOT / "fieldmate" / "contracts" / "detection_rules.json").read_text(encoding="utf-8"))
 
 
 # ------------------------------------------------ 缺陷库自洽性
@@ -488,7 +488,7 @@ def test_mcp_check_sources_without_arguments_reports_why():
 
 def test_mcp_gaps_tool_runs_on_the_local_corpus():
     import json
-    mf = ROOT / "libraries" / "corpus_bulk.json"
+    mf = ROOT / "fieldmate" / "libraries" / "corpus_bulk.json"
     if not mf.exists():
         pytest.skip("目标语料不在本机")
     mod = _mcp_server()

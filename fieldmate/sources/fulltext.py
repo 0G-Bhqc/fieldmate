@@ -302,25 +302,29 @@ def _resolve_cache_dir(raw: str | Path | None, manifest_path: Path) -> Path:
 
     解析顺序：
     * 显式绝对路径 → 原样返回；
-    * manifest 显式给了相对 cache_dir → 依次尝试 manifest 所在目录、其父目录
-      （manifest 在 <repo>/libraries/ 时即仓库根），取第一个真实存在的；
-      都不存在则原样返回（「先建 manifest 后建缓存」的用法仍可用）；
+    * manifest 显式给了相对 cache_dir → 依次尝试 manifest 所在目录、其父目录、
+      父目录的父目录（v0.4.0 起 manifest 随包在 <repo>/fieldmate/libraries/，
+      缓存仍在 <repo>/.fieldmate-cache，需要向上三层；editable 安装成立，
+      wheel 安装时三层都在 site-packages 内、不存在，自然落到 cwd 兜底），
+      取第一个真实存在的；都不存在则原样返回（「先建 manifest 后建缓存」
+      的用法仍可用）；
     * manifest 没给 cache_dir → 先试 cwd 下的默认名（旧用法：在哪儿跑就在哪儿
       建缓存），再按 manifest 位置向上找已有缓存（离线复用），最后退回 cwd 相对。
     """
     mp = manifest_path.resolve().parent
+    bases = (mp, mp.parent, mp.parent.parent)
     if raw is not None:
         c = Path(raw)
         if c.is_absolute():
             return c
-        for base in (mp, mp.parent):
+        for base in bases:
             if (base / c).exists():
                 return base / c
         return c
     c = default_cache()
     if c.exists():
         return c
-    for base in (mp.parent, mp):
+    for base in bases:
         if (base / c).exists():
             return base / c
     return c

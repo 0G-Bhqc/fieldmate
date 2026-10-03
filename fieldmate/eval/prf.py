@@ -29,6 +29,8 @@ import json
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
+
+from .._paths import data_dir as _data
 from typing import Any
 
 from ..compare.matrix import REPORT_ITEMS, re_search
@@ -39,7 +41,7 @@ _CACHE: dict[str, str] = {}
 
 
 def load_goldset(path: str | Path | None = None) -> list[dict[str, Any]]:
-    p = Path(path) if path else Path(__file__).resolve().parents[2] / "libraries" / "goldset.jsonl"
+    p = Path(path) if path else _data("libraries") / "goldset.jsonl"
     return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
@@ -51,7 +53,7 @@ def load_corpus(path: str | Path | None = None) -> dict[str, Any]:
     因为 "denoising" 在现代 ML 里专指「去噪扩散」，会把整个扩散模型文献拉进来。
     这个方向的论文普遍走期刊投稿、不上 arXiv，目标语料只能人工指定。
     """
-    p = Path(path) if path else Path(__file__).resolve().parents[2] / "libraries" / "corpus.json"
+    p = Path(path) if path else _data("libraries") / "corpus.json"
     if not p.exists():
         return {"cache_dir": ".fieldmate-cache/arxiv_pdfs", "papers": {}, "arxiv_papers": []}
     return json.loads(p.read_text(encoding="utf-8"))
