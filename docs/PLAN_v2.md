@@ -184,7 +184,10 @@ Phase 0 五件事（更名、打包、编码、git/CI、README）都是小时级
 - ✅ read 重复卡片去重（语料与 --path 同篇只出一卡）
 
 **待办（需用户动作或下阶段）**：
-- ⬜ GitHub 远端创建与 push（`gh` 已登录，创建仓库属对外动作，等用户确认执行）
+- ✅ GitHub 远端已创建并推送（https://github.com/0G-Bhqc/fieldmate，用户确认公开）；
+  **CI 首跑全绿**（6/6 job）——首跑抓出并修复两个冒烟脚本自身问题：
+  Windows cp1252 下脚本 print 崩溃（已自保）、`python -c` 无 cwd 沿 sys.path
+  解析到源码树的假阳性（已改 cwd=workdir 真正校验 wheel 副本）
 - ⬜ 插件市场 UI 安装与试用验收（用户手动三步）
 - ⬜ Phase 1：gold set 扩容、缺陷库 L1 扩容、OpenAlex/Crossref 元数据后端
 - ⬜ Phase 3：`--llm-cmd`、候选 schema 化；Phase 4：verify↔pfdenoise 对接、负结果回写
