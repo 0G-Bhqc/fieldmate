@@ -1,6 +1,8 @@
 # fieldmate
 
-**跨论文横向对比 + 缺陷库匹配**。为计算科学研究设计，可挂进**任意** Agent Harness。
+**相场/几何处理方向的科研助手**，帮研究者走完科研闭环四步：
+**读文献 → 找精进点 → 定实验 → 核结果**。以 CLI / MCP / Skill+子 Agent 挂进**任意** Agent Harness。
+红线：不审稿——所有判定只回答「下一步研究怎么做」。设计契约见 [docs/DESIGN.md](docs/DESIGN.md)。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![deps](https://img.shields.io/badge/dependencies-none-success.svg)](pyproject.toml)
@@ -24,8 +26,11 @@ LLM 只能产出**候选**，不能产出**判定**。
 ## 快速开始
 
 ```bash
-pip install -e .            # 零依赖
-pip install -e ".[pdf]"     # 需要解析本地 PDF 时
+pip install -e ".[pdf]"     # 数据随包分发；[pdf] 装 pymupdf+pypdf 解析后端
+                            # 零依赖安装：pip install . （read/--fulltext 将报「无法解析」）
+
+# 0) 环境体检：包数据 / 编码 / PDF 后端 / 缓存（--net 探测 arXiv）
+python -m fieldmate doctor
 
 # 1) 体检缺陷库与检测规则的覆盖情况
 python -m fieldmate patterns
@@ -53,10 +58,10 @@ python -m fieldmate gaps --corpus libraries/corpus_bulk.json
 
 # 8) ★ 语料自检：确认语料够用，再谈结论
 python -m fieldmate coverage --corpus libraries/corpus_bulk.json   # 关键术语有没有支撑（按命中出处分层）
-python -m fieldmate topics   --corpus libraries/corpus_bulk.json   # 哪些方向有、哪些几乎没有（附原文片段）
+python -m fieldmate topics   --corpus fieldmate/libraries/corpus_bulk.json   # 哪些方向有、哪些几乎没有（附原文片段）
 
 # 9) 体检与查表
-python -m fieldmate --help                   # 所有子命令（12 个）
+python -m fieldmate --help                   # 所有子命令（13 个，含 doctor）
 python -m fieldmate list                     # 缺陷库速览（每条是否已有可执行检测规则）
 python -m fieldmate sources --path paper.pdf  # 数据源体检（arXiv 通不通 / PDF 能不能解析）
 python -m fieldmate patterns                 # 缺陷库 & 规则的分栏体检（欠规则 vs 运行时缺陷）
@@ -255,7 +260,7 @@ arXiv 检索式天然含空格与引号，而 shell、subprocess、各家 harnes
 
 ```bash
 # 装载 manifest 语料做离线分析（只读 PDF 缓存，不联网）
-python -m fieldmate.cli gaps --corpus libraries/corpus_bulk.json --min-n 10
+python -m fieldmate gaps --corpus fieldmate/libraries/corpus_bulk.json --min-n 10
 ```
 
 `--corpus` 与 `--query` 是**并集**关系而非替代：检索结果通常只有摘要，
@@ -566,20 +571,22 @@ python -m fieldmate harvest --only all --no-term-gate --no-download
 |---|---|
 | 裸 CLI | `python -m fieldmate gaps --query-file q.txt --fulltext --format json` |
 | 任意 Python harness | `import fieldmate; fieldmate.mine_gaps(rows, stats, library)` |
-| MCP | `pip install -e ".[mcp]"` + `adapters/mcp/server.py`（7 个工具，三项能力各有入口） |
+| MCP | `pip install -e ".[mcp]"` + `adapters/mcp/server.py`（10 个工具，三项能力各有入口） |
+| **Skill + 子 Agent（推荐）** | `plugins/fieldmate/` 插件源 + `plugins/marketplace.json` 本地市场，装进宿主即自动注册（四步闭环剧本 + 同名子 Agent） |
 | Agent Skill | `adapters/skill/SKILL.md`，抄走即可 |
 
 集成契约见 [docs/DESIGN.md](docs/DESIGN.md) 的 §4（H1–H6）。
 
-### 退出码
+### 退出码（语义按子命令解释，完整表见 [docs/DESIGN.md](docs/DESIGN.md) §5）
 
 | 码 | 含义 |
 |---|---|
 | 0 | 成功（`gaps` 且有 STRONG 级候选） |
-| 1 | 校验失败（没取到论文、schema 不符） |
-| 2 | 数据源失败（arXiv 不可达、PDF 解析全失败） |
-| 3 | 参数错误（argparse 自身） |
+| 1 | 校验失败（没取到论文、schema 不符、预注册不合格） |
+| 2 | 数据源失败（arXiv 不可达、PDF 解析全失败、包数据损坏） |
+| 3 | 参数错误；**`coverage` 下 = 语料存在未覆盖技术线** |
 | **4** | **`gaps`：无 STRONG 级精进点，按纪律不可据此立项** |
+| **5** | **`verify`：有假设被真推翻——负结果不是命令失败，但调用方应当知道** |
 
 ---
 
@@ -600,7 +607,9 @@ python -m fieldmate harvest --only all --no-term-gate --no-download
 - **五槽抽取 + 阅读卡**（`read`）：按阅读目的渐进披露
 - **检索词汇表**（`libraries/queries.json`）：本方向实测有效的检索式 + 污染证据 + PDF 端点对拍
 - **自动语料构建**（`harvest`）：两道相关性闸门 + rejection log，实测拒收率 42%
-- 70 个测试
+- 149 个测试（每个对应一次真实踩坑）+ wheel 冒烟测试（干净安装验收）
+- **数据随包分发**（v0.4.0）：pip install 后立即可用，不再依赖仓库布局
+- **doctor 子命令**：环境体检第一入口；MCP 10 工具；Skill+子 Agent 插件源
 
 **尚未做（Phase 2+）：** 实验预注册的 LLM 增强、concept_graph、期刊画像、多源检索（Semantic Scholar / Crossref）。
 

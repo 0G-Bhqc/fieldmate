@@ -4,10 +4,16 @@
 第三种（被混淆因素支配，当前实验无法区分「方法更差」与「设置不足」）
 是最容易被糊弄过去的，也正是本模块存在的理由。
 """
-from .prereg import (Prereg, Hypothesis, validate, load, save,  # noqa: F401
-                     new_template, prereg_markdown)
-from .verify import (Verdict, HypothesisVerdict, verify, verify_file,  # noqa: F401
-                     verify_markdown)
+from .prereg import (  # noqa: F401
+                     Hypothesis,
+                     Prereg,
+                     load,
+                     new_template,
+                     prereg_markdown,
+                     save,
+                     validate,
+)
+from .verify import HypothesisVerdict, Verdict, verify, verify_file, verify_markdown  # noqa: F401
 
 __all__ = ["Prereg", "Hypothesis", "validate", "load", "save", "new_template",
            "prereg_markdown", "Verdict", "HypothesisVerdict", "verify",

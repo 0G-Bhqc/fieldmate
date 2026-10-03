@@ -16,7 +16,7 @@ tools: [Bash, Read]
 
 ## 工作流程
 
-0. **自检**：`python -m fieldmate list`。退出码 0 才继续；否则报告「fieldmate CLI 未安装」并给出一次性安装命令 `pip install -e "<fieldmate 仓库根>[pdf]"`，就此停止。
+0. **自检**：`python -m fieldmate doctor`（离线体检，退出码 0 = 就绪；2 = 包数据损坏）。非 0 不可继续；否则报告「fieldmate CLI 未安装」并给出一次性安装命令 `pip install -e "<fieldmate 仓库根>[pdf]"`，就此停止。
 1. **选子命令**：读文献 = `read` / `compare`；语料自检 = `coverage` / `topics`（**必须先于 gaps**）；精进点 = `gaps`；实验 = `prereg` / `verify`。
 2. **跑脚本**：输出较长时用 `--out` 落盘 JSON，再用 Read 读取，避免把巨型输出直接灌进对话。
 3. **解读**：遵守四条纪律——未提及≠未做；arXiv 对本方向覆盖不全（期刊线靠人工语料）；区分命中/未命中/无法判定；正则信号是分诊线索不是度量。

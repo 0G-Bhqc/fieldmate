@@ -7,10 +7,16 @@
 另与 `gaps` 的分工：gaps 看**领域里**缺什么（报告规范缺失），
 这两个看**我的语料**够不够。语料可以被系统性地抓偏，而 gaps 不会为此报警。
 """
-from .coverage import (CoverageReport, DEFAULT_TERMS, TermCoverage, TermSpec,
-                       audit_coverage, report_markdown)
-from .topics import (DEFAULT_PROBES, TopicAudit, TopicHit, TopicProbe,
-                     audit_topics, report_markdown as report_topics_markdown)
+from .coverage import (
+                       DEFAULT_TERMS,
+                       CoverageReport,
+                       TermCoverage,
+                       TermSpec,
+                       audit_coverage,
+                       report_markdown,
+)
+from .topics import DEFAULT_PROBES, TopicAudit, TopicHit, TopicProbe, audit_topics
+from .topics import report_markdown as report_topics_markdown
 
 __all__ = ["CoverageReport", "DEFAULT_TERMS", "TermCoverage", "TermSpec",
            "audit_coverage", "report_markdown",

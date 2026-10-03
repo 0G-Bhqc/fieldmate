@@ -161,22 +161,30 @@ L2 时间分数阶反应扩散（arXiv 可自动扩，重启成本最低）→ L
 Phase 0 五件事（更名、打包、编码、git/CI、README）都是小时级工作量，方案已定稿，
 按此执行即可。
 
-## 9. 执行进度（2026-10-02）
+## 9. 执行进度（2026-10-03 更新）
 
-**已完成**：
-- ✅ git 仓库建立（基线 → 更名 → 编码修复，历史干净，缓存不进库）
-- ✅ 更名 fieldmate 全量落地（包、CLI、环境变量 `FIELDMATE_QUERY`、缓存目录
-  `.fieldmate-cache/`、文档），145 测试全绿
-- ✅ stdout/stderr 强制 UTF-8 + ASCII 管道回归测试（宿主 subprocess 在 GBK
-  控制台不再崩）
-- ✅ **skill 包提前交付**（Phase 2 的 ①③ 项）：`plugins/fieldmate/` 为 ZCode
-  插件源（`.zcode-plugin/plugin.json` + `skills/fieldmate/SKILL.md` 四步闭环
-  剧本 + `agents/fieldmate.md` 子 Agent 定义），`plugins/marketplace.json`
-  为本地测试市场
+**Phase 0 全部完成**：
+- ✅ git 仓库建立（历史干净，缓存不进库）
+- ✅ 更名 fieldmate 全量落地，150 测试全绿
+- ✅ stdout/stderr 强制 UTF-8 + ASCII 管道回归测试
+- ✅ **数据随包分发**：libraries/contracts 移入 `fieldmate/`，`importlib.resources`
+  加载（`_paths.py`）；**wheel 冒烟测试**（`scripts/wheel_smoke_test.py`）本地通过
+  ——「pip install 后立刻可用」首次真正成立
+- ✅ 真实测试六轮（宿主视角）抓出并修复：manifest 相对 cache_dir 两层静默丢全文、
+  PDF 代理字符崩溃、`pdf` extra 缺 pymupdf 主力后端、磁盘缓存目录未随更名迁移
 
-**待办**：
-- Phase 0 余项：数据文件进包 + `importlib.resources` + wheel 冒烟测试、GitHub
-  远端与 CI
-- Phase 1/2/3 按 §4 推进（gold set 扩容、OpenAlex 元数据后端、`doctor` 子命令、
-  候选 schema 化）
-- 用户手动完成插件市场添加与安装（见交付说明），试用验收后回填结论
+**Phase 2 大部分完成**：
+- ✅ skill + 子 Agent 插件源（`plugins/fieldmate/`）+ 本地测试市场
+- ✅ `doctor` 子命令（离线体检，`--net` 探测 arXiv）
+- ✅ MCP 补全至 10 工具（prereg_init / evaluate_rules / read_card），去 `_tool` 后缀
+- ✅ `docs/DESIGN.md`（H1–H6 契约 + 逐命令退出码表 + 数据布局 + 扩展规则）
+- ✅ README 对齐实况（四步闭环定位、安装、退出码表、插件形态）
+- ✅ CI workflow（`.github/workflows/ci.yml`：ubuntu+windows × pytest/ruff/wheel 冒烟）
+- ✅ ruff 全绿（126 项清理：死变量、%-format、长行）
+- ✅ read 重复卡片去重（语料与 --path 同篇只出一卡）
+
+**待办（需用户动作或下阶段）**：
+- ⬜ GitHub 远端创建与 push（`gh` 已登录，创建仓库属对外动作，等用户确认执行）
+- ⬜ 插件市场 UI 安装与试用验收（用户手动三步）
+- ⬜ Phase 1：gold set 扩容、缺陷库 L1 扩容、OpenAlex/Crossref 元数据后端
+- ⬜ Phase 3：`--llm-cmd`、候选 schema 化；Phase 4：verify↔pfdenoise 对接、负结果回写

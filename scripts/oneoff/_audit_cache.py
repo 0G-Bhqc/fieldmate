@@ -33,7 +33,7 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from fieldmate.sources.local import parse_pdf_cached          # noqa: E402
+from fieldmate.sources.local import parse_pdf_cached  # noqa: E402
 
 MF = Path("libraries/corpus_bulk.json")
 CACHE = Path(".fieldmate-cache/arxiv_pdfs")

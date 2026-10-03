@@ -16,10 +16,10 @@ description: 相场/几何处理方向的科研助手（fieldmate CLI 的编排�
 ## 第 0 步：环境自检（每个会话先做一次）
 
 ```bash
-python -m fieldmate list
+python -m fieldmate doctor
 ```
 
-- 退出码 0 且列出缺陷库 → 就绪，继续。
+- 退出码 0 且核心项 ✅ → 就绪，继续（`list` 可看缺陷库明细）。
 - 报 `No module named fieldmate` → 提示用户一次性安装：
   `pip install -e "<fieldmate 仓库根>[pdf]"`（仓库根 = 含 `fieldmate/`、`libraries/`、`contracts/` 的目录；`[pdf]` 装 pymupdf（主力）+pypdf（兜底）后端，不装则 `read`/`--fulltext` 只能报「无法解析」），装完重跑自检。
 - 语料与缺陷库路径相对**仓库根**。宿主 cwd 不是仓库根时，先定位它再拼绝对路径：
@@ -45,8 +45,8 @@ python -m fieldmate compare --query-file q.txt --fulltext --format markdown
 ### ② 语料自检（跑 gaps 之前必做，不可跳过）
 
 ```bash
-python -m fieldmate coverage --corpus libraries/corpus_bulk.json   # 术语有没有语料支撑
-python -m fieldmate topics   --corpus libraries/corpus_bulk.json   # 方向分布与空白
+python -m fieldmate coverage --corpus fieldmate/libraries/corpus_bulk.json   # 术语有没有语料支撑
+python -m fieldmate topics   --corpus fieldmate/libraries/corpus_bulk.json   # 方向分布与空白
 ```
 
 - coverage 退出码 3 = 语料存在完全没覆盖的技术线 → 明确告诉用户「这份语料不能支撑该方向的结论」。
@@ -55,7 +55,7 @@ python -m fieldmate topics   --corpus libraries/corpus_bulk.json   # 方向分�
 ### ③ 找精进点
 
 ```bash
-python -m fieldmate gaps --corpus libraries/corpus_bulk.json --min-n 8 --format markdown
+python -m fieldmate gaps --corpus fieldmate/libraries/corpus_bulk.json --min-n 8 --format markdown
 ```
 
 - **退出码 4 = 无 STRONG 级候选：按纪律不得据此立项。** 如实转告，不要粉饰。

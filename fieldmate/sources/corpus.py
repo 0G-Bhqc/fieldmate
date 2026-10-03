@@ -21,14 +21,12 @@ from __future__ import annotations
 
 import json
 import re
-import time
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-
-from .._paths import data_dir as _data
 from typing import Any
 
+from .._paths import data_dir as _data
 from .arxiv import Paper, RateLimiter, collect
 from .fulltext import attach_fulltext, corpus_fingerprint, default_cache
 
@@ -113,12 +111,14 @@ class DomainFilter:
         # 闸门 B：术语强弱
         if self.require_term:
             if len(strong) >= self.min_strong:
-                why = f"通过（强术语 {strong[:2]}，分类 {sorted(cats & CORE_CATEGORIES)[:2] or sorted(cats)[:2]}"
+                why = (f"通过（强术语 {strong[:2]}，"
+                       f"分类 {sorted(cats & CORE_CATEGORIES)[:2] or sorted(cats)[:2]}")
                 if ml:
                     why += f"；⚠ 命中 ML 词 {ml[:2]}，但有强术语+核心分类，保留待人审"
                 return True, why
             if self.allow_weak and weak and has_core and not ml:
-                return True, f"通过（仅弱术语 {weak[:2]}，但分类 {sorted(cats & CORE_CATEGORIES)[:2]} 且无 ML 特征）"
+                return True, (f"通过（仅弱术语 {weak[:2]}，但分类 "
+                              f"{sorted(cats & CORE_CATEGORIES)[:2]} 且无 ML 特征）")
             if weak and ml:
                 return False, f"词法闸门：仅弱术语 {weak[:1]} 且命中 ML 词 {ml[:2]}"
             if weak:
@@ -251,7 +251,8 @@ def harvest_markdown(m: dict[str, Any]) -> str:
     L.append("### 闸门配置\n")
     L.append(f"- 学科门核心分类：{', '.join(m['gate']['core_categories'])}")
     L.append(f"- 直接拒收的 ML 分类：{', '.join(m['gate']['ml_categories'])}")
-    L.append(f"- 词法门：强术语 {m['gate']['n_strong_terms']} 条 + 弱术语 {m['gate']['n_weak_terms']} 条　"
+    L.append(f"- 词法门：强术语 {m['gate']['n_strong_terms']} 条 + "
+             f"弱术语 {m['gate']['n_weak_terms']} 条　"
              f"是否强制命中：{'是' if m['gate']['require_term'] else '否'}\n")
     L.append("### 逐检索式\n")
     L.append("| 检索式 | 抓取 | 收录 | 拒收 |")
@@ -262,6 +263,6 @@ def harvest_markdown(m: dict[str, Any]) -> str:
     rej = [(r, x) for r in m["per_query"] for x in r["rejected"]]
     if rej:
         L.append("\n### 拒收样例（检查闸门有没有误杀）\n")
-        for r, x in rej[:15]:
+        for _r, x in rej[:15]:
             L.append(f"- `{x['id']}` {x['title'][:62]}\n  - 理由：{x['reason']}")
     return "\n".join(L)

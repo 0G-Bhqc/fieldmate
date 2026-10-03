@@ -30,7 +30,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from typing import Any
 
 __all__ = ["Slot", "PaperSlots", "extract_slots", "SECTION_MAP", "ASSUMPTION_MARKERS"]

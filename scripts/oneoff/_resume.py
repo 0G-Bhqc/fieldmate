@@ -19,9 +19,9 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from fieldmate.sources.arxiv import Paper, RateLimiter          # noqa: E402
-from fieldmate.sources.fulltext import BULK_INTERVAL, attach_fulltext   # noqa: E402
-from fieldmate.sources.local import parse_pdf_cached           # noqa: E402
+from fieldmate.sources.arxiv import Paper, RateLimiter  # noqa: E402
+from fieldmate.sources.fulltext import BULK_INTERVAL, attach_fulltext  # noqa: E402
+from fieldmate.sources.local import parse_pdf_cached  # noqa: E402
 
 BATCH = int(sys.argv[1]) if len(sys.argv) > 1 else 0
 SIZE = int(sys.argv[2]) if len(sys.argv) > 2 else 40

@@ -29,7 +29,8 @@ def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
     r = subprocess.run(cmd, capture_output=True, text=True, **kw)
     if r.returncode != 0:
         tail = (r.stdout + r.stderr)[-1500:]
-        raise SystemExit(f"[smoke] 命令失败（exit {r.returncode}）：{' '.join(map(str, cmd))}\n{tail}")
+        raise SystemExit(f"[smoke] 命令失败（exit {r.returncode}）："
+                         f"{' '.join(map(str, cmd))}\n{tail}")
     return r
 
 
@@ -66,7 +67,8 @@ def main() -> int:
         list_out = fm("list", expect=0)
         assert "缺陷库" in list_out, "list 未输出缺陷库统计"
         fm("patterns", "--json", expect=0)
-        print("[smoke]    list / patterns ✓（包内数据可加载）")
+        fm("doctor", expect=0)
+        print("[smoke]    list / patterns / doctor ✓（包内数据可加载）")
 
         print("[smoke] 4/4 prereg 闭环 + 语料 manifest 装载 …")
         prereg = workdir / "smoke-exp.json"

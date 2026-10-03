@@ -18,7 +18,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 API = "http://export.arxiv.org/api/query"
@@ -161,7 +161,8 @@ def _fetch(url: str, limiter: RateLimiter, retries: int = 3, timeout: int = 45) 
 def _parse_entry(el: ET.Element) -> Paper | None:
     def txt(path: str, default: str = "") -> str:
         node = el.find(path, NS)
-        return re.sub(r"\s+", " ", node.text).strip() if (node is not None and node.text) else default
+        return (re.sub(r"\s+", " ", node.text).strip()
+                if (node is not None and node.text) else default)
 
     raw_id = txt("a:id")
     if not raw_id:
@@ -226,7 +227,6 @@ def collect(query: str, target: int = 50, limiter: RateLimiter | None = None,
                       start=start, limiter=limiter, **kw)
         if not page["papers"]:
             break
-        base_ids = {p.id.split("v")[0] for p in page["papers"]}
         for p in page["papers"]:
             out.setdefault(p.id.split("v")[0], p)
         start += len(page["papers"])

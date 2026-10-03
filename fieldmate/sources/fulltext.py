@@ -26,7 +26,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-from .arxiv import BULK_INTERVAL, _UA, Paper, RateLimiter, backoff_seconds
+from .arxiv import BULK_INTERVAL, Paper, RateLimiter, backoff_seconds
 from .local import parse_pdf, parse_pdf_cached
 
 PDF_TMPL = "https://arxiv.org/pdf/{id}"

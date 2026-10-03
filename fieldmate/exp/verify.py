@@ -21,11 +21,11 @@ from __future__ import annotations
 
 import json
 import os
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
-from .prereg import CONFOUND_GUARDS, Prereg, load as load_prereg, save
+from .prereg import Prereg
 
 __all__ = ["Verdict", "HypothesisVerdict", "verify", "verify_file", "verify_markdown"]
 

@@ -16,11 +16,10 @@ from __future__ import annotations
 
 import sys
 from collections import Counter
-from pathlib import Path
 
 sys.path.insert(0, '.')
-from fieldmate.sources.fulltext import load_manifest          # noqa: E402
-from fieldmate.extract.slots import extract_slots            # noqa: E402
+from fieldmate.extract.slots import extract_slots  # noqa: E402
+from fieldmate.sources.fulltext import load_manifest  # noqa: E402
 
 SLOTS = ("Claim", "Mechanism", "Evidence", "Assumption", "Protocol", "Gap")
 

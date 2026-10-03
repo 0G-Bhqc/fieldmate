@@ -32,11 +32,11 @@ echo 'abs:"time-fractional" AND abs:"Allen-Cahn"' > q.txt
 python -m fieldmate compare --query-file q.txt --limit 20 --format markdown
 
 # ① 精进点：读离线批量语料（libraries/corpus_bulk.json），不联网
-python -m fieldmate gaps --corpus libraries/corpus_bulk.json --min-n 8
+python -m fieldmate gaps --corpus fieldmate/libraries/corpus_bulk.json --min-n 8
 
 # 语料自检：先确认语料够用，再谈结论
-python -m fieldmate coverage --corpus libraries/corpus_bulk.json   # 术语够不够
-python -m fieldmate topics   --corpus libraries/corpus_bulk.json   # 方向分布
+python -m fieldmate coverage --corpus fieldmate/libraries/corpus_bulk.json   # 术语够不够
+python -m fieldmate topics   --corpus fieldmate/libraries/corpus_bulk.json   # 方向分布
 
 # ③ 实验核验
 python -m fieldmate prereg --init

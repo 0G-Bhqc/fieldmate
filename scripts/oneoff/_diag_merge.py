@@ -19,7 +19,7 @@ import sys
 from collections import Counter
 
 sys.path.insert(0, '.')
-from fieldmate.sources.fulltext import load_manifest          # noqa: E402
+from fieldmate.sources.fulltext import load_manifest  # noqa: E402
 
 # 行首匹配：可选编号 + 章节关键词，后跟分隔符或词边界
 HEAD_KW = re.compile(
@@ -68,7 +68,7 @@ for p in papers:
 
 print(f"语料 {n} 篇")
 print(f"行首关键词能捞到：{hits_paper} / {n} ({hits_paper/n:.0%})")
-print(f"  现有整行匹配 method 只有 12% —— 差距就是这个\n")
+print("  现有整行匹配 method 只有 12% —— 差距就是这个\n")
 print(f"其中「标题后紧跟正文」（合并证据）：{sum(MERGED.values())} 行")
 for kw, c in MERGED.most_common(12):
     print(f"   {kw:<28}{c}")

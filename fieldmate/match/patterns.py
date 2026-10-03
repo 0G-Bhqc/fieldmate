@@ -17,7 +17,7 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 # 可疑度：absent 类信号比 present 类更容易造成"结论反向"，权重更高
 WEIGHTS = {"absent": 1.0, "present": 0.4, "regex": 0.4}
@@ -81,7 +81,8 @@ def _signal_hits(sig: dict[str, Any], texts: dict[str, str]) -> tuple[bool, str]
     kind = sig["type"]
     if kind == "absent":
         return (not found), ("" if not found else f"意外出现：{sig['pattern'][:48]}")
-    return found, (f"命中：{rx.search(text).group(0)[:40]}" if found else f"未出现：{sig['pattern'][:40]}")
+    return found, (f"命中：{rx.search(text).group(0)[:40]}" if found
+                   else f"未出现：{sig['pattern'][:40]}")
 
 
 def match_paper(paper: Any, library: list[dict[str, Any]],

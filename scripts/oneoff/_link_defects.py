@@ -101,7 +101,7 @@ def main() -> int:
     print(f"  精进点条目 {len(MAP)} 个：{', '.join(MAP)}")
     orphan = [d["id"] for d in defs if not d.get("alert_items")]
     if orphan:
-        print(f"  未挂到任何精进点的缺陷（属正常：它们是实现/工程坑，不是报告规范问题）：")
+        print("  未挂到任何精进点的缺陷（属正常：它们是实现/工程坑，不是报告规范问题）：")
         print("    " + ", ".join(orphan))
     return 0
 

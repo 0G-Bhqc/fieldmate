@@ -26,8 +26,13 @@ _ROOT = Path(__file__).resolve().parents[2]
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
-from fieldmate.compare.matrix import (build_matrix, defect_stats,  # noqa: E402
-                                    matrix_csv, matrix_json, matrix_markdown)
+from fieldmate.compare.matrix import (  # noqa: E402
+    build_matrix,
+    defect_stats,
+    matrix_csv,
+    matrix_json,
+    matrix_markdown,
+)
 from fieldmate.match.patterns import load_library, load_rules, match_all  # noqa: E402
 from fieldmate.sources.arxiv import collect  # noqa: E402
 from fieldmate.sources.local import load_paths  # noqa: E402
@@ -186,6 +191,7 @@ def audit_coverage(corpus: str, fmt: str = "markdown") -> str:
         fmt: markdown | json
     """
     import json as _json
+
     from fieldmate.audit.coverage import audit_coverage, report_markdown
     from fieldmate.sources.fulltext import load_manifest
     try:
@@ -206,6 +212,7 @@ def audit_topics(corpus: str, show: int = 3) -> str:
         show: 每个主题列出前几篇的原文片段。
     """
     import json as _json
+
     from fieldmate.audit.topics import audit_topics, report_markdown
     from fieldmate.sources.fulltext import load_manifest
     try:
@@ -226,6 +233,7 @@ def verify_result(prereg: str, results: str) -> str:
     与「设置不足」，工具拒绝替你下结论。
     """
     import json as _json
+
     from fieldmate.exp.prereg import validate
     from fieldmate.exp.verify import verify
     p, r = Path(prereg), Path(results)
@@ -255,6 +263,7 @@ def prereg_init(exp_id: str = "exp-001", out: str | None = None) -> str:
         out: 写出路径；不填则只返回模板内容。
     """
     import json as _json
+
     from fieldmate.exp.prereg import new_template, save
     d = new_template(exp_id)
     if out:
@@ -274,9 +283,16 @@ def evaluate_rules(gold: str | None = None, cache: str | None = None,
     """
     import json as _json
     from pathlib import Path as _Path
+
     from fieldmate.compare.matrix import REPORT_ITEMS, re_search
-    from fieldmate.eval.prf import (_load_texts, evaluate_items, load_corpus,
-                                    load_goldset, prf_json, prf_markdown)
+    from fieldmate.eval.prf import (
+        _load_texts,
+        evaluate_items,
+        load_corpus,
+        load_goldset,
+        prf_json,
+        prf_markdown,
+    )
     from fieldmate.sources.fulltext import default_cache
 
     goldset = load_goldset(gold)
@@ -293,7 +309,8 @@ def evaluate_rules(gold: str | None = None, cache: str | None = None,
         if int(g["label"]) == 0:
             t = texts.get(g["paper"], "")
             if t and re_search(pats.get(g["item"], "$^"), t):
-                notes.append(f"`{g['item']}` 在 {g['paper']} 上假阳性：{g.get('evidence', '')[:120]}")
+                notes.append(f"`{g['item']}` 在 {g['paper']} 上假阳性："
+                             f"{g.get('evidence', '')[:120]}")
     head = (_json.dumps({"missing_fulltext": missing}, ensure_ascii=False)
             + "\n") if missing else ""
     body = prf_json(prf, n_ok) if fmt == "json" else prf_markdown(prf, n_ok, notes)
@@ -313,6 +330,7 @@ def read_card(paths: list[str], purpose: str = "beat", l2: bool = False,
     """
     import json as _json
     from pathlib import Path as _Path
+
     from fieldmate.extract.disclose import card_markdown, reading_card_l1, reading_card_l2
     from fieldmate.extract.slots import extract_slots
     from fieldmate.sources.arxiv import Paper

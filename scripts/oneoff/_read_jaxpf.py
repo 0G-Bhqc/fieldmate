@@ -24,7 +24,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from fieldmate.sources.local import parse_pdf_cached            # noqa: E402
+from fieldmate.sources.local import parse_pdf_cached  # noqa: E402
 
 PDF = Path(".fieldmate-cache/arxiv_pdfs/2601.06079.pdf")
 

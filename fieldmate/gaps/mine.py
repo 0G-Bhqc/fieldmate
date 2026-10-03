@@ -28,8 +28,7 @@ arXiv 摘要是 150~250 词的极短文本。**没人会在摘要里写 Δt、ε
 
 from __future__ import annotations
 
-import re
-from collections import Counter, defaultdict
+from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -343,7 +342,7 @@ def gaps_markdown(gaps: list[Gap], query: str = "", n_papers: int = 0) -> str:
             L.append("\n> 这份名单是本条精进点**唯一能被逐篇复核的东西**。"
                      "只列有全文的条目 —— 依据只来自看过原文的论文。\n")
         if g.reported_sample:
-            L.append(f"**对照（报告了该项的）**："
+            L.append("**对照（报告了该项的）**："
                      + "、".join(f"`{c['paper_id']}`" for c in g.reported_sample) + "\n")
         L.append("**这条精进点的自身局限**：\n")
         for c in g.caveats:

@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -99,7 +99,7 @@ class Prereg:
         return d
 
     @staticmethod
-    def from_dict(d: dict[str, Any]) -> "Prereg":
+    def from_dict(d: dict[str, Any]) -> Prereg:
         hs = [Hypothesis(**h) for h in d.get("hypotheses", [])]
         return Prereg(id=d["id"], created=d["created"], claim=d["claim"],
                       hypotheses=hs, confounds=d.get("confounds", []),
@@ -245,7 +245,8 @@ def _check_controls(d: dict[str, Any], results: Any) -> list[str]:
 
 def prereg_markdown(d: dict[str, Any], problems: list[str]) -> str:
     L = ["## 预注册校验\n"]
-    L.append(f"> `{d.get('id')}`　注册时间 `{d.get('created')}`　状态 `{d.get('status', 'registered')}`\n")
+    L.append(f"> `{d.get('id')}`　注册时间 `{d.get('created')}`　"
+             f"状态 `{d.get('status', 'registered')}`\n")
     L.append(f"**主张**：{d.get('claim', '(未填)')}\n")
     if d.get("mechanism"):
         L.append(f"**机制**：{d['mechanism']}\n")
@@ -262,7 +263,7 @@ def prereg_markdown(d: dict[str, Any], problems: list[str]) -> str:
     L.append(f"\n**已声明的混淆因素**：{', '.join(d.get('confounds', [])) or '(未填)'}\n")
 
     if problems:
-        L.append("### ❌ 不合格（%d 项）——**不要开始跑实验**\n" % len(problems))
+        L.append(f"### ❌ 不合格（{len(problems)} 项）——**不要开始跑实验**\n")
         for x in problems:
             L.append(f"- {x}")
     else:

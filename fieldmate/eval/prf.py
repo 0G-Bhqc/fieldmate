@@ -26,15 +26,12 @@ gold set 的来源与局限
 from __future__ import annotations
 
 import json
-from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-
-from .._paths import data_dir as _data
 from typing import Any
 
+from .._paths import data_dir as _data
 from ..compare.matrix import REPORT_ITEMS, re_search
-from ..sources.arxiv import Paper
 from ..sources.local import parse_pdf_cached
 
 _CACHE: dict[str, str] = {}
@@ -71,7 +68,8 @@ def _load_texts(pdf_dir: str | Path | None = None,
             _CACHE[pid] = t or ""
         if pid in _CACHE:
             out[pid] = _CACHE[pid]
-    cache = Path(pdf_dir) if pdf_dir else Path(corpus.get("cache_dir", ".fieldmate-cache/arxiv_pdfs"))
+    cache = (Path(pdf_dir) if pdf_dir
+             else Path(corpus.get("cache_dir", ".fieldmate-cache/arxiv_pdfs")))
     if cache.is_dir():
         for f in sorted(cache.glob("*.pdf")):
             if f.stem in _CACHE:
@@ -197,9 +195,8 @@ def prf_markdown(prf: list[ItemPRF], n_papers: int, notes: list[str] | None = No
     L.append("| 报告项 | TP | FP | FN | TN | 精确率 | 召回率 | F1 | 目标域样本 | 判定 |")
     L.append("|---|---|---|---|---|---|---|---|---|---|")
     for r in sorted(prf, key=lambda x: x.precision):
-        L.append("| {} | {} | {} | {} | {} | {:.2f} | {:.2f} | {:.2f} | {} | {} |".format(
-            r.item, r.tp, r.fp, r.fn, r.tn, r.precision, r.recall, r.f1,
-            r.n_target, r.verdict))
+        L.append(f"| {r.item} | {r.tp} | {r.fp} | {r.fn} | {r.tn} | {r.precision:.2f} | "
+                 f"{r.recall:.2f} | {r.f1:.2f} | {r.n_target} | {r.verdict} |")
     if notes:
         L.append("\n### 失效案例（务必写进规则注释）\n")
         for n in notes:

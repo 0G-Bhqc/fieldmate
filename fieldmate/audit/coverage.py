@@ -202,8 +202,8 @@ def report_markdown(rep: CoverageReport) -> str:
              f"覆盖充分 {len(rep.by_verdict('OK'))} 条　"
              f"偏薄 {len(rep.by_verdict('THIN'))} 条　"
              f"无覆盖 {len(rep.by_verdict('NO_COVERAGE'))} 条\n")
-    L.append(f"**可对比篇数 = 标题命中 + 正文命中。**只出现在参考文献区的命中"
-             f"几乎肯定是「引用了别人」，不计入。\n")
+    L.append("**可对比篇数 = 标题命中 + 正文命中。**只出现在参考文献区的命中"
+             "几乎肯定是「引用了别人」，不计入。\n")
     L.append("| 术语 | 可对比 | 标题 | 正文 | 仅参考文献 | 判定 | 说明 |")
     L.append("|---|---|---|---|---|---|---|")
     icon = {"OK": "OK", "THIN": "偏薄", "NO_COVERAGE": "**无覆盖**"}
@@ -223,8 +223,8 @@ def report_markdown(rep: CoverageReport) -> str:
     if thin:
         L.append(f"\n### 偏薄的技术线（<{THIN} 篇，{len(thin)} 条）\n")
         for t in thin:
-            L.append(f"- **{t.term}**：可对比 {t.n_strong} 篇"
-                     f"{'（另有 %d 篇仅参考文献命中）' % t.n_ref_only if t.n_ref_only else ''}")
+            extra = f"（另有 {t.n_ref_only} 篇仅参考文献命中）" if t.n_ref_only else ""
+            L.append(f"- **{t.term}**：可对比 {t.n_strong} 篇{extra}")
         L.append("\n篇数这么少，横向对比的统计功效不足 —— "
                  "「这个领域集体没报 X」可能只是「能查到的就这几篇没报」。")
     L.append("\n### 口径\n")

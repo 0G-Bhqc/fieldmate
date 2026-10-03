@@ -65,7 +65,7 @@ def test_gaps_actually_link_to_defect_library():
     两者之间那层连接如果不显式建模，就永远是空的 —— 报告里少了关键依据，
     却没有任何东西会报错。
     """
-    from fieldmate.gaps.mine import _related_defects, mine_gaps
+    from fieldmate.gaps.mine import _related_defects
     lib = load_library()
     by_id = {d["id"]: d for d in lib}
     linked = {it: _related_defects(by_id, it) for it in
@@ -92,7 +92,8 @@ def test_gap_object_carries_related_defects_end_to_end():
 
 
 def test_rules_json_is_valid():
-    json.loads((ROOT / "fieldmate" / "contracts" / "detection_rules.json").read_text(encoding="utf-8"))
+    rules_p = ROOT / "fieldmate" / "contracts" / "detection_rules.json"
+    json.loads(rules_p.read_text(encoding="utf-8"))
 
 
 # ------------------------------------------------ 缺陷库自洽性
@@ -228,7 +229,7 @@ def test_matrix_marks_undecidable_separately():
     rows = build_matrix(papers, match_all(papers, lib, rules))
     a, b = rows[0], next(r for r in rows if r.paper_id == "b")
     assert a.undecidable, "无全文的论文应有无法判定项"
-    assert not b.has_fulltext is False, "b 有全文"
+    assert b.has_fulltext is not False, "b 有全文"
 
 
 def test_report_includes_all_four_limitations():
@@ -278,6 +279,7 @@ def test_all_report_item_regexes_compile():
     整个包直接 SyntaxError，所有子命令全挂。
     """
     import re as _re
+
     from fieldmate.compare.matrix import REPORT_ITEMS
     for name, pat, did in REPORT_ITEMS:
         _re.compile(pat, _re.IGNORECASE)          # 编译失败会直接抛
@@ -354,6 +356,7 @@ def test_all_subcommands_are_registered():
     """
     import io
     from contextlib import redirect_stdout
+
     from fieldmate.cli import main
     for cmd in ("list", "patterns", "read", "gaps", "compare", "prereg",
                 "verify", "evaluate", "sources", "harvest"):
@@ -640,9 +643,25 @@ def test_parse_pdf_sanitizes_lone_surrogates(tmp_path, monkeypatch):
     assert loc.parse_pdf(pdf)[0] == "clean ✓"
 
 
+def test_collect_read_sources_dedupes_by_resolved_path(tmp_path):
+    """回归（真实测试 2026-10-03）：语料里已有的论文再显式传 --path，
+    以前会出两张一样的阅读卡。同一篇以语料的语义 id 为准，只出一卡。"""
+    from fieldmate.cli import _collect_read_sources
+
+    pdf = tmp_path / "paper.pdf"
+    pdf.write_bytes(b"%PDF-1.4")
+    corpus = {"papers": {"P1-recon": str(pdf)}}
+
+    src = _collect_read_sources(corpus, [str(pdf)])          # 完全相同的路径
+    assert src == [("P1-recon", str(pdf))]
+    # 大小写/等价写法（Windows 下 resolve 后应归一）
+    src = _collect_read_sources(corpus, [str(pdf) + ".nonexist"])
+    assert len(src) == 2                                     # 不同文件仍都保留
+    assert src[0][0] == "P1-recon" and src[1][0] == "paper.pdf"
+
+
 def test_doctor_reports_healthy_environment():
     """doctor：正常环境下核心检查全过、退出码 0；--json 结构化可解析。"""
-    import json as _json
     from fieldmate.cli import main
     assert main(["doctor"]) == 0
     from fieldmate import doctor
@@ -1127,10 +1146,10 @@ def test_degraded_slot_is_disclosed():
 
 
 def test_slots_finds_protocol_sentences_in_real_paper():
+    from fieldmate.eval.prf import load_corpus
     from fieldmate.extract.slots import extract_slots
     from fieldmate.sources.arxiv import Paper
     from fieldmate.sources.local import parse_pdf
-    from fieldmate.eval.prf import load_corpus
     p1 = (load_corpus().get("papers") or {}).get("P1-recon")
     if not p1 or not Path(p1).exists():
         pytest.skip("目标论文不在本机")
@@ -1247,6 +1266,7 @@ def test_verify_untested_when_metric_absent():
     v = verify(_tiny_prereg(), rows, {})
     assert v.hypotheses[0].verdict == "UNTESTED"
     import re as _re
+
     from fieldmate.compare.matrix import REPORT_ITEMS
     for name, pat, did in REPORT_ITEMS:
         _re.compile(pat, _re.IGNORECASE)          # 编译失败会直接抛
@@ -1266,8 +1286,9 @@ def test_report_item_regexes_reject_contextual_false_positives():
     收紧前的实测精确率：报稳定条件 0.00 / 报分辨率 0.25 / 报时间步 0.25。
     这里把最典型的假阳性句固定为负例，防止有人把正则改回宽匹配。
     """
-    from fieldmate.compare.matrix import re_search, REPORT_ITEMS
     import re as _re
+
+    from fieldmate.compare.matrix import REPORT_ITEMS, re_search
     pats = {n: _re.compile(p, _re.IGNORECASE) for n, p, _ in REPORT_ITEMS}
 
     # 物理稳定性 / 训练稳定性 / rollout 稳定性 ≠ 数值稳定性

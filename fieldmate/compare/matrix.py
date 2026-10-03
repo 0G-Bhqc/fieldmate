@@ -17,8 +17,9 @@ from __future__ import annotations
 
 import json
 from collections import Counter, defaultdict
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Any, Iterable
+from typing import Any
 
 from ..match.patterns import Match
 
@@ -26,9 +27,12 @@ from ..match.patterns import Match
 FAMILIES: list[tuple[str, str]] = [
     ("相场/Allen-Cahn",      r"allen[- ]cahn|\bac\b.*\b(phase|相)|\bphase[- ]field|相场|相场法"),
     ("Cahn–Hilliard",        r"cahn[- ]hilliard"),
-    ("反应扩散/图案形成",      r"reaction[- ]diffusion|gray[- ]scott|lengyel|sine[- ]gordon|反应扩散"),
-    ("学习式去噪",            r"\bneural|\btransformer|\bgnn|\bmamba\b|\bdiffusion model|\bnetwork\b|神经网络|深度学习"),
-    ("传统几何滤波",          r"bilateral|laplacian|\bheat method\b|moving least squares|taubin|\bsvd\b|双曲|拉普拉斯平滑"),
+    ("反应扩散/图案形成",
+     r"reaction[- ]diffusion|gray[- ]scott|lengyel|sine[- ]gordon|反应扩散"),
+    ("学习式去噪",
+     r"\bneural|\btransformer|\bgnn|\bmamba\b|\bdiffusion model|\bnetwork\b|神经网络|深度学习"),
+    ("传统几何滤波",
+     r"bilateral|laplacian|\bheat method\b|moving least squares|taubin|\bsvd\b|双曲|拉普拉斯平滑"),
     ("体数据/标量场处理",      r"\bvolume|\bvolumetric|体数据|\bscalar field\b|\bvoxel"),
 ]
 
@@ -269,7 +273,7 @@ def matrix_markdown(rows: list[MatrixRow], stats: dict[str, Any],
         L.append("| 缺陷 | 标题 | 需全文的篇数 |")
         L.append("|---|---|---|")
         for did, c in stats["undecidable"].items():
-            L.append("| `{}` | {} | {} |".format(did, titles.get(did, did), c))
+            L.append(f"| `{did}` | {titles.get(did, did)} | {c} |")
         L.append("\n> 这些**不是**「未命中」，而是「没看过所以判不了」。"
                  "把它们和真命中混在一起，是这类工具最典型的自欺方式。")
 
@@ -294,7 +298,7 @@ def matrix_markdown(rows: list[MatrixRow], stats: dict[str, Any],
 
     L.append("\n## 方法族分布\n")
     for k, v in stats["families"].items():
-        L.append("- {}：{} 篇".format(k, v))
+        L.append(f"- {k}：{v} 篇")
 
     L.append("\n---\n")
     L.append("### 读这份报告的四个限制（务必一并引用）\n")

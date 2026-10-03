@@ -20,9 +20,8 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, '.')
-from fieldmate.sources.arxiv import Paper, RateLimiter                 # noqa: E402
-from fieldmate.sources.fulltext import attach_fulltext, BULK_INTERVAL   # noqa: E402
-from fieldmate.sources.local import parse_pdf_cached                   # noqa: E402
+from fieldmate.sources.arxiv import Paper, RateLimiter  # noqa: E402
+from fieldmate.sources.fulltext import BULK_INTERVAL, attach_fulltext  # noqa: E402
 
 MF = Path("libraries/corpus_bulk.json")
 

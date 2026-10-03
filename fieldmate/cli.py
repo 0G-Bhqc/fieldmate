@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -48,11 +47,10 @@ def _resolve_query(args) -> str:
 
 
 def _cmd_compare(args) -> int:
+    from .compare.matrix import build_matrix, defect_stats, matrix_csv, matrix_json, matrix_markdown
+    from .match.patterns import load_library, load_rules, match_all
     from .sources.arxiv import RateLimiter, collect
     from .sources.local import load_paths
-    from .match.patterns import load_library, load_rules, match_all
-    from .compare.matrix import (build_matrix, defect_stats, matrix_csv,
-                                matrix_json, matrix_markdown)
 
     library = load_library(args.library)
     rules = load_rules(args.rules)
@@ -107,7 +105,7 @@ def _cmd_compare(args) -> int:
                          ensure_ascii=False, indent=2))
         return EXIT_OK
 
-    fp_info = _maybe_fulltext(papers, args, query_desc)
+    _maybe_fulltext(papers, args, query_desc)   # compare 不用语料指纹，只取抓取进度与告警
     matches = match_all(papers, library, rules)
     rows = build_matrix(papers, matches)
     stats = defect_stats(rows, library)
@@ -141,6 +139,7 @@ def _maybe_fulltext(papers, args, query_desc: str) -> dict | None:
                   "摘要这种体裁基本不写它们。结论只会是 WEAK 级。", file=sys.stderr)
         return None
     from pathlib import Path as _P
+
     from .sources.fulltext import attach_fulltext, corpus_fingerprint, default_cache
     cache = _P(args.cache) if args.cache else default_cache()
     print(f"[fulltext] 开始抓取（缓存目录 {cache}）…", file=sys.stderr)
@@ -177,8 +176,8 @@ def _cmd_list(args) -> int:
     被评测的求解器来自 pfdenoise（或任何外部实现）。
     读论文/横向对比/预注册核验才是本包的职责。
     """
-    from .match.patterns import load_library, load_rules
     from .eval.prf import load_goldset
+    from .match.patterns import load_library, load_rules
     lib = load_library()
     rules = load_rules()
     rule_ids = {r["id"] for r in rules.get("rules", [])}
@@ -216,21 +215,42 @@ def _load_results(path):
     return out
 
 
+def _collect_read_sources(corpus: dict, extra_paths: list[str]) -> list[tuple[str, str]]:
+    """read 的输入源合并：目标语料（corpus.json）在前，--path 补充在后。
+
+    按**解析后的真实路径**去重 —— 语料里已有的论文再显式传一次 --path，
+    以前会出两张一样的阅读卡（真实测试 2026-10-03 发现）；同一篇以语料
+    里的 id（P1-recon 这类语义名）为准。
+    """
+    src: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for pid, path in (corpus.get("papers") or {}).items():
+        key = str(Path(path).resolve())
+        if key in seen:
+            continue
+        seen.add(key)
+        src.append((pid, path))
+    for p in extra_paths:
+        key = str(Path(p).resolve())
+        if key in seen:
+            continue
+        seen.add(key)
+        src.append((Path(p).stem, p))
+    return src
+
+
 def _cmd_read(args) -> int:
     """阅读卡：五槽抽取 + 按阅读目的渐进披露。"""
-    from .extract.disclose import card_markdown, reading_card_l1, reading_card_l2
-    from .extract.slots import cross_assumptions, extract_slots
-    from .sources.local import parse_pdf
-    from .sources.arxiv import Paper
-    from .eval.prf import load_corpus
     import json as _json
 
+    from .eval.prf import load_corpus
+    from .extract.disclose import card_markdown, reading_card_l1, reading_card_l2
+    from .extract.slots import cross_assumptions, extract_slots
+    from .sources.arxiv import Paper
+    from .sources.local import parse_pdf
+
     corpus = load_corpus()
-    src = []
-    for pid, path in (corpus.get("papers") or {}).items():
-        src.append((pid, path))
-    for p in (args.path or []):
-        src.append((Path(p).stem, p))
+    src = _collect_read_sources(corpus, args.path or [])
 
     cards, slots_list = [], []
     for pid, path in src:
@@ -268,8 +288,9 @@ def _cmd_read(args) -> int:
 
 def _cmd_prereg(args) -> int:
     """预注册：新建模板 / 校验 / 看必填对照。"""
-    from .exp.prereg import new_template, prereg_markdown, save, validate
     import json as _json
+
+    from .exp.prereg import new_template, prereg_markdown, save, validate
     if args.init:
         d = new_template(args.id or "exp-001")
         if args.out:
@@ -292,8 +313,9 @@ def _cmd_prereg(args) -> int:
 
 def _cmd_verify(args) -> int:
     """结果核验：把实测结果对回预注册。"""
-    from .exp.verify import verify_file, verify_markdown
     import json as _json
+
+    from .exp.verify import verify_file, verify_markdown
     if not args.prereg or not args.results:
         print("[validate] 需要 --prereg 与 --results", file=sys.stderr)
         return EXIT_ARGS
@@ -313,7 +335,14 @@ def _cmd_verify(args) -> int:
 
 def _cmd_evaluate(args) -> int:
     """规则体检：用人工标注的 gold set 算各检测项的精确率/召回率。"""
-    from .eval.prf import _load_texts, evaluate_items, load_corpus, load_goldset, prf_json, prf_markdown
+    from .eval.prf import (
+        _load_texts,
+        evaluate_items,
+        load_corpus,
+        load_goldset,
+        prf_json,
+        prf_markdown,
+    )
     from .sources.fulltext import default_cache
 
     gold = load_goldset(args.gold)
@@ -340,8 +369,7 @@ def _cmd_evaluate(args) -> int:
 
 def _failure_notes(gold, prf, texts) -> list[str]:
     """把被规则误判为「已报告」的案例列出来——这是修规则时最需要看的东西。"""
-    from .compare.matrix import REPORT_ITEMS
-    from .compare.matrix import re_search
+    from .compare.matrix import REPORT_ITEMS, re_search
     pats = {n: p for n, p, _ in REPORT_ITEMS}
     out = []
     for g in gold:
@@ -355,12 +383,12 @@ def _failure_notes(gold, prf, texts) -> list[str]:
 
 def _cmd_gaps(args) -> int:
     """精进点生成：横向对比 -> 可执行精进点候选（含证据强度分级）。"""
-    from .sources.arxiv import RateLimiter, collect
-    from .sources.local import load_paths
-    from .sources.fulltext import load_manifest
-    from .match.patterns import load_library, load_rules, match_all
     from .compare.matrix import build_matrix, defect_stats
     from .gaps.mine import gaps_json, gaps_markdown, mine_gaps
+    from .match.patterns import load_library, load_rules, match_all
+    from .sources.arxiv import RateLimiter, collect
+    from .sources.fulltext import load_manifest
+    from .sources.local import load_paths
 
     library = load_library(args.library)
     rules = load_rules(args.rules)
@@ -423,8 +451,8 @@ def _cmd_topics(args) -> int:
 
     ⚠ 词层面匹配，词义未核验：每条命中都附原文片段，分诊看片段不看计数。
     """
-    from .sources.fulltext import load_manifest
     from .audit.topics import audit_topics, report_markdown
+    from .sources.fulltext import load_manifest
     if not args.corpus:
         print("请用 --corpus 指定检索 manifest（如 libraries/corpus_bulk.json）",
               file=sys.stderr)
@@ -450,8 +478,8 @@ def _cmd_coverage(args) -> int:
     语料可以被系统性地抓偏（实测 arXiv 上 Langevin 相关命中的「11 篇」里
     真正能拿来对比的只有 2~3 篇），而 gaps 不会为此报警。
     """
-    from .sources.fulltext import load_manifest
     from .audit.coverage import audit_coverage, report_markdown
+    from .sources.fulltext import load_manifest
     if not args.corpus:
         print("请用 --corpus 指定检索 manifest（如 libraries/corpus_bulk.json）",
               file=sys.stderr)
@@ -490,7 +518,7 @@ def _cmd_patterns(args) -> int:
             "orphan_rules": sorted(rule_ids - lib_ids),
         }, ensure_ascii=False, indent=2))
         return EXIT_OK
-    print("缺陷库：{} 条；检测规则：{} 条\n".format(len(lib), len(rule_ids)))
+    print(f"缺陷库：{len(lib)} 条；检测规则：{len(rule_ids)} 条\n")
     for d in lib:
         if d["id"] in rule_ids:
             has = "✔"
@@ -511,16 +539,15 @@ def _cmd_patterns(args) -> int:
     missing_lib = sorted(lib_ids - rule_ids - runtime_ids)
     runtime_only = sorted(runtime_ids)
     if missing_rules:
-        print("\n规则引用了库中不存在的缺陷：{}".format(missing_rules))
+        print(f"\n规则引用了库中不存在的缺陷：{missing_rules}")
     if missing_lib:
         print("\n以下缺陷【无】可执行检测规则（该做而没做，R1 风险）：")
         for i in missing_lib:
-            print("  - {}".format(i))
+            print(f"  - {i}")
     else:
         print("\n✔ 所有文本可检测的缺陷都已有可执行规则。")
     if runtime_only:
-        print("\n以下 {} 条是**运行时缺陷**，判据在代码执行里，论文文本查不到：".format(
-            len(runtime_only)))
+        print(f"\n以下 {len(runtime_only)} 条是**运行时缺陷**，判据在代码执行里，论文文本查不到：")
         for i in runtime_only:
             print("  - {}  {}".format(i, by_id.get(i, {}).get("runtime_reason", "")))
     return EXIT_OK

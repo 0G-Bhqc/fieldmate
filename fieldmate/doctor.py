@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import json
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 EXIT_OK = 0
 EXIT_SOURCE = 2      # 核心数据缺失 = 数据源级失败，与 cli 的 EXIT_SOURCE 同语义
@@ -48,16 +48,14 @@ def collect_report(include_net: bool = False) -> tuple[list[Check], dict]:
     enc = getattr(sys.stdout, "encoding", None) or "?"
     try:
         "fieldmate✓".encode(enc or "ascii")
-        enc_ok = True
         enc_note = f"stdout={enc}，样例字符可编码"
     except (UnicodeEncodeError, LookupError):
-        enc_ok = False
         enc_note = (f"stdout={enc} 不能编码样例字符 —— CLI 已在入口强制 UTF-8+replace，"
                     f"宿主侧无需设置 PYTHONIOENCODING")
     checks.append(Check("output_encoding", True, False, enc_note))
 
     # ---- 3) 包内数据资产（fatal）---------------------------------------
-    from ._paths import library_dir, contracts_dir
+    from ._paths import contracts_dir, library_dir
     try:
         lib_dir = library_dir()
         from .match.patterns import load_library, load_rules
@@ -125,7 +123,8 @@ def collect_report(include_net: bool = False) -> tuple[list[Check], dict]:
                                 if ok else "export.arxiv.org 返回异常状态"))
         except Exception as e:                              # noqa: BLE001
             checks.append(Check("arxiv_reachable", False, False,
-                                f"不可达：{type(e).__name__} —— 离线用法（--corpus/--path）不受影响"))
+                                f"不可达：{type(e).__name__} —— "
+                                f"离线用法（--corpus/--path）不受影响"))
 
     return checks, info
 

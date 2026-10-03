@@ -15,7 +15,7 @@ import sys
 from collections import Counter
 
 sys.path.insert(0, '.')
-from fieldmate.sources.fulltext import load_manifest          # noqa: E402
+from fieldmate.sources.fulltext import load_manifest  # noqa: E402
 
 # 真实章节标题的典型形态：短行、以数字或全大写开头
 HEADISH = re.compile(

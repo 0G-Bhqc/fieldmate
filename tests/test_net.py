@@ -22,8 +22,8 @@ from pathlib import Path
 import pytest
 
 from fieldmate.sources.arxiv import (
-    MIN_INTERVAL,
     BULK_INTERVAL,
+    MIN_INTERVAL,
     RateLimiter,
     backoff_seconds,
     is_throttle,

@@ -50,7 +50,7 @@ def structured_backend_available() -> bool:
     if not _USE_LLM_BACKEND:
         return False
     try:
-        import pymupdf4llm                                            # noqa: PLC0415, F401
+        import pymupdf4llm  # noqa: PLC0415, F401
         return True
     except ImportError:
         return False
@@ -93,14 +93,14 @@ def _register_extractors() -> None:
     # 它慢 37 倍，作为默认后端会把「跑一次分析」从秒级拖到分钟级。
     if _USE_LLM_BACKEND:
         try:
-            import pymupdf4llm                                            # noqa: PLC0415
+            import pymupdf4llm  # noqa: PLC0415
             def _llm(path: Path) -> str:
                 return pymupdf4llm.to_markdown(str(path))
             _EXTRACTORS.append(("pymupdf4llm", _llm))
         except ImportError:
             pass
     try:
-        import fitz                                                     # noqa: PLC0415
+        import fitz  # noqa: PLC0415
         # MuPDF 把语法错误直接写进 stdout/stderr。截断 PDF 上会刷几百行，
         # 足以淹没真正的报告输出。必须显式关掉——这是踩过的坑。
         try:
@@ -114,8 +114,9 @@ def _register_extractors() -> None:
     except ImportError:
         pass
     try:
-        from pypdf import PdfReader                                    # noqa: PLC0415
-        import logging                                                 # noqa: PLC0415
+        import logging  # noqa: PLC0415
+
+        from pypdf import PdfReader  # noqa: PLC0415
         logging.getLogger("pypdf").setLevel(logging.ERROR)              # 掐掉 EOF 警告
         def _pypdf(path: Path) -> str:
             rd = PdfReader(str(path))
@@ -124,7 +125,7 @@ def _register_extractors() -> None:
     except ImportError:
         pass
     try:
-        from pdfminer.high_level import extract_text                  # noqa: PLC0415
+        from pdfminer.high_level import extract_text  # noqa: PLC0415
         _EXTRACTORS.append(("pdfminer", lambda p: extract_text(str(p))))
     except ImportError:
         pass
