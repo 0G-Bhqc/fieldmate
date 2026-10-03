@@ -35,11 +35,11 @@ if task == "assumption_refine":
     print(json.dumps({"ok": True, "result": {"candidates": cands}}))
 elif task == "subdomain_filter":
     if "RELEVANT" in req["data"]["title"]:
-        print(json.dumps({"ok": True, "result": {"relevant": True, "reason": "方法与对象一致"}},
-))
+        print(json.dumps({"ok": True,
+                          "result": {"relevant": True, "reason": "方法与对象一致"}}))
     else:
-        print(json.dumps({"ok": True, "result": {"relevant": False, "reason": "词面沾边"}},
-))
+        print(json.dumps({"ok": True,
+                          "result": {"relevant": False, "reason": "词面沾边"}}))
 elif task == "assumption_scan":
     chunks = req["data"]["chunks"]
     cands = []
