@@ -104,10 +104,12 @@ def validate_candidates(result: dict, source_sentences: list[str],
             dropped.append(f"{label}：rationale 为空")
             continue
         if nq in seen_quotes:
+            dropped.append(f"{label}：重复候选（同 quote 已收录）")
             continue
         seen_quotes.add(nq)
         kept.append({"quote": re.sub(r"\s+", " ", quote).strip(),
                      "kind": kind, "confidence": conf,
+                     # 模板要求模型 rationale<=200 字；此处 400 只是兜底截断
                      "rationale": rationale.strip()[:400],
                      "confirmed": False})
         if len(kept) >= _MAX_CANDIDATES:
@@ -183,4 +185,5 @@ def subdomain_check(llm_cmd: str, query: str, title: str, abstract: str,
         raise LLMError(f"subdomain_filter 返回的 relevant 不是布尔值：{relevant!r}")
     if not isinstance(reason, str):
         reason = ""
+    # 模板要求模型 reason<=120 字；此处 200 只是兜底截断
     return relevant, reason.strip()[:200]

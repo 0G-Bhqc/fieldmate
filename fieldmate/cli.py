@@ -5,7 +5,8 @@
 H1 无状态    ：所有持久化走文件系统；进程内不保存会话
 H2 契约显式  ：每个子命令有 --help；stdout 为 JSON 或 Markdown；退出码有意义
               0 成功 / 1 校验失败 / 2 数据源失败 / 3 参数错误（coverage 下 = 语料未覆盖）
-              4 gaps 无 STRONG 级精进点 / 5 verify 有假设被真推翻（逐命令表见 docs/DESIGN.md）
+              4 gaps 无 STRONG 级精进点（harvest 全被拒收同码）
+              5 verify 有假设被真推翻（逐命令表见 docs/DESIGN.md）
 H3 可脱离 LLM：`--llm none` 是默认；全流程纯 stdlib 可跑
 H6 失败显式  ：数据源不可达、库缺失、schema 不符 → 抛错并给建议，不静默降级
 
@@ -138,10 +139,8 @@ def _maybe_fulltext(papers, args, query_desc: str) -> dict | None:
                   "「是否报告 Δt/分辨率/噪声模型」这类信号几乎必然为缺失——"
                   "摘要这种体裁基本不写它们。结论只会是 WEAK 级。", file=sys.stderr)
         return None
-    from pathlib import Path as _P
-
     from .sources.fulltext import attach_fulltext, corpus_fingerprint, default_cache
-    cache = _P(args.cache) if args.cache else default_cache()
+    cache = Path(args.cache) if args.cache else default_cache()
     print(f"[fulltext] 开始抓取（缓存目录 {cache}）…", file=sys.stderr)
     st = attach_fulltext(papers, cache=cache, verbose=True)
     fp = corpus_fingerprint(papers)
@@ -257,6 +256,9 @@ def _cmd_read(args) -> int:
               "协议见 docs/DESIGN.md）；不给 --llm-cmd 时 read 行为保持不变", file=sys.stderr)
         return EXIT_ARGS
 
+    from .extract.refine import refine_assumptions
+    from .llm import LLMError
+
     refined: dict[str, dict] = {}
     cards, slots_list = [], []
     for pid, path in src:
@@ -267,8 +269,6 @@ def _cmd_read(args) -> int:
             continue
         ps = extract_slots(paper, text, per_slot=args.per_slot)
         if args.refine_assumptions:
-            from .extract.refine import refine_assumptions
-            from .llm import LLMError
             try:
                 refined[pid] = refine_assumptions(text, args.llm_cmd)
             except LLMError as e:
@@ -283,14 +283,16 @@ def _cmd_read(args) -> int:
         print("[validate] 没有可用的全文", file=sys.stderr)
         return EXIT_SOURCE
 
-    if args.refine_assumptions and refined:
+    if args.refine_assumptions and refined and args.format == "markdown":
         print("\n## Assumption 候选（LLM 精筛 · 未经人工确认）\n")
         for pid, rr in refined.items():
             print(f"### {pid}")
             if rr.get("error"):
                 print(f"- ⛔ 精筛失败：{rr['error']}")
             elif not rr.get("candidates"):
-                print(f"- （预滤 {rr.get('n_prefiltered', 0)} 句，LLM 未给出合格候选）")
+                scope = (f"预滤 {rr['n_prefiltered']} 句" if rr.get("mode") != "chunk-scan"
+                         else f"扫描 {rr.get('n_chunks', '?')} 个正文块")
+                print(f"- （{scope}，LLM 未给出合格候选）")
             for c in rr.get("candidates", []):
                 print(f"- [{c['kind']}/{c['confidence']}] {c['quote']}")
                 print(f"    - 理由：{c['rationale']}")
@@ -636,13 +638,16 @@ def main(argv: list[str] | None = None) -> int:
             _stream.reconfigure(encoding="utf-8", errors="replace")
         except (AttributeError, OSError):    # 非 TextIO 包装（如测试捕获）或旧运行时
             pass
+    from . import __version__
     p = argparse.ArgumentParser(
         prog="fieldmate",
-        description="fieldmate：跨论文横向对比 + 缺陷库匹配（harness 无关，纯 stdlib）")
+        description="fieldmate：相场/几何处理科研助手（读文献→找精进点→定实验→核结果）")
+    p.add_argument("--version", action="version", version=f"fieldmate {__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     hv = sub.add_parser("harvest", help="自动语料构建：检索 + 相关性闸门 + 下载全文")
-    hv.add_argument("--per-query", type=int, default=10, dest="per_query")
+    hv.add_argument("--per-query", type=int, default=10, dest="per_query",
+                    help="每条检索式最多抓取篇数")
     hv.add_argument("--only", default="high", choices=["high", "all"],
                     help="high=只用验证过的高纯度检索式（默认）；all=含被污染的检索式")
     hv.add_argument("--no-term-gate", action="store_true",
@@ -655,7 +660,7 @@ def main(argv: list[str] | None = None) -> int:
     hv.add_argument("--format", choices=["markdown", "json"], default="markdown")
     hv.set_defaults(func=_cmd_harvest)
 
-    lsub = sub.add_parser("list", help="列出可用的曲面/噪声/求解器")
+    lsub = sub.add_parser("list", help="列出缺陷库、规则覆盖与语料来源")
     lsub.set_defaults(func=_cmd_list)
 
     c = sub.add_parser("compare", help="检索 + 匹配 + 出横向对比矩阵")
@@ -680,14 +685,14 @@ def main(argv: list[str] | None = None) -> int:
     c.set_defaults(func=_cmd_compare)
 
     g = sub.add_parser("gaps", help="从横向对比挖精进点（含证据强度分级）")
-    g.add_argument("--query")
-    g.add_argument("--query-file", dest="query_file")
-    g.add_argument("--path", nargs="*", default=None)
+    g.add_argument("--query", help="arXiv 检索式（含空格/引号建议改用 --query-file）")
+    g.add_argument("--query-file", dest="query_file", help="从文件读检索式，绕开 shell 拆词")
+    g.add_argument("--path", nargs="*", default=None, help="本地 PDF 或目录，与 --corpus 并集")
     g.add_argument("--corpus", default=None,
-                   help="检索 manifest 语料（corpus_bulk.json 等）；"
-                        "只读本地缓存不联网，配合 --fulltext 之外的离线批量分析")
-    g.add_argument("--limit", type=int, default=30)
-    g.add_argument("--interval", type=float, default=3.0)
+                   help="离线批量语料 manifest（fieldmate/libraries/corpus_bulk.json 等）；"
+                        "与 --query 是并集：检索给摘要、缓存给全文")
+    g.add_argument("--limit", type=int, default=30, help="arXiv 检索最多取多少篇")
+    g.add_argument("--interval", type=float, default=3.0, help="arXiv 请求间隔（秒，官方要求>=3）")
     g.add_argument("--min-rate", type=float, default=0.5, help="触发精进点所需的最低缺失率")
     g.add_argument("--min-n", type=int, default=5, help="某族至少多少篇才纳入分析")
     g.add_argument("--format", choices=["markdown", "json"], default="markdown")
@@ -705,7 +710,7 @@ def main(argv: list[str] | None = None) -> int:
                     choices=["implement", "beat", "cite", "build-on"],
                     help="阅读目的，决定展开哪些槽位")
     rd.add_argument("--l2", action="store_true", help="展开 L2 细节（默认只给 L1 一屏）")
-    rd.add_argument("--per-slot", type=int, default=4, dest="per_slot")
+    rd.add_argument("--per-slot", type=int, default=4, dest="per_slot", help="每槽最多候选句数")
     rd.add_argument("--refine-assumptions", action="store_true",
                     help="判断层：用 --llm-cmd 对 Assumption 槽做候选精筛（幻觉闸门在脚本侧）")
     rd.add_argument("--llm-cmd", dest="llm_cmd", default=None,

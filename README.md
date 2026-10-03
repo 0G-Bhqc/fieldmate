@@ -441,7 +441,7 @@ python -m fieldmate verify  --prereg experiments/exp-001.json \
 python -m fieldmate evaluate          # 用人工标注 gold set 算精确率/召回率
 ```
 
-gold set 共 **42** 条 = 目标领域论文 12 条（作者亲读全文、高置信度）+ 其他论文 30 条。
+gold set 共 **55** 条 = 目标领域论文 12 条（作者亲读全文、高置信度）+ 其他论文 43 条。
 
 | 报告项 | 精确率 | 召回率 | 目标域样本 | 判定 |
 |---|---|---|---|---|
@@ -484,21 +484,22 @@ v1 的教训同样值钱：`stability` 在相场/ML/材料论文里绝大多数�
 
 ---
 
-`libraries/defect_patterns.jsonl` —— **17 条，全部是实测验证过的真实数据**，不是示例。
+`fieldmate/libraries/defect_patterns.jsonl` —— **19 条，全部是实测验证过的真实数据**，不是示例。
 
 | class | 条数 | 代表 |
 |---|---|---|
 | `reproducibility` | 5 | 论文 λ 符号反了、Δt 量纲抄错、边缘函数记号歧义 |
-| `evaluation` | 4 | 未报分辨率下限、N2N 一致性被恒等变换奖励、噪声分布不可迁移 |
+| `evaluation` | 5 | 未报分辨率下限、N2N 一致性被恒等变换奖励、噪声分布不可迁移、显式/隐式对比不对齐精度 |
 | `engineering` | 4 | 静默兜底、近邻偏移错向、亚格点量纲错、Hausdorff 单向索引 |
 | `modeling` | 2 | 纯 AC 腐蚀液滴、目标场需 ±1 而非 0/1 |
 | `discretization` | 2 | 时间步量纲、CH 四阶刚性 |
+| `differentiable` | 1 | 可微相场里轨迹长度是独立于算力的约束（逆向 AD 存整条轨迹） |
 
-`verified` 13 条 / `reported` 4 条；`detection` 与 `evidence` 字段零缺失。
+`verified` 15 条 / `reported` 4 条；`detection` 与 `evidence` 字段零缺失。
 
 **知识（是什么）与检测（怎么找）分离：**
-- `libraries/defect_patterns.jsonl` —— 知识，可被引用与讨论
-- `contracts/detection_rules.json` —— 机器可执行的检测规则，可被测试与演进
+- `fieldmate/libraries/defect_patterns.jsonl` —— 知识，可被引用与讨论
+- `fieldmate/contracts/detection_rules.json` —— 机器可执行的检测规则，可被测试与演进
 
 > **入库硬标准：没有可执行检测方式的条目不准入库。**
 > 只写「注意事项」的条目无法被复用，只会变成又一篇需要人读的文档——
@@ -587,7 +588,7 @@ python -m fieldmate harvest --only all --no-term-gate --no-download
 | 1 | 校验失败（没取到论文、schema 不符、预注册不合格） |
 | 2 | 数据源失败（arXiv 不可达、PDF 解析全失败、包数据损坏） |
 | 3 | 参数错误；**`coverage` 下 = 语料存在未覆盖技术线** |
-| **4** | **`gaps`：无 STRONG 级精进点，按纪律不可据此立项** |
+| **4** | **`gaps`：无 STRONG 级精进点；`harvest` 全被闸门拒收（一条没进）** |
 | **5** | **`verify`：有假设被真推翻——负结果不是命令失败，但调用方应当知道** |
 
 ---
@@ -601,20 +602,22 @@ python -m fieldmate harvest --only all --no-term-gate --no-download
 - **manifest 语料装载**（`load_manifest` / `gaps --corpus`）：只读不下载，离线可复现
 - **解析结果磁盘缓存**：按 (size, mtime, max_chars) 失效，实测 240 篇 214.6s → **18.9s**
 - **目标语料清单**（`corpus.json`，人工指定本地 PDF）—— 计算数学方向的主力来源
-- **批量语料**（`corpus_bulk.json`）：30 条检索式 × 247 篇去重
-- 缺陷库加载 + 15 条可执行检测规则
+- **批量语料**（`corpus_bulk.json`）：30 条检索式 × 248 篇去重（fitz 实测 246 篇全文）
+- 缺陷库加载 + 16 条可执行检测规则
 - 横向对比矩阵 + 缺失统计（Markdown / JSON / CSV）
 - 精进点生成 + 证据强度分级（STRONG / MEDIUM / WEAK）
 - **规则体检**（`evaluate`）：人工标注 gold set 55 条 / 8 篇论文，精确率/召回率 + 失效案例
 - **五槽抽取 + 阅读卡**（`read`）：按阅读目的渐进披露
 - **检索词汇表**（`libraries/queries.json`）：本方向实测有效的检索式 + 污染证据 + PDF 端点对拍
-- **自动语料构建**（`harvest`）：两道相关性闸门 + rejection log，实测拒收率 42%
-- 150 个测试（每个对应一次真实踩坑）+ wheel 冒烟测试（干净安装验收）
+- **自动语料构建**（`harvest`）：两道相关性闸门 + rejection log（可另接 `--llm-cmd` 子领域闸门 C）
+- **判断层**（v0.5.0，Phase 3）：`--llm-cmd` 适配层 + `read --refine-assumptions` 双路精筛
+  （句级 + 隐式假设 chunk-scan）+ 幻觉闸门（quote 逐字回对原文）
+- 169 个测试（每个对应一次真实踩坑）+ wheel 冒烟测试（干净安装验收）
 - **数据随包分发**（v0.4.0）：pip install 后立即可用，不再依赖仓库布局
 - **doctor 子命令**：环境体检第一入口；MCP 10 工具；Skill+子 Agent 插件源
 
 **判断层已落地（Phase 3）**：`--llm-cmd` 接宿主任意 LLM 命令（stdin/stdout JSON 协议，
-`--llm none` 默认不接照样可跑）。两个判断任务：`read --refine-assumptions`（Assumption
+不接时纯脚本照样可跑）。两个判断任务：`read --refine-assumptions`（Assumption
 槽双路精筛：句级判断 + 无标记文本的隐式假设分块扫描）与 `harvest --llm-cmd`（子领域
 过滤，判断进 rejection log 可复核）。**幻觉闸门**：LLM 的 quote 必须逐字命中原文，
 否则丢弃记账——判定永远在脚本里。

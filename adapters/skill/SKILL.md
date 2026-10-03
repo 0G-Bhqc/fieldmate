@@ -1,98 +1,103 @@
 ---
 name: fieldmate
-description: 用于计算科学研究（数值 PDE / 几何处理 / 计算成像 / 相场类方向）的文献横向对比、缺陷检查、精进点挖掘与实验核验。当需要：检索并横向对比某个研究方向的论文、找出可做的精进点、检查论文的可复现性与评测协议完整性、判断语料够不够覆盖某个方向、或把假设落成可证伪的实验并核验结果时使用。触发词：横向对比、文献对比、复现性检查、评测协议、精进点、这个方向最近有什么进展、帮我读这篇论文、arXiv 检索、我的语料够吗、验证实验结果。
+description: 相场/几何处理方向的科研助手（fieldmate CLI 的编排剧本）。当需要：横向对比某研究方向的论文、按阅读目的精读一篇论文、挖掘可做的精进点、检查语料够不够支撑结论、为实验写预注册并核验结果时使用。触发词：横向对比、文献对比、精进点、这个方向最近有什么进展、帮我读这篇论文、复现这篇论文、我的语料够吗、预注册、核验实验结果、验证我的假设。
 ---
 
-# fieldmate
+# fieldmate —— 相场/几何处理科研助手
 
-## 这个 Skill 做什么
+四步闭环：**读文献 → 找精进点 → 定实验 → 核结果**。
 
-把「读文献」从**摘要式消费**变成**可复核的判定**。三项能力：
+分工（必须遵守）：
 
-| | 能力 | 入口 | 产出 |
-|---|---|---|---|
-| ① | **找精进点** | `gaps` | 每条含缺失率 × 族、关联缺陷、**出处论文名单**、最小验证实验 |
-| ② | **理解文献** | `compare` / `read` | 横向对比矩阵、五槽候选句、跨论文共同假设 |
-| ③ | **验证实验** | `prereg` / `verify` | SUPPORTED / REFUTED / **INCONCLUSIVE** 三态判定 |
+- **判定归脚本**：所有算术、比对、阈值、三态判定由 `fieldmate` CLI 完成，你不复算、不改判。
+- **判断归你**：CLI 的输出都是**候选**与**线索**，由你组织、解读、提示用户复核。
+- **红线**：不审稿。所有判定只回答「用户的下一步研究怎么做」，不给任何论文打分或下「好/坏」结论。
 
-外加两个**语料自检**（这是另两项工具最容易缺、而你最需要的）：
-
-| | 入口 | 回答什么 |
-|---|---|---|
-| 覆盖审计 | `coverage` | 「我关心的这些术语，语料里有支撑吗？」按**命中出处**分层（标题 / 正文 / 仅参考文献） |
-| 主题审计 | `topics` | 「哪些方向有、哪些几乎没有？」每条命中附**原文片段**，供快速分诊 |
-
-## 怎么用
+## 第 0 步：环境自检（每个会话先做一次）
 
 ```bash
-# 写检索式到文件（避免 shell 拆词，见下方踩坑）
-echo 'abs:"time-fractional" AND abs:"Allen-Cahn"' > q.txt
-
-# ② 横向对比
-python -m fieldmate compare --query-file q.txt --limit 20 --format markdown
-
-# ① 精进点：读离线批量语料（libraries/corpus_bulk.json），不联网
-python -m fieldmate gaps --corpus fieldmate/libraries/corpus_bulk.json --min-n 8
-
-# 语料自检：先确认语料够用，再谈结论
-python -m fieldmate coverage --corpus fieldmate/libraries/corpus_bulk.json   # 术语够不够
-python -m fieldmate topics   --corpus fieldmate/libraries/corpus_bulk.json   # 方向分布
-
-# ③ 实验核验
-python -m fieldmate prereg --init
-python -m fieldmate verify --prereg my.json --results out.json
+python -m fieldmate doctor
 ```
 
-依赖：核心零依赖（纯 stdlib）。`pip install -e .` 后即可用。
-可选：`.[pdf]` / `.[pdfminer]` 增强 PDF 解析；`.[mcp]` 挂成 MCP server。
+- 退出码 0 且核心项 ✅ → 就绪，继续（`list` 可看缺陷库明细）。
+- 报 `No module named fieldmate` → 提示用户一次性安装：
+  `pip install -e "<fieldmate 仓库根>[pdf]"`（仓库根 = fieldmate 项目目录；数据已随包分发在
+  `fieldmate/libraries/`、`fieldmate/contracts/`；`[pdf]` 装 pymupdf（主力）+pypdf（兜底）后端，
+  不装则 `read`/`--fulltext` 只能报「无法解析」），装完重跑自检。
+- 语料与缺陷库在包内 `fieldmate/libraries/`。宿主 cwd 不在仓库根时，先定位仓库根再拼绝对路径：
+  `python -c "import fieldmate,pathlib;print(pathlib.Path(fieldmate.__file__).resolve().parents[1])"`
+- 其余报错 → 原样转告用户，不要猜测原因。
 
-## 什么时候该用它
+## 四步剧本
 
-| 场景 | 怎么做 |
-|---|---|
-| 「这个方向最近有什么进展」 | `compare --query-file q.txt`，看方法族分布 + 年份分布 |
-| 「帮我读这篇论文」 | `read --path x.pdf` 出五槽候选句，再按缺口深挖 |
-| 「我能做什么」 | `gaps --corpus ...`，逐条读**出处名单**，挑一条去做最小验证实验 |
-| 「我要复现这篇」 | 看「报时间步 / 报稳定条件 / 报噪声模型」三列，全是 `—` 就要预期踩坑 |
-| 「我的语料够吗」 | 先 `coverage` 再 `topics`；**不要**跳过这步直接看 `gaps` |
-| 「我的实验做对了吗」 | `prereg` 先注册假设，再 `verify`；INCONCLUSIVE 时不要改指标重跑 |
-
-## 解读报告的四条纪律
-
-1. **「未提及」≠「未做」**。这是关于**可核查性**的结论，不是关于方法质量的结论。
-2. **arXiv 覆盖不全**。计算数学方向大量走期刊投稿（Langevin 方程、damping limit
-   在 arXiv 实测 **0 篇**）。缺失率不能外推到全领域。
-3. **区分「命中」与「无法判定」**。报告里的「另 N 项需全文」表示**没看过所以判不了**，
-   不是「没问题」。
-4. **`gaps` 的 STRONG 现在只表示「有全文支撑」**，不表示「方法更好」。
-   真正能用来决策的是**缺失率 × 族**，不是那个强度标签。
-
-## 常见踩坑（都实测过）
-
-| 坑 | 症状 | 解法 |
-|---|---|---|
-| 检索式被 shell 拆词 | `unrecognized arguments: field AND ...` | 用 `--query-file` |
-| arXiv 限流 429 | 批量下载大面积失败 | 已内置 30/60/120/240s 退避并遵从 `Retry-After`；别调小 `--interval` |
-| 下载到截断的 PDF | 该论文永远读不出正文 | 已修：校验 `%%EOF` 才落 `.pdf` 名 |
-| 命中数高但其实不相关 | 拿「11 篇」当支撑，核实后只有 2 篇 | 用 `topics` / `coverage` 看**命中出处**和**原文片段**，别只看计数 |
-| 把「无法判定」当「未命中」 | 报告显得比实际更糟 | 看缺陷标签列的括号说明 |
-
-## 边界（重要）
-
-**不要**用它替代读原文。它的输出是「值得警惕的信号」，不是「结论」。
-最有价值的一类缺陷（`D-REP-*`）**需要全文甚至源码才能判定**，
-本工具对它们一律标为「无法判定」——这是刻意的，不是缺陷。
-
-同理：**语料覆盖不足时，任何基于它的横向对比都不足以支撑立项。**
-先跑 `coverage` / `topics` 确认语料够用，这一步不能省。
-
-## 扩展缺陷库
-
-判定逻辑在 `contracts/detection_rules.json`，知识在 `libraries/defect_patterns.jsonl`。
-新增一条缺陷时**两者都要改**，且必须写 `detection` 字段——没有可执行检测方式的条目不准入库；
-`evidence` 字段必须能被独立复核（引用论文时给原文出处）。
+### ① 读文献
 
 ```bash
-python -m fieldmate patterns    # 查看哪些缺陷还没有可执行规则
-python -m fieldmate evaluate    # 用 gold set 体检规则的精确率/召回率
+# 五槽阅读卡：先问用户阅读目的，再选 purpose（implement/beat/cite/build-on）
+python -m fieldmate read --path <pdf> --purpose beat --l2
+
+# 横向对比。检索式天然含空格与引号，必须写进文件再传，不要经命令行参数
+printf '%s' 'abs:"Allen-Cahn" AND abs:"surface reconstruction"' > q.txt
+python -m fieldmate compare --query-file q.txt --fulltext --format markdown
 ```
+
+- `read` 的输出是**候选句**：Protocol 槽最可靠；Assumption 槽在期刊论文上常为空
+  （作者不用显式措辞）——此时可加 `--refine-assumptions --llm-cmd "<命令>"` 走
+  判断层找**隐式假设**，输出会标注「未经人工确认」，逐条给用户过目。
+- 不带 `--fulltext` 时矩阵里「报分辨率/报时间步」等列几乎全为「—」——必须说明这只代表**摘要层面**，不是论文真没写。
+
+### ② 语料自检（跑 gaps 之前必做，不可跳过）
+
+```bash
+python -m fieldmate coverage --corpus fieldmate/libraries/corpus_bulk.json   # 术语有没有语料支撑
+python -m fieldmate topics   --corpus fieldmate/libraries/corpus_bulk.json   # 方向分布与空白
+```
+
+- coverage 退出码 3 = 语料存在完全没覆盖的技术线 → 明确告诉用户「这份语料不能支撑该方向的结论」。
+- `topics` 每条命中附原文片段：引用计数前先抽读片段（词面命中≠真在做同一件事）。
+
+### ③ 找精进点
+
+```bash
+python -m fieldmate gaps --corpus fieldmate/libraries/corpus_bulk.json --min-n 8 --format markdown
+```
+
+- **退出码 4 = 无 STRONG 级候选：按纪律不得据此立项。** 如实转告，不要粉饰。
+- 每条候选自带「出处论文名单 + 缺失项的全文占比」；转述时必须带上这两样，否则证据强度失真。
+
+### ④ 定实验与核结果
+
+```bash
+python -m fieldmate prereg --init --out experiments/exp-001.json   # 生成模板，协助用户填写
+python -m fieldmate verify --prereg experiments/exp-001.json --results results.json
+```
+
+- 核验是**三态**：SUPPORTED / REFUTED / **INCONCLUSIVE**（存在已知混淆因素，当前实验区分不了「方法差」与「设置不足」）。
+- **退出码 5 = 有假设被真推翻**：这不是工具失败。如实报告负结果，并提醒用户先对照缺陷库 D-REP-* 检查实现，**不要改指标或换基线**。
+
+## 退出码表（按此分支，不要凭 stdout 猜）
+
+| 码 | 含义 | 你该做什么 |
+|---|---|---|
+| 0 | 成功（gaps：有 STRONG 级候选） | 正常解读输出 |
+| 1 | 校验失败（没取到论文 / schema 不符） | 检查参数与文件路径后重试 |
+| 2 | 数据源失败（arXiv 不可达 / PDF 解析全败） | 改用 `--path` 本地语料或 `--corpus` |
+| 3 | 参数错误；**coverage 子命令中 = 语料有未覆盖线**（语义重叠为已知问题） | 查 `--help`；coverage 场景下如实下调结论强度 |
+| 4 | gaps：无 STRONG 级精进点 | 不得据此立项，转告用户 |
+| 5 | verify：有假设被真推翻 | 如实报告负结果，阻止改指标重跑 |
+
+## 解读纪律（转述结果时必须保持）
+
+1. **「未提及」≠「未做」**——结论关于**可核查性**，不是方法质量。
+2. **arXiv 覆盖不全**——本方向（相场曲面重建/网格去噪）大量论文只走期刊，主力语料是人工指定的 `corpus.json`；「Langevin + Allen-Cahn」在 arXiv 实测 0 篇，别用 arXiv 命中数断言「方向是空的」。
+3. **区分「命中/未命中/无法判定」**——「另 N 项需全文」= 没看过所以判不了，不是「没问题」。
+4. 检测规则的精确率在 0.4~1.0 之间、gold set 仍小——输出是**分诊线索**，不是度量；引用具体缺失率前先跑 `evaluate`。
+
+## 本 Skill 的边界
+
+- 不替代读原文：最有价值的一类缺陷（D-REP-*）需要全文甚至源码才能判定，CLI 对它们一律标「无法判定」——这是刻意的。
+- 语料覆盖不足时，任何横向对比都不足以支撑立项；第②步不能省。
+- 判断层（v0.5.0）已落地：`read --refine-assumptions --llm-cmd "<命令>"` 精筛 Assumption
+  槽（显式措辞走句级判断、期刊论文的隐式假设走分块扫描）、`harvest --llm-cmd` 做子领域
+  过滤。宿主 LLM 只出候选：quote 必须逐字命中原文（脚本侧幻觉闸门），最终由人工复核。
+  没有 --llm-cmd 时，这些判断由你按上述纪律人工完成。

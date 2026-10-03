@@ -692,6 +692,18 @@ def test_install_skill_copies_skillmd_into_workspace(tmp_path):
     assert text == src, "挂载副本与插件源不一致"
 
 
+def test_cli_version_flag(capsys):
+    """--version 输出版本号并以 0 退出（argparse version action）。"""
+    import pytest
+
+    from fieldmate import __version__
+    from fieldmate.cli import main
+    with pytest.raises(SystemExit) as ei:
+        main(["--version"])
+    assert ei.value.code == 0
+    assert __version__ in capsys.readouterr().out
+
+
 def test_doctor_reports_healthy_environment():
     """doctor：正常环境下核心检查全过、退出码 0；--json 结构化可解析。"""
     from fieldmate.cli import main

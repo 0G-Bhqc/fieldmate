@@ -41,12 +41,20 @@ def main() -> int:
                     help="宿主类型（决定 .zcode/ 或 .claude/，默认 zcode）")
     args = ap.parse_args()
 
-    assert SKILL_SRC.is_file(), f"找不到插件源里的 SKILL.md：{SKILL_SRC}"
-    text = SKILL_SRC.read_text(encoding="utf-8")
-    assert text.startswith("---") and "name: fieldmate" in text.split("---")[1], \
-        "SKILL.md frontmatter 不符（name: fieldmate）"
+    def fail(msg: str) -> int:
+        print(f"[install] ⛔ {msg}", file=sys.stderr)
+        return 2
 
-    dst_dir = Path(args.workspace).resolve() / HOST_DIRS[args.host] / "skills" / "fieldmate"
+    ws = Path(args.workspace).resolve()
+    if not ws.is_dir():
+        return fail(f"工作区不存在：{ws}")
+    if not SKILL_SRC.is_file():
+        return fail(f"找不到插件源里的 SKILL.md：{SKILL_SRC}（安装不完整？）")
+    text = SKILL_SRC.read_text(encoding="utf-8")
+    if not (text.startswith("---") and "name: fieldmate" in text.split("---")[1]):
+        return fail("SKILL.md frontmatter 不符（name: fieldmate）")
+
+    dst_dir = ws / HOST_DIRS[args.host] / "skills" / "fieldmate"
     dst_dir.mkdir(parents=True, exist_ok=True)
     dst = dst_dir / "SKILL.md"
     changed = (not dst.exists()) or dst.read_text(encoding="utf-8") != text

@@ -1,6 +1,6 @@
 # ------------------------------------------------ Phase 3 判断层（--llm-cmd）
 # 假 LLM 命令：覆盖协议全路径（成功 / 任务被拒 / 坏 JSON / 非零退出 / 超时），
-# 以及两条真实任务的固定回答。行为经 FAKE_MODE 环境变量切换。
+# 以及三条真实任务的固定回答。行为由模板内 @MODE@ 占位符决定（纯 ASCII 输出）。
 import json
 import sys
 from pathlib import Path
@@ -176,14 +176,13 @@ def test_subdomain_check_both_branches(fake_llm_cmd, monkeypatch):
     assert ok2 is False and why2 == "词面沾边"
 
 
-def test_subdomain_check_invalid_relevant_type(tmp_path, monkeypatch):
+def test_subdomain_check_invalid_relevant_type(tmp_path):
     from fieldmate.extract.refine import subdomain_check
     from fieldmate.llm import LLMError
     script = tmp_path / "bad.py"
     script.write_text('import json,sys\n'
                       'print(json.dumps({"ok": True, "result": {"relevant": "yes"}}))',
                       encoding="utf-8")
-    monkeypatch.delenv("FAKE_MODE", raising=False)
     with pytest.raises(LLMError, match="布尔"):
         subdomain_check(f'"{sys.executable}" "{script}"', "q", "t", "a")
 

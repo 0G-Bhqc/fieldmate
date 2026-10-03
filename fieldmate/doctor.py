@@ -80,7 +80,18 @@ def collect_report(include_net: bool = False) -> tuple[list[Check], dict]:
         info["manifests"] = manifests
         checks.append(Check("bulk_manifests", True, False,
                             "包内 manifest：" + ", ".join(manifests)))
-        _ = contracts_dir  # contracts_dir 在 load_rules 里已被间接验证
+        qpath = lib_dir / "queries.json"
+        from .sources.corpus import _load_queries
+        n_q = len(_load_queries(qpath, None))
+        checks.append(Check("query_lexicon", n_q > 0, True,
+                            f"检索词汇表：{n_q} 条实测检索式"))
+        prompts_dir = lib_dir.parent / "prompts"
+        n_prompts = len(list(prompts_dir.glob("*.md"))) if prompts_dir.is_dir() else 0
+        checks.append(Check("llm_prompts", n_prompts >= 3, True,
+                            f"判断层任务模板：{n_prompts} 份"
+                            + ("" if n_prompts >= 3 else "（--llm-cmd 判断层不可用）")))
+        info["n_prompts"] = n_prompts
+        _ = contracts_dir  # load_rules 间接验证；保留引用以免误删导入
     except Exception as e:                                  # noqa: BLE001
         checks.append(Check("data_assets", False, True, f"包内数据加载失败：{e}"))
 
@@ -115,7 +126,7 @@ def collect_report(include_net: bool = False) -> tuple[list[Check], dict]:
             import urllib.request
             req = urllib.request.Request(
                 "https://export.arxiv.org/api/query?search_query=all:fieldmate&max_results=1",
-                headers={"User-Agent": "fieldmate-doctor/0.4"})
+                headers={"User-Agent": f"fieldmate-doctor/{__version__}"})
             with urllib.request.urlopen(req, timeout=NET_TIMEOUT) as resp:
                 ok = resp.status == 200
             checks.append(Check("arxiv_reachable", ok, False,
@@ -140,8 +151,8 @@ def report_markdown(checks: list[Check], info: dict) -> str:
         lines.append("> ⛔ 存在致命失败：包数据不完整，多数子命令不可用。"
                      "请重装：pip install --force-reinstall \".[pdf]\"")
     else:
-        lines.append("> ✅ 核心数据完整。⚠️ 项只影响部分能力，按需安装可选依赖。")
-    _ = info
+        lines.append(f"> ✅ 核心数据完整（fieldmate {info.get('fieldmate', '?')}）。"
+                     "⚠️ 项只影响部分能力，按需安装可选依赖。")
     return "\n".join(lines)
 
 

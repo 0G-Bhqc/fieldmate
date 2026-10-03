@@ -97,4 +97,7 @@ python -m fieldmate verify --prereg experiments/exp-001.json --results results.j
 
 - 不替代读原文：最有价值的一类缺陷（D-REP-*）需要全文甚至源码才能判定，CLI 对它们一律标「无法判定」——这是刻意的。
 - 语料覆盖不足时，任何横向对比都不足以支撑立项；第②步不能省。
-- 判断类工作（Assumption 槽精筛、子领域过滤、最小实验设计）当前由你按上述纪律人工完成；候选 schema 化的宿主回填协议见 docs/PLAN_v2.md Phase 3。
+- 判断层（v0.5.0）已落地：`read --refine-assumptions --llm-cmd "<命令>"` 精筛 Assumption
+  槽（显式措辞走句级判断、期刊论文的隐式假设走分块扫描）、`harvest --llm-cmd` 做子领域
+  过滤。宿主 LLM 只出候选：quote 必须逐字命中原文（脚本侧幻觉闸门），最终由人工复核。
+  没有 --llm-cmd 时，这些判断由你按上述纪律人工完成。

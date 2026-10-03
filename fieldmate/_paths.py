@@ -10,7 +10,7 @@ FileNotFoundError（「pip install 后立刻可用」是本项目的生死线，
 
 importlib.resources 对 editable 与 wheel 安装给出同一个包内真实路径，
 因此默认路径只认包内位置；调用方显式传入的
---library / --rules / --gold / --gold / --corpus 永远优先于默认值。
+--library / --rules / --gold / --corpus 永远优先于默认值。
 """
 from __future__ import annotations
 

@@ -10,7 +10,7 @@
   本模块只负责「把候选安全地拿回来」——结构校验、幻觉闸门由各任务
   的调用方负责（如 ``extract.refine.validate_candidates``）。
 
-PROTOCOL（v0.4.0 起生效）
+PROTOCOL（v0.5.0 起生效）
 ------------------------
 命令从 **stdin** 读入一个 JSON 对象::
 
