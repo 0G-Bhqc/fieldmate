@@ -47,6 +47,8 @@ python -m fieldmate gaps --query-file q.txt --fulltext
 
 # 5) ★ 论文阅读卡：按阅读目的渐进披露（五槽抽取）
 python -m fieldmate read --purpose beat --l2
+python -m fieldmate read --purpose beat --l2 \
+       --refine-assumptions --llm-cmd "<宿主 LLM 命令>"   # 判断层：隐式假设精筛
 
 # 6) ★★ 实验预注册与核验（跑实验前后各一次）
 python -m fieldmate prereg --init --out experiments/exp-001.json
@@ -611,7 +613,13 @@ python -m fieldmate harvest --only all --no-term-gate --no-download
 - **数据随包分发**（v0.4.0）：pip install 后立即可用，不再依赖仓库布局
 - **doctor 子命令**：环境体检第一入口；MCP 10 工具；Skill+子 Agent 插件源
 
-**尚未做（Phase 2+）：** 实验预注册的 LLM 增强、concept_graph、期刊画像、多源检索（Semantic Scholar / Crossref）。
+**判断层已落地（Phase 3）**：`--llm-cmd` 接宿主任意 LLM 命令（stdin/stdout JSON 协议，
+`--llm none` 默认不接照样可跑）。两个判断任务：`read --refine-assumptions`（Assumption
+槽双路精筛：句级判断 + 无标记文本的隐式假设分块扫描）与 `harvest --llm-cmd`（子领域
+过滤，判断进 rejection log 可复核）。**幻觉闸门**：LLM 的 quote 必须逐字命中原文，
+否则丢弃记账——判定永远在脚本里。
+
+**尚未做（Phase 1/4）：** concept_graph、期刊画像、多源检索（OpenAlex/Crossref）、负结果自动回写缺陷库。
 
 **已知局限（不要绕过它们引用本工具的结论）：**
 1. **arXiv 对计算数学方向基本无效**（见上节实测表）——目标语料靠 `corpus.json` 人工指定

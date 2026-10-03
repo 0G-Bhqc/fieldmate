@@ -2,7 +2,7 @@
 
 核心保证：**不接 LLM 也能跑**。LLM 是可插拔的外部依赖，不是前置条件。
 """
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 from .compare.matrix import (  # noqa: F401
                              MatrixRow,

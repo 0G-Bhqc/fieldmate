@@ -160,7 +160,7 @@ def _cmd_harvest(args) -> int:
     m = harvest(per_query=args.per_query, only=args.only,
                 require_term=not args.no_term_gate,
                 do_download=not args.no_download, interval=args.interval,
-                out=args.out, verbose=True)
+                out=args.out, verbose=True, llm_cmd=args.llm_cmd)
     if args.format == "json":
         print(json.dumps(m, ensure_ascii=False, indent=2))
     else:
@@ -252,6 +252,12 @@ def _cmd_read(args) -> int:
     corpus = load_corpus()
     src = _collect_read_sources(corpus, args.path or [])
 
+    if args.refine_assumptions and not args.llm_cmd:
+        print("[validate] --refine-assumptions 需要 --llm-cmd（宿主 LLM 命令，"
+              "协议见 docs/DESIGN.md）；不给 --llm-cmd 时 read 行为保持不变", file=sys.stderr)
+        return EXIT_ARGS
+
+    refined: dict[str, dict] = {}
     cards, slots_list = [], []
     for pid, path in src:
         text, _ = parse_pdf(path)
@@ -260,6 +266,14 @@ def _cmd_read(args) -> int:
             print(f"[skip] {pid}：无法解析 {path}", file=sys.stderr)
             continue
         ps = extract_slots(paper, text, per_slot=args.per_slot)
+        if args.refine_assumptions:
+            from .extract.refine import refine_assumptions
+            from .llm import LLMError
+            try:
+                refined[pid] = refine_assumptions(text, args.llm_cmd)
+            except LLMError as e:
+                print(f"[refine] {pid}：{e}", file=sys.stderr)
+                refined[pid] = {"error": str(e), "candidates": [], "dropped": []}
         c1 = reading_card_l1(ps)
         if args.l2:
             c1.update(reading_card_l2(ps))
@@ -269,11 +283,28 @@ def _cmd_read(args) -> int:
         print("[validate] 没有可用的全文", file=sys.stderr)
         return EXIT_SOURCE
 
+    if args.refine_assumptions and refined:
+        print("\n## Assumption 候选（LLM 精筛 · 未经人工确认）\n")
+        for pid, rr in refined.items():
+            print(f"### {pid}")
+            if rr.get("error"):
+                print(f"- ⛔ 精筛失败：{rr['error']}")
+            elif not rr.get("candidates"):
+                print(f"- （预滤 {rr.get('n_prefiltered', 0)} 句，LLM 未给出合格候选）")
+            for c in rr.get("candidates", []):
+                print(f"- [{c['kind']}/{c['confidence']}] {c['quote']}")
+                print(f"    - 理由：{c['rationale']}")
+            for d in rr.get("dropped", []):
+                print(f"  - ⚠ 丢弃：{d}")
+        print("\n> 判定归脚本：以上 quote 已逐字对回原文（幻觉剔除），kind/置信度仍需人读确认。")
+
     if args.format == "json":
         payload = {"cards": cards}
         shared = cross_assumptions(slots_list)
         if shared:
             payload["shared_assumptions"] = shared
+        if refined:
+            payload["refined_assumptions"] = refined
         print(_json.dumps(payload, ensure_ascii=False, indent=2))
     else:
         print(card_markdown(cards, purpose=args.purpose, l2=args.l2))
@@ -617,6 +648,8 @@ def main(argv: list[str] | None = None) -> int:
     hv.add_argument("--no-term-gate", action="store_true",
                     help="关掉词法闸门（只保留学科闸门）—— 用来测闸门的贡献")
     hv.add_argument("--no-download", action="store_true", help="只抓取不下全文")
+    hv.add_argument("--llm-cmd", dest="llm_cmd", default=None,
+                    help="可选闸门 C：LLM 子领域过滤（判断进 rejection log，可复核）")
     hv.add_argument("--interval", type=float, default=3.0, help="arXiv 请求间隔（秒）")
     hv.add_argument("--out", default=None)
     hv.add_argument("--format", choices=["markdown", "json"], default="markdown")
@@ -673,6 +706,10 @@ def main(argv: list[str] | None = None) -> int:
                     help="阅读目的，决定展开哪些槽位")
     rd.add_argument("--l2", action="store_true", help="展开 L2 细节（默认只给 L1 一屏）")
     rd.add_argument("--per-slot", type=int, default=4, dest="per_slot")
+    rd.add_argument("--refine-assumptions", action="store_true",
+                    help="判断层：用 --llm-cmd 对 Assumption 槽做候选精筛（幻觉闸门在脚本侧）")
+    rd.add_argument("--llm-cmd", dest="llm_cmd", default=None,
+                    help="宿主 LLM 命令（stdin/stdout JSON 协议，见 docs/DESIGN.md；不填则纯脚本）")
     rd.add_argument("--format", choices=["markdown", "json"], default="markdown")
     rd.set_defaults(func=_cmd_read)
 

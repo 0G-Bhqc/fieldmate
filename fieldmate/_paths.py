@@ -36,3 +36,11 @@ def library_dir() -> Path:
 
 def contracts_dir() -> Path:
     return data_dir("contracts")
+
+
+def prompt_path(name: str) -> Path:
+    """包内任务模板（fieldmate/prompts/<name>），供 --llm-cmd 判断层使用。"""
+    p = data_dir("prompts") / name
+    if not p.is_file():
+        raise FileNotFoundError(f"包内任务模板缺失：{p}（安装不完整？）")
+    return p

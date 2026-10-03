@@ -41,7 +41,9 @@ printf '%s' 'abs:"Allen-Cahn" AND abs:"surface reconstruction"' > q.txt
 python -m fieldmate compare --query-file q.txt --fulltext --format markdown
 ```
 
-- `read` 的输出是**候选句**：Protocol 槽最可靠，Assumption 槽最弱（常为空），逐条给用户过目。
+- `read` 的输出是**候选句**：Protocol 槽最可靠；Assumption 槽在期刊论文上常为空
+  （作者不用显式措辞）——此时可加 `--refine-assumptions --llm-cmd "<命令>"` 走
+  判断层找**隐式假设**，输出会标注「未经人工确认」，逐条给用户过目。
 - 不带 `--fulltext` 时矩阵里「报分辨率/报时间步」等列几乎全为「—」——必须说明这只代表**摘要层面**，不是论文真没写。
 
 ### ② 语料自检（跑 gaps 之前必做，不可跳过）

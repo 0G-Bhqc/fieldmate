@@ -13,7 +13,10 @@
 LLM 是可插拔的外部依赖，不是前置条件。PDF 解析是**可选**增强（`.[pdf]`），
 装不上时工具诚实报告「无法解析」，绝不静默编造。
 
-**② 判定归脚本，判断归 Prompt。** 所有算术、比对、schema 校验、阈值判定都在
+**② 判定归脚本，判断归 Prompt。** 引申教训（CI 三次抓到同款）：
+**一切会向 stdout 打中文的入口脚本，第一件事是把 stdout/stderr reconfigure 成
+UTF-8+replace**——Windows 宿主的管道编码是 gbk/cp1252，不防护的脚本第一个
+print 就崩，且症状与「工具坏了」无法区分。 所有算术、比对、schema 校验、阈值判定都在
 确定性代码里且有测试（150）；LLM/宿主只能产出**候选**，不能产出**判定**。
 理由：Harness 里的 LLM 每次跑都可能不一样，让模型判断「差 5% 还是 50%」
 就失去可复现性——可复现是科研基础设施的最低要求。
@@ -95,9 +98,15 @@ python -m fieldmate gaps --corpus <manifest> --format json
 
 ## 7. 版本与兼容
 
-- **v0.4.0**（当前）：数据随包（H4）+ `doctor` + MCP 10 工具 + 退出码常量化；
+- **v0.5.0**（当前）：**判断层落地**——`--llm-cmd` 适配层（stdin/stdout JSON 协议，
+  见 `fieldmate/llm/__init__.py`）、`read --refine-assumptions` 双路精筛
+  （句级 refine + 无标记文本的 chunk-scan）、harvest 可选闸门 C（LLM 子领域过滤）；
+  任务模板随包分发在 `fieldmate/prompts/`。**幻觉闸门**：LLM 返回的 quote 必须
+  逐字命中喂给它的文本（空白归一后子串匹配），否则丢弃并记账——LLM 永远不能
+  引入正文里不存在的话。
+- **v0.4.0**：数据随包（H4）+ `doctor` + MCP 10 工具 + 退出码常量化；
   更名 `fieldmate`（包、CLI、环境变量 `FIELDMATE_QUERY`、缓存 `.fieldmate-cache/`）。
 - v0.3.0 更名前的 `research-harness`/`rharness` 不再兼容；旧的
   `.rharness-cache/` 仍被 `.gitignore` 识别以防历史工作区误入库。
-- 计划内未实现：`--llm-cmd` 适配层（协议见 `fieldmate/llm/__init__.py`），
-  concept_graph，期刊画像，多源检索（OpenAlex/Crossref）。
+- 计划内未实现：concept_graph，期刊画像，多源检索（OpenAlex/Crossref），
+  负结果自动回写缺陷库。

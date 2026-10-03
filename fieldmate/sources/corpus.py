@@ -95,9 +95,12 @@ class DomainFilter:
     def check(self, paper: Paper) -> tuple[bool, str]:
         cats = _read_categories(paper)
         low = f"{paper.title} {paper.abstract}".lower()
-        strong = [t for t in STRONG_TERMS if re.search(t, low)]
-        weak = [t for t in WEAK_TERMS if re.search(t, low)]
-        ml = [f for f in _ML_FLAGS if re.search(f, low)]
+        # IGNORECASE 必须加：STRONG_TERMS 里 8 条带大写专有名词的模式
+        # （Allen[- ]Cahn / Caputo / Mittag[- ]Leffler 等）在 lower 后的文本上
+        # 从未匹配过——等于强术语表一直缺了三分之一（Phase 3 测试抓到）。
+        strong = [t for t in STRONG_TERMS if re.search(t, low, re.IGNORECASE)]
+        weak = [t for t in WEAK_TERMS if re.search(t, low, re.IGNORECASE)]
+        ml = [f for f in _ML_FLAGS if re.search(f, low, re.IGNORECASE)]
         has_core = bool(cats & CORE_CATEGORIES)
         ml_only = bool(cats & ML_CATEGORIES) and not has_core
 
@@ -159,7 +162,8 @@ def harvest(out: str | Path | None = None, per_query: int = 10,
             only: str = "high", require_term: bool = True,
             do_download: bool = True, interval: float = 3.0,
             queries_path: str | Path | None = None,
-            cache: str | Path | None = None, verbose: bool = True) -> dict[str, Any]:
+            cache: str | Path | None = None, verbose: bool = True,
+            llm_cmd: str | None = None) -> dict[str, Any]:
     """按检索式自动抓取 + 过闸门 + 下载全文 + 写出带出处的语料清单。"""
     qs = _load_queries(queries_path, only)
     if not qs:
@@ -190,6 +194,22 @@ def harvest(out: str | Path | None = None, per_query: int = 10,
                 continue
             seen.add(base)
             ok, why = flt.check(p)
+            if ok and llm_cmd:
+                # 闸门 C（可选）：LLM 子领域过滤。判断归 LLM，记账归脚本——
+                # 被拒的每篇都带理由进 rejection log，误杀可复核。
+                from ..extract.refine import subdomain_check
+                from ..llm import LLMError
+                try:
+                    relevant, llm_why = subdomain_check(
+                        llm_cmd, q["query"], p.title, p.abstract or "")
+                except LLMError as e:
+                    r.rejected.append({"id": p.id, "title": p.title[:110],
+                                       "reason": f"[LLM 闸门错误] {e}"})
+                    continue
+                if not relevant:
+                    r.rejected.append({"id": p.id, "title": p.title[:110],
+                                       "reason": f"[LLM 子领域闸门] {llm_why}"})
+                    continue
             if ok:
                 papers.append(p)
                 r.accepted.append({"id": p.id, "title": p.title[:110],

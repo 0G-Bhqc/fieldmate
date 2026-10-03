@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fieldmate"
-version = "0.4.0"
+version = "0.5.0"
 description = "Cross-paper comparison and defect-library matching for computational-science research. Harness-agnostic: pure stdlib, no LLM required."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -50,7 +50,8 @@ include-package-data = true
 # 数据资产随包分发（v0.4.0）：缺陷库、检测规则、gold set、语料 manifest。
 # 以前放在仓库根、运行时用 parents[2] 向上找 —— pip install 后全崩
 # （「pip install 后立刻可用」是生死线，wheel 冒烟测试抓的正是这个）。
-fieldmate = ["libraries/*.json", "libraries/*.jsonl", "contracts/*.json"]
+fieldmate = ["libraries/*.json", "libraries/*.jsonl", "contracts/*.json",
+            "prompts/*.md"]
 
 [tool.ruff]
 line-length = 100

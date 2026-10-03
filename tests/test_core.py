@@ -320,6 +320,20 @@ def test_domain_gate_rejects_weak_term_with_ml_flags():
     assert not ok, why
 
 
+def test_domain_gate_strong_terms_are_case_insensitive():
+    """回归（Phase 3 测试抓到的存量 bug）：STRONG_TERMS 里带大写专有名词的模式
+    （Allen[- ]Cahn / Caputo / Mittag[- ]Leffler 等 8 条）在 .lower() 后的文本上
+    从未匹配过——强术语表一直缺了三分之一。修复后小写书写也必须命中。"""
+    from fieldmate.sources.arxiv import Paper
+    from fieldmate.sources.corpus import DomainFilter
+    p = Paper(id="ac", title="numerical study of the allen-cahn dynamics",
+              abstract="we solve the allen-cahn equation with a finite difference scheme.",
+              categories=["math.NA"])
+    ok, why = DomainFilter().check(p)
+    assert ok, why
+    assert "allen" in why.lower()
+
+
 def test_domain_gate_accepts_real_phase_field_paper():
     from fieldmate.sources.arxiv import Paper
     from fieldmate.sources.corpus import DomainFilter

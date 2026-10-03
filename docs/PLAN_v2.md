@@ -205,7 +205,7 @@ Phase 0 五件事（更名、打包、编码、git/CI、README）都是小时级
 | 打包安装 | ✅ 已验证 | wheel 冒烟：干净 venv 非 editable 安装 + 无关 cwd 全通过（0.4.0，含 cp1252 最恶劣环境） |
 | **skill 挂载（零 UI）** | ✅ 已落地，待新会话实测 | `scripts/install_skill.py` 把 SKILL.md 挂进 `<workspace>/.zcode/skills/fieldmate/`（已对本工作区执行，含安装器单测）；新任务/新会话自动发现 |
 | **子 Agent 注册（插件市场）** | ⬜ 源码就绪，未在真实宿主验证 | agents/ 组件需经市场 UI 安装；待用户执行三步 |
-| 判断层（宿主 LLM 精筛候选） | ❌ 未实现（Phase 3） | `--llm-cmd` 适配层、prompts/ 候选 schema、Assumption 槽精筛——「skill 而非仅 CLI」的关键增量，目前 Assumption 槽仍 0 命中 |
+| 判断层（宿主 LLM 精筛候选） | ✅ 已实现（0.5.0），待真实宿主接线 | `--llm-cmd` 协议、prompts 三任务模板随包；`read --refine-assumptions` 双路精筛（句级 + 无标记文本 chunk-scan，实测期刊论文零显式措辞必须走 chunk-scan）；幻觉闸门（quote 逐字回对）单测+真实论文验证；harvest 闸门 C 可选接入；真实 LLM 质量验收待用户接线宿主模型 |
 | 领域纵深（Phase 1） | ❌ 未实现 | gold set 仅 8 篇目标域、缺陷库 19 条偏去噪线、无多源检索（OpenAlex/Crossref） |
 | 文件名一致性 | ✅ 已修复 | 本地目录已更名 `fieldmate`（原 research-harness）；远端/包名/CLI/环境变量/缓存目录一致 |
 

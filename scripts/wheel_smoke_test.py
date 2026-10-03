@@ -101,6 +101,12 @@ def main() -> int:
                   cwd=str(workdir))
         manifest = loc.stdout.strip()
         assert Path(manifest).is_file(), "包内 corpus_bulk.json 缺失（package-data 漏配）"
+        loc2 = run([str(py), "-c",
+                    "from importlib import resources; import sys;"
+                    "p = resources.files('fieldmate') / 'prompts' / 'assumption_refine.md';"
+                    "print(p); sys.exit(0 if p.is_file() else 1)"],
+                   cwd=str(workdir))
+        assert Path(loc2.stdout.strip()).is_file(), "包内 prompts 缺失（package-data 漏配）"
         # coverage 对无 PDF 缓存的 manifest 会诚实退出 3（语料未覆盖），不算失败
         cov = subprocess.run([str(py), "-m", "fieldmate", "coverage", "--corpus", manifest],
                              capture_output=True, text=True,
