@@ -21,6 +21,14 @@ import tempfile
 import venv
 from pathlib import Path
 
+# 这个脚本自己在 Windows CI 上就踩过 cp1252 崩溃（print 中文即
+# UnicodeEncodeError）—— 与 fieldmate.cli.main 同一款防护，脚本自保。
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
+
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "build" / "wheelhouse"
 
