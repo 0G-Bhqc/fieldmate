@@ -607,7 +607,7 @@ python -m fieldmate harvest --only all --no-term-gate --no-download
 - **五槽抽取 + 阅读卡**（`read`）：按阅读目的渐进披露
 - **检索词汇表**（`libraries/queries.json`）：本方向实测有效的检索式 + 污染证据 + PDF 端点对拍
 - **自动语料构建**（`harvest`）：两道相关性闸门 + rejection log，实测拒收率 42%
-- 149 个测试（每个对应一次真实踩坑）+ wheel 冒烟测试（干净安装验收）
+- 150 个测试（每个对应一次真实踩坑）+ wheel 冒烟测试（干净安装验收）
 - **数据随包分发**（v0.4.0）：pip install 后立即可用，不再依赖仓库布局
 - **doctor 子命令**：环境体检第一入口；MCP 10 工具；Skill+子 Agent 插件源
 
