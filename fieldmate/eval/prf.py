@@ -56,20 +56,35 @@ def load_corpus(path: str | Path | None = None) -> dict[str, Any]:
     return json.loads(p.read_text(encoding="utf-8"))
 
 
+def _resolve_paper_path(raw_path: str | Path) -> Path:
+    """容错解析目标论文路径（支持跨系统路径、中文/拼音别名兼容）。"""
+    f = Path(raw_path)
+    if f.exists():
+        return f
+    s = str(raw_path)
+    if "信计" in s and Path(s.replace("信计", "XinJi")).exists():
+        return Path(s.replace("信计", "XinJi"))
+    if "XinJi" in s and Path(s.replace("XinJi", "信计")).exists():
+        return Path(s.replace("XinJi", "信计"))
+    return f
+
+
 def _load_texts(pdf_dir: str | Path | None = None,
                 corpus: dict[str, Any] | None = None) -> dict[str, str]:
     """把 gold set 涉及的论文全文读进来：arXiv 缓存 + corpus.json 指定的目标论文。"""
     corpus = corpus if corpus is not None else load_corpus()
     out: dict[str, str] = {}
     for pid, path in (corpus.get("papers") or {}).items():
-        f = Path(path)
+        f = _resolve_paper_path(path)
         if f.exists() and pid not in _CACHE:
             t, _ = parse_pdf_cached(f)
             _CACHE[pid] = t or ""
         if pid in _CACHE:
             out[pid] = _CACHE[pid]
+    from ..sources.fulltext import _resolve_cache_dir
+    manifest_p = _data("libraries") / "corpus.json"
     cache = (Path(pdf_dir) if pdf_dir
-             else Path(corpus.get("cache_dir", ".fieldmate-cache/arxiv_pdfs")))
+             else _resolve_cache_dir(corpus.get("cache_dir"), manifest_p))
     if cache.is_dir():
         for f in sorted(cache.glob("*.pdf")):
             if f.stem in _CACHE:

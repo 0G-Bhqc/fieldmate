@@ -221,20 +221,23 @@ def _collect_read_sources(corpus: dict, extra_paths: list[str]) -> list[tuple[st
     以前会出两张一样的阅读卡（真实测试 2026-10-03 发现）；同一篇以语料
     里的 id（P1-recon 这类语义名）为准。
     """
+    from .eval.prf import _resolve_paper_path
     src: list[tuple[str, str]] = []
     seen: set[str] = set()
     for pid, path in (corpus.get("papers") or {}).items():
-        key = str(Path(path).resolve())
+        resolved = _resolve_paper_path(path)
+        key = str(resolved.resolve())
         if key in seen:
             continue
         seen.add(key)
-        src.append((pid, path))
+        src.append((pid, str(resolved)))
     for p in extra_paths:
-        key = str(Path(p).resolve())
+        resolved = _resolve_paper_path(p)
+        key = str(resolved.resolve())
         if key in seen:
             continue
         seen.add(key)
-        src.append((Path(p).stem, p))
+        src.append((Path(p).stem, str(resolved)))
     return src
 
 

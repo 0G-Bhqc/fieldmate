@@ -10,7 +10,11 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 
 FAKE_LLM_TEMPLATE = r'''
-import json, sys
+import io, json, sys
+if hasattr(sys.stdin, "reconfigure"):
+    sys.stdin.reconfigure(encoding="utf-8")
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 mode = "@MODE@"
 if mode == "exit1":
     sys.exit(3)

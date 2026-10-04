@@ -597,7 +597,8 @@ def test_package_is_importable_from_any_working_directory(tmp_path):
         "print('ok')"
     )
     r = subprocess.run([_sys.executable, "-c", code],
-                       capture_output=True, text=True, cwd=str(tmp_path),
+                       capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", cwd=str(tmp_path),
                        env={**os.environ, "PYTHONPATH": str(ROOT)})
     assert r.returncode == 0, f"换个目录就 import 不了：\n{r.stderr[-800:]}"
     assert "ok" in r.stdout
@@ -681,7 +682,8 @@ def test_install_skill_copies_skillmd_into_workspace(tmp_path):
     import sys as _sys
     r = subprocess.run([_sys.executable, str(ROOT / "scripts" / "install_skill.py"),
                         "--workspace", str(tmp_path)],
-                       capture_output=True, text=True, cwd=str(ROOT))
+                       capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", cwd=str(ROOT))
     assert r.returncode == 0, r.stderr
     dst = tmp_path / ".zcode" / "skills" / "fieldmate" / "SKILL.md"
     assert dst.is_file(), "SKILL.md 未落盘"
