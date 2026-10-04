@@ -1,0 +1,44 @@
+{
+  "id": "exp-pfdenoise-002",
+  "created": "2026-10-04T10:00:00Z",
+  "status": "registered",
+  "claim": "守恒型相场（pf_ac_conserved）与无条件能量稳定凸分裂相场（pf_ac_convex）能显著抑制毛细收缩漂移，并有效消除高频几何离群值",
+  "mechanism": "通过拉格朗日乘子约束 beta(t) 严格抵消曲率流毛细收缩造成的体积萎缩 (d/dt \\int phi dx = 0)；通过凸分裂半隐式能量解耦保证界面收敛单调性",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "statement": "|radius_drift(pf_ac_conserved)| < |radius_drift(pf_ac)|",
+      "metric": "radius_drift",
+      "compare": "pf_ac_conserved vs pf_ac",
+      "expected": "pf_smaller",
+      "falsification": "若 |radius_drift(pf_ac_conserved)| >= |radius_drift(pf_ac)|，H1 被推翻",
+      "support_required": []
+    },
+    {
+      "id": "H2",
+      "statement": "|radius_drift(pf_ac_convex)| < |radius_drift(pf_ac)|",
+      "metric": "radius_drift",
+      "compare": "pf_ac_convex vs pf_ac",
+      "expected": "pf_smaller",
+      "falsification": "若 |radius_drift(pf_ac_convex)| >= |radius_drift(pf_ac)|，H2 被推翻",
+      "support_required": []
+    },
+    {
+      "id": "H3",
+      "statement": "hausdorff(pf_ac_convex) < hausdorff(none)",
+      "metric": "hausdorff",
+      "compare": "pf_ac_convex vs none",
+      "expected": "pf_smaller",
+      "falsification": "若 hausdorff(pf_ac_convex) >= hausdorff(none)，H3 被推翻",
+      "support_required": []
+    }
+  ],
+  "confounds": ["体素分辨率", "噪声模型", "点云密度"],
+  "backend": "pfdenoise",
+  "reproduce": {
+    "cmd": "python -m pfdenoise run --shape sphere -n 2000 --noise gaussian",
+    "shape": "sphere",
+    "n": 2000,
+    "noise": "gaussian"
+  }
+}

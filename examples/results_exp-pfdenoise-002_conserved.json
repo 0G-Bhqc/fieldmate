@@ -1,0 +1,62 @@
+{
+  "query": "sphere / gaussian / n=2000",
+  "created": "2026-10-04T12:30:00Z",
+  "noise": "gaussian (sigma=0.010)",
+  "res_floor": 0.0421,
+  "rows": [
+    {
+      "solver": "none",
+      "chamfer": 0.0153,
+      "radius_drift": 0.02,
+      "volume_drift": 2.78,
+      "thickness": 0.0154,
+      "hausdorff": 0.3418,
+      "normal_err": 3.88
+    },
+    {
+      "solver": "laplacian",
+      "chamfer": 0.0238,
+      "radius_drift": -0.02,
+      "volume_drift": 0.46,
+      "thickness": 0.0182,
+      "hausdorff": 0.1494,
+      "normal_err": 5.65
+    },
+    {
+      "solver": "pf_ac",
+      "chamfer": 0.0846,
+      "radius_drift": 0.39,
+      "volume_drift": 38.04,
+      "thickness": 0.1029,
+      "hausdorff": 0.2411,
+      "normal_err": 34.40
+    },
+    {
+      "solver": "pf_ac_fidelity",
+      "chamfer": 0.0841,
+      "radius_drift": 0.24,
+      "volume_drift": 37.88,
+      "thickness": 0.1020,
+      "hausdorff": 0.2347,
+      "normal_err": 35.63
+    },
+    {
+      "solver": "pf_ac_conserved",
+      "chamfer": 0.0846,
+      "radius_drift": 0.11,
+      "volume_drift": 38.51,
+      "thickness": 0.1034,
+      "hausdorff": 0.2385,
+      "normal_err": 36.11
+    },
+    {
+      "solver": "pf_ac_convex",
+      "chamfer": 0.0855,
+      "radius_drift": 0.12,
+      "volume_drift": 38.79,
+      "thickness": 0.1043,
+      "hausdorff": 0.2418,
+      "normal_err": 35.07
+    }
+  ]
+}
