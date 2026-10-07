@@ -8,12 +8,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
 [![Core Dependencies: None](https://img.shields.io/badge/Core%20Dependencies-None%20(stdlib)-brightgreen.svg)](pyproject.toml)
-[![Tests: 191 Passed](https://img.shields.io/badge/Tests-191%20Passed-success.svg)](tests/)
+[![Tests: 198 Passed](https://img.shields.io/badge/Tests-198%20Passed-success.svg)](tests/)
 [![Harness Ready](https://img.shields.io/badge/Harness-Antigravity%20%7C%20Claude%20%7C%20Codex%20%7C%20Cursor-purple.svg)](#-一键挂载到主流-agent-harness)
 
 **“不只总结论文，更拦截代码里的物理硬伤；不靠直觉改指标，让每一个科研主张真实可证伪。”**
 
-[痛点直击](#-为什么需要-fieldmate) • [60 秒极速上手](#-60-秒极速上手) • [四大核心支柱](#-四大核心支柱) • [Agent Harness 挂载](#-一键挂载到主流-agent-harness) • [实测踩坑档案](#-真实学术踩坑档案) • [设计契约](#-面向-harness-的工业级集成契约-h1h6)
+[痛点直击](#-为什么需要-fieldmate) • [60 秒极速上手](#-60-秒极速上手) • [五大核心支柱](#-五大核心支柱) • [突破点与实验设计](#支柱--学术突破点逆向挖掘与假设驱动实验设计器-breakthrough--design) • [Agent Harness 挂载](#-一键挂载到主流-agent-harness) • [设计契约](#-面向-harness-的工业级集成契约-h1h6)
 
 </div>
 
@@ -86,21 +86,23 @@ python -m fieldmate verify --prereg examples/prereg_exp-pfdenoise-002_conserved.
 
 ---
 
-## 🧩 四大核心支柱
+## 🧩 五大核心支柱
 
 ```mermaid
 flowchart TD
-    subgraph 认知与文献
+    subgraph 认知与文献挖掘
         A[arXiv / 目标文献 PDF] --> B[1. 跨文献横向对比与空白挖掘<br>compare / gaps / topics]
-        B --> C[2. 物理与数值缺陷库<br>19+ Traps & Detection Rules]
+        A --> C[2. 突破点逆向挖掘器<br>breakthrough: 匹配 5 大理论突破原型]
+        B --> D[3. 物理与数值缺陷库<br>19+ Traps & Detection Rules]
     end
-    subgraph 实验与闭环
-        C --> D[3. 预注册可证伪假设<br>prereg --init / prereg --validate]
-        D --> E[外部求解器 / pfdenoise 运行真实计算]
-        E --> F[4. 严格三态核验<br>verify]
-        F -->|✅ SUPPORTED| G[形成扎实可信论文证据]
-        F -->|❌ REFUTED| H[如实写入负结果，避免学术弯路]
-        F -->|⚠ INCONCLUSIVE| I[排查分辨率下限与混淆因素]
+    subgraph 实验设计与闭环验证
+        C --> E[4. 假设驱动实验设计器<br>design: 自然语言想法 / 论文突破点 ➔ 预注册协议]
+        D --> E
+        E --> F[外部求解器 / pfdenoise 运行真实计算]
+        F --> G[5. 严格三态核验<br>verify]
+        G -->|✅ SUPPORTED| H[形成扎实可信论文证据]
+        G -->|❌ REFUTED| I[如实写入负结果，避免学术弯路]
+        G -->|⚠ INCONCLUSIVE| J[排查分辨率下限与混淆因素]
     end
 ```
 
@@ -186,6 +188,70 @@ python -m fieldmate read --purpose implement --l2
 | `implement` (复现) | **Protocol (网格/时间步/边界), Mechanism (方程)** | 直击数值离散细节，避开摘要套话 |
 | `beat` (超越) | **Assumption (简化假设), Gap (未解难题)** | 快速定位现有方法的边界与脆弱点 |
 | `cite` (引用) | **Claim (主要贡献与主张)** | 1 秒提取精确贡献陈述 |
+
+---
+
+### 支柱 ⑤：学术突破点逆向挖掘与假设驱动实验设计器 (`breakthrough` / `design`)
+
+科研人员常面临两类困境：
+1. **读了经典旧论文，明知其有局限，却不知道下一步理论与实验切入点在哪里**；
+2. **脑子里闪现出一个算法想法，却不知道如何落地成符合学术规范、具备明确认输条件的严谨实验**。
+
+FieldMate 内建**突破点逆向引擎**与**假设驱动实验设计器**，实现从自然语言想法或旧论文 PDF 到机器级可证伪实验方案的秒级端到端转化：
+
+#### 1. 从旧论文中逆向挖掘突破点 (`breakthrough`)
+
+深入论文正文，自动识别 CFL 步长受限、各向同性平滑、体积收缩腐蚀、离散截断偏差等深层物理与数值瓶颈，并自动映射至 5 大突破原型：
+- **`BT-STABILITY-CONVEX` (凸分裂半隐式能量稳定)**：将非凸双阱势与拉普拉斯项分离，突破显式 CFL 时间步长瓶颈 $\Delta t \sim \mathcal{O}(h^2)$；
+- **`BT-VOLUME-CONSERVED` (拉格朗日乘子全局体积守恒)**：引入时间相关拉格朗日乘子，根除纯 Allen-Cahn 曲率流引起的毛细收缩与体积蒸发；
+- **`BT-FEATURE-ANISOTROPIC` (曲率引导各向异性扩散张量)**：以主曲率方向构建各向异性扩散张量 $\mathbf{D}(\nabla \phi)$，保留尖锐棱边与法向角点；
+- **`BT-SUBVOXEL-CORRECTION` (亚格点重心平移校正)**：在粗网格界面处引入二阶截断误差补偿，将精度逼近谱精度；
+- **`BT-NOISE-SELF-SUPERVISED` (微观结构有偏自监督去噪)**：构建不依赖 Clean Ground-Truth 的自监督无损去噪协议。
+
+```bash
+# 逆向挖掘论文中的突破点，输出高信息密度 Markdown 报告
+python -m fieldmate breakthrough --path path/to/paper.pdf --format markdown
+```
+
+<details>
+<summary><b>🔍 查看生成的突破点分析报告样例 (点击展开)</b></summary>
+
+```markdown
+# 论文突破点挖掘与研究进阶分析报告 (FieldMate Breakthrough Analysis)
+- 目标文献: `paper.pdf`
+- 命中突破点候选: 3 项
+
+### 1. [BT-STABILITY-CONVEX] 半隐式凸分裂能量稳定时间步进格式
+- 核心瓶颈: 显式时间推进受到刚性 CFL 条件极端限制，时间步长必须满足 dt < 0.05 h^2，导致迭代极慢或发散
+- 突破方向: 凸分裂 (Convex Splitting) / 标量辅助变量 (SAV) 方法
+- 理论机理: 将总自由能 E(phi) 严格分解为凸项 E_c 与凹项 E_e，凸项隐式求解保证能量无条件耗散 dE/dt <= 0
+- 改造方案: (phi^{n+1} - phi^n) / dt = Delta phi^{n+1} - f(phi^n)
+- 待证伪主张: 在时间步长放大 10 倍以上时，依然保持无条件稳定且不发散
+- 建议最小实验: 设置 dt_test = 10 * dt_cfl，运行 100 步，监测离散能量序列 E(t) 是否严格单调非增
+```
+</details>
+
+#### 2. 根据科研想法自动设计严谨实验 (`design`)
+
+无论是随手打出的科研灵感，还是刚挖出的突破点，FieldMate 能将其一键转化为 100% 通过机器质检的预注册实验文件（`prereg.json`）：
+
+```bash
+# A. 根据随手写的 Idea 一键设计实验方案
+python -m fieldmate design --idea "我想用凸分裂半隐式能量稳定方法，解决显式相场时间步长太小易发散的问题" \
+                          --out prereg.json
+
+# B. 直接将旧论文的突破点转化为执行实验方案
+python -m fieldmate design --from-paper path/to/paper.pdf --out prereg.json
+
+# C. 针对指定突破点生成实验方案
+python -m fieldmate design --breakthrough BT-VOLUME-CONSERVED --out prereg.json
+```
+
+- **机器级科研规范保证**：
+  - 自动匹配基准数据集与对照组算法（如 `pf_ac_explicit` vs `pf_ac_convex`）；
+  - 自动设置**明确认输条件（Falsification）**，杜绝事后粉饰指标；
+  - 强制包含恒等基线（`identity_baseline`）与空间网格分辨率下限（`res_floor`）；
+  - 输出格式可直接交由 `pfdenoise` 等物理仿真器无缝执行与 `verify` 自动核验！
 
 ---
 

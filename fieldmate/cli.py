@@ -369,6 +369,106 @@ def _cmd_verify(args) -> int:
     return EXIT_REFUTED if v.refuted else EXIT_OK
 
 
+def _cmd_breakthrough(args) -> int:
+    """突破点挖掘：从论文全文或摘要中逆向提取学术/数值瓶颈与改进方向。"""
+    import json as _json
+
+    from .research.breakthrough import breakthrough_markdown, discover_breakthroughs
+    from .sources.local import parse_pdf_cached
+
+    paper_path = args.path
+    if not paper_path:
+        print("[validate] 请指定待分析的论文路径：--path <paper.pdf>", file=sys.stderr)
+        return EXIT_ARGS
+
+    txt, _ = parse_pdf_cached(paper_path)
+    if not txt:
+        print(f"[source] 无法读取或解析论文全文：{paper_path}", file=sys.stderr)
+        return EXIT_SOURCE
+
+    bts = discover_breakthroughs(txt, paper_id=Path(paper_path).stem)
+    if not bts:
+        print("[breakthrough] 未在文中检测到明显物理/数值瓶颈模式", file=sys.stderr)
+        return EXIT_NO_STRONG
+
+    if args.format == "json":
+        print(_json.dumps([b.to_dict() for b in bts], ensure_ascii=False, indent=2))
+    else:
+        print(breakthrough_markdown(bts, paper_desc=Path(paper_path).name))
+
+    if args.out:
+        Path(args.out).write_text(
+            _json.dumps([b.to_dict() for b in bts], ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"[out] {args.out}", file=sys.stderr)
+
+    return EXIT_OK
+
+
+def _cmd_design(args) -> int:
+    """实验设计：根据用户想法（--idea）或根据论文突破点自动生成可证伪预注册。"""
+    import json as _json
+
+    from .exp.prereg import prereg_markdown, save, validate
+    from .research.breakthrough import BREAKTHROUGH_ARCHETYPES, Breakthrough
+    from .research.designer import (
+        design_from_breakthrough,
+        design_from_idea,
+        design_from_paper,
+    )
+
+    prereg = None
+    if args.idea:
+        prereg = design_from_idea(args.idea, exp_id=args.id)
+    elif args.from_paper:
+        try:
+            _, prereg = design_from_paper(args.from_paper, exp_id=args.id)
+        except Exception as e:
+            print(f"[design] 从论文设计实验失败：{e}", file=sys.stderr)
+            return EXIT_SOURCE
+    elif args.breakthrough:
+        target = next(
+            (a for a in BREAKTHROUGH_ARCHETYPES if a["id"].upper() == args.breakthrough.upper()),
+            None,
+        )
+        if not target:
+            valid_ids = [a["id"] for a in BREAKTHROUGH_ARCHETYPES]
+            print(f"[validate] 未知突破点 ID：{args.breakthrough}，可选：{valid_ids}",
+                  file=sys.stderr)
+            return EXIT_ARGS
+        bt = Breakthrough(
+            id=target["id"],
+            title=target["title"],
+            category=target["category"],
+            target_bottleneck=target["target_bottleneck"],
+            theoretical_rationale=target["theoretical_rationale"],
+            suggested_method=target["suggested_method"],
+            falsifiable_claim=target["falsifiable_claim"],
+            minimal_experiment=target["minimal_experiment"],
+            confidence="HIGH",
+        )
+        prereg = design_from_breakthrough(bt, exp_id=args.id)
+    else:
+        print("[validate] 请提供设计源："
+              "--idea \"<构想>\" 或 --from-paper <pdf> 或 --breakthrough <id>",
+              file=sys.stderr)
+        return EXIT_ARGS
+
+    d = prereg.to_dict()
+    problems = validate(d)
+    if args.out:
+        save(d, args.out)
+        print(f"[out] 预注册已写入：{args.out}", file=sys.stderr)
+
+    if args.format == "json":
+        print(_json.dumps(d, ensure_ascii=False, indent=2))
+    else:
+        print(prereg_markdown(d, problems))
+
+    return EXIT_OK if not problems else EXIT_VALIDATION
+
+
 def _cmd_evaluate(args) -> int:
     """规则体检：用人工标注的 gold set 算各检测项的精确率/召回率。"""
     from .eval.prf import (
@@ -753,6 +853,21 @@ def main(argv: list[str] | None = None) -> int:
     vf.add_argument("--format", choices=["markdown", "json"], default="markdown")
     vf.add_argument("--out")
     vf.set_defaults(func=_cmd_verify)
+
+    bt = sub.add_parser("breakthrough", help="从旧论文挖掘学术/数值瓶颈与下一步突破点")
+    bt.add_argument("--path", required=True, help="待分析的目标论文 PDF 路径")
+    bt.add_argument("--format", choices=["markdown", "json"], default="markdown")
+    bt.add_argument("--out", help="将突破点分析输出为 JSON 文件")
+    bt.set_defaults(func=_cmd_breakthrough)
+
+    ds = sub.add_parser("design", help="根据用户构想或突破点自动设计可证伪预注册实验")
+    ds.add_argument("--idea", help="用户的研究设想（如：'我想用凸分裂解决显式步长太小的问题'）")
+    ds.add_argument("--from-paper", help="从指定论文挖掘突破点并直接生成实验方案")
+    ds.add_argument("--breakthrough", help="指定突破点原型 ID（如 BT-STABILITY-CONVEX）")
+    ds.add_argument("--id", help="指定生成的预注册实验 ID")
+    ds.add_argument("--format", choices=["markdown", "json"], default="markdown")
+    ds.add_argument("--out", help="预注册 JSON 输出路径")
+    ds.set_defaults(func=_cmd_design)
 
     e = sub.add_parser("evaluate", help="用人工标注 gold set 给检测规则做体检")
     e.add_argument("--gold", help="标注集 jsonl（默认 libraries/goldset.jsonl）")

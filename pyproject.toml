@@ -43,7 +43,7 @@ fieldmate = "fieldmate.cli:main"
 # `audit` 曾漏在这里：源码里一切正常，打包后 `import fieldmate.audit` ModuleNotFoundError。
 packages = ["fieldmate", "fieldmate.sources", "fieldmate.match", "fieldmate.compare",
             "fieldmate.gaps", "fieldmate.eval", "fieldmate.exp", "fieldmate.extract",
-            "fieldmate.llm", "fieldmate.audit"]
+            "fieldmate.llm", "fieldmate.audit", "fieldmate.research"]
 include-package-data = true
 
 [tool.setuptools.package-data]
