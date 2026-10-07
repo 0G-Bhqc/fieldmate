@@ -75,8 +75,10 @@ def collect_report(include_net: bool = False) -> tuple[list[Check], dict]:
         checks.append(Check("goldset", len(gold) > 0, True,
                             f"{len(gold)} 条人工标注"))
         has_corpus = bool(corpus.get("papers") or corpus.get("arxiv_papers"))
+        n_local = len(corpus.get("papers") or {})
+        n_arxiv = len(corpus.get("arxiv_papers") or [])
         checks.append(Check("corpus_manifest", has_corpus, True,
-                            f"corpus.json：{len(corpus.get('papers') or {})} 篇本地目标论文，{len(corpus.get('arxiv_papers') or [])} 篇 arXiv 目标论文"))
+                            f"corpus.json：{n_local} 篇本地目标论文，{n_arxiv} 篇 arXiv 目标论文"))
         manifests = sorted(p.name for p in lib_dir.glob("corpus_*.json"))
         info["manifests"] = manifests
         checks.append(Check("bulk_manifests", True, False,

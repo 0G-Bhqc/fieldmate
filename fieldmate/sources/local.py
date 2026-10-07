@@ -188,7 +188,22 @@ _TXT_CACHE_DIRNAME = "parsed_text"
 
 
 def _text_cache_dir() -> Path:
-    return Path(".fieldmate-cache") / _TXT_CACHE_DIRNAME
+    import os
+    env = os.environ.get("FIELDMATE_CACHE_DIR")
+    if env:
+        return Path(env) / _TXT_CACHE_DIRNAME
+    cwd_cache = Path(".fieldmate-cache") / _TXT_CACHE_DIRNAME
+    if cwd_cache.exists():
+        return cwd_cache
+    curr = Path.cwd().resolve()
+    for parent in [curr] + list(curr.parents)[:4]:
+        cand = parent / ".fieldmate-cache" / _TXT_CACHE_DIRNAME
+        if cand.exists():
+            return cand
+        cand_tests = parent / "tests" / ".fieldmate-cache" / _TXT_CACHE_DIRNAME
+        if cand_tests.exists():
+            return cand_tests
+    return cwd_cache
 
 
 def parse_pdf_cached(path: str | Path, max_chars: int = 2_000_000) -> tuple[str | None, str]:

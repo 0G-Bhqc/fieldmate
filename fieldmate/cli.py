@@ -795,9 +795,11 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--limit", type=int, default=5)
     s.set_defaults(func=_cmd_sources)
 
-    isk = sub.add_parser("install-skill", help="一键挂载 fieldmate skill 到各种 Agent Harness 工作区")
+    isk = sub.add_parser("install-skill",
+                         help="一键挂载 fieldmate skill 到各种 Agent Harness 工作区")
     isk.add_argument("--workspace", default=".", help="目标工作区目录（默认当前目录）")
-    isk.add_argument("--host", choices=["agents", "antigravity", "claude", "codex", "cursor", "zcode"],
+    isk.add_argument("--host",
+                     choices=["agents", "antigravity", "claude", "codex", "cursor", "zcode"],
                      default="zcode", help="宿主 Harness 类型（默认 zcode）")
     isk.add_argument("--global", dest="is_global", action="store_true",
                      help="挂载到当前用户全局 Agent Harness 配置目录")

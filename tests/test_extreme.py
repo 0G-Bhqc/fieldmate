@@ -103,8 +103,9 @@ def test_validate_scale_500_hypotheses():
 
 def test_verify_file_malformed_json_fails_loud():
     """坏 JSON 必须显式抛错（静默吞掉才是灾难）。"""
-    import tempfile
     import os
+    import tempfile
+
     from fieldmate.exp.verify import verify_file
     tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False,
                                       encoding="utf-8")

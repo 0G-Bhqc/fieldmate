@@ -7,7 +7,6 @@ r"""test_guards.py — 判定引擎修复的回归测试（2026-10）
   4. _classify 小样本守卫被全文率短路
 """
 
-import pytest
 
 
 def _prereg(expected="pf_smaller", support=None, metric="drift"):

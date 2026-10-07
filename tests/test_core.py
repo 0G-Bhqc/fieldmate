@@ -1434,3 +1434,49 @@ def test_gaps_markdown_does_not_confuse_candidate_count_with_family_count():
     assert "候选 4 条 = 2 个条目 × 2 个族" in md
     # 族标签必须出现在每条标题上
     assert "〔族：A〕" in md and "〔族：B〕" in md
+
+
+def test_verify_nan_inf_divergence_fails_safely():
+    """实测值出现 NaN 或 Inf 时，必须判定为 INCONCLUSIVE 而不是误判为 REFUTED。"""
+    from fieldmate.exp.verify import verify
+    prereg = {
+        "id": "exp-nan-test",
+        "created": "2026-10-01T00:00:00Z",
+        "hypotheses": [
+            {"id": "H1", "statement": "pf_ac < laplacian", "metric": "cd",
+             "compare": "pf_ac vs laplacian", "expected": "pf_smaller"}
+        ]
+    }
+    # 场景 1：NaN 发散
+    results_nan = [{"solver": "pf_ac", "cd": float("nan")}, {"solver": "laplacian", "cd": 0.05}]
+    v_nan = verify(prereg, results_nan)
+    assert v_nan.hypotheses[0].verdict == "INCONCLUSIVE"
+    assert "发散" in v_nan.hypotheses[0].reason
+
+    # 场景 2：Inf 发散
+    results_inf = [{"solver": "pf_ac", "cd": float("inf")}, {"solver": "laplacian", "cd": 0.05}]
+    v_inf = verify(prereg, results_inf)
+    assert v_inf.hypotheses[0].verdict == "INCONCLUSIVE"
+    assert "发散" in v_inf.hypotheses[0].reason
+
+
+def test_matrix_compiled_regex_enhancements():
+    """新增的 Courant-Friedrichs-Lewy / von Neumann / mesh spacing 规则准确生效。"""
+    from fieldmate.compare.matrix import REPORT_ITEMS, re_search
+    by_item = {name: pat for name, pat, _ in REPORT_ITEMS}
+
+    # 稳定条件增强测试
+    t1 = "The Courant-Friedrichs-Lewy condition dictates the maximum permissible time step."
+    assert re_search(by_item["报稳定条件"], t1)
+
+    t2 = "We analyze the von Neumann stability of the semi-implicit discretization."
+    assert re_search(by_item["报稳定条件"], t2)
+
+    # 分辨率增强测试
+    t3 = "The uniform mesh spacing is chosen to be h = 0.02 mm."
+    assert re_search(by_item["报分辨率"], t3)
+
+    # 时间步增强测试
+    t4 = "We set the time-increment dt = 1e-4."
+    assert re_search(by_item["报时间步"], t4)
+

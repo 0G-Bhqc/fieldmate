@@ -68,6 +68,7 @@ def load_rules(path: str | Path | None = None) -> dict[str, Any]:
     return _rules_cached(p)
 
 
+@lru_cache(maxsize=1024)
 def _compile(pat: str) -> re.Pattern[str]:
     return re.compile(pat, re.IGNORECASE)
 
@@ -77,11 +78,12 @@ def _signal_hits(sig: dict[str, Any], texts: dict[str, str]) -> tuple[bool, str]
     scope = sig.get("scope", "any")
     text = texts.get(scope) or texts.get("any") or ""
     rx = _compile(sig["pattern"])
-    found = rx.search(text) is not None
+    m = rx.search(text)
+    found = m is not None
     kind = sig["type"]
     if kind == "absent":
         return (not found), ("" if not found else f"意外出现：{sig['pattern'][:48]}")
-    return found, (f"命中：{rx.search(text).group(0)[:40]}" if found
+    return found, (f"命中：{m.group(0)[:40]}" if found
                    else f"未出现：{sig['pattern'][:40]}")
 
 

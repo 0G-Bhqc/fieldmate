@@ -210,6 +210,14 @@ def verify(prereg: Prereg | dict[str, Any], results: list[dict[str, Any]],
                          f"（{pair[0]}={ra[metric]!r} / {pair[1]}={rb[metric]!r}），无法判定")
             v.hypotheses.append(hv)
             continue
+        import math
+        if math.isnan(a) or math.isnan(b) or math.isinf(a) or math.isinf(b):
+            hv.verdict = "INCONCLUSIVE"
+            hv.reason = (f"`{metric}` 实测值出现非有限数 NaN/Inf 发散"
+                         f"（{pair[0]}={a} / {pair[1]}={b}），数值格式或求解器已失稳发散")
+            hv.recommended_action = "检查 CFL 条件、时间步长 dt 或刚性系数设置，排除数值发散。"
+            v.hypotheses.append(hv)
+            continue
         # 假设常写成 |x| < |y|，但指标给的是带符号的值。
         # 不显式取绝对值就会拿 +0.05 和 -0.03 比大小 —— 结论直接反掉。
         # 预注册可用 "abs": true 显式声明；声明了但语句里没有 | 也照取绝对值。

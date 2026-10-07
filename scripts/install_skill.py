@@ -45,7 +45,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="挂载 fieldmate skill 到各种 Agent Harness 工作区")
     ap.add_argument("--workspace", default=".", help="目标工作区目录（默认当前目录）")
     ap.add_argument("--host", choices=sorted(HOST_DIRS), default="zcode",
-                    help="宿主 Harness 类型（antigravity / claude / codex / cursor / zcode，默认 zcode）")
+                    help="宿主 Harness 类型（默认 zcode）")
     ap.add_argument("--global", dest="is_global", action="store_true",
                     help="挂载到当前用户全局 Agent Harness 配置目录")
     args = ap.parse_args()
