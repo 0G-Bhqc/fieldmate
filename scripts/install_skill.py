@@ -31,14 +31,23 @@ for _stream in (sys.stdout, sys.stderr):
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_SRC = ROOT / "plugins" / "fieldmate" / "skills" / "fieldmate" / "SKILL.md"
 
-HOST_DIRS = {"zcode": ".zcode", "claude": ".claude"}
+HOST_DIRS = {
+    "agents": ".agents",
+    "antigravity": ".agents",
+    "claude": ".claude",
+    "codex": ".codex",
+    "cursor": ".cursor",
+    "zcode": ".zcode",
+}
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="挂载 fieldmate skill 到工作区")
+    ap = argparse.ArgumentParser(description="挂载 fieldmate skill 到各种 Agent Harness 工作区")
     ap.add_argument("--workspace", default=".", help="目标工作区目录（默认当前目录）")
     ap.add_argument("--host", choices=sorted(HOST_DIRS), default="zcode",
-                    help="宿主类型（决定 .zcode/ 或 .claude/，默认 zcode）")
+                    help="宿主 Harness 类型（antigravity / claude / codex / cursor / zcode，默认 zcode）")
+    ap.add_argument("--global", dest="is_global", action="store_true",
+                    help="挂载到当前用户全局 Agent Harness 配置目录")
     args = ap.parse_args()
 
     def fail(msg: str) -> int:
@@ -54,7 +63,15 @@ def main() -> int:
     if not (text.startswith("---") and "name: fieldmate" in text.split("---")[1]):
         return fail("SKILL.md frontmatter 不符（name: fieldmate）")
 
-    dst_dir = ws / HOST_DIRS[args.host] / "skills" / "fieldmate"
+    if args.is_global:
+        if args.host in ("antigravity", "agents"):
+            dst_dir = Path.home() / ".gemini" / "config" / "skills" / "fieldmate"
+        elif args.host == "claude":
+            dst_dir = Path.home() / ".claude" / "skills" / "fieldmate"
+        else:
+            dst_dir = Path.home() / HOST_DIRS[args.host] / "skills" / "fieldmate"
+    else:
+        dst_dir = ws / HOST_DIRS[args.host] / "skills" / "fieldmate"
     dst_dir.mkdir(parents=True, exist_ok=True)
     dst = dst_dir / "SKILL.md"
     changed = (not dst.exists()) or dst.read_text(encoding="utf-8") != text

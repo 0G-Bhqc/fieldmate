@@ -75,6 +75,19 @@ python -m fieldmate verify --prereg experiments/exp-001.json --results results.j
 - 核验是**三态**：SUPPORTED / REFUTED / **INCONCLUSIVE**（存在已知混淆因素，当前实验区分不了「方法差」与「设置不足」）。
 - **退出码 5 = 有假设被真推翻**：这不是工具失败。如实报告负结果，并提醒用户先对照缺陷库 D-REP-* 检查实现，**不要改指标或换基线**。
 
+### ⑤ 跑数值模拟与几何处理（物理平面闭环）
+
+```bash
+# 端到端闭环：点云审计 -> 假说预注册 -> 相场 PDE 求解 -> 三态核验
+python station_orchestrator.py --shape sphere --noise gaussian --solver pf_ac_convex --iters 30 --format json
+
+# 点云 I/O 与无损试跑诊断（检查体素尺度 h、CFL 条件与内存消耗）
+python pf_field_bridge.py -i input.xyz -s pf_ac_conserved --dry-run
+```
+
+- 求解器矩阵：半隐式凸分裂 `pf_ac_convex`（无条件稳定）、体积守恒 `pf_ac_conserved`、各向异性 `pf_ac_aniso`、四阶 `cahn_hilliard`。
+- HASP 护栏契约：当 CFL 条件违背或检测到相塌缩发散时，系统自动拦截并自适应降级至凸分裂求解器。
+
 ## 退出码表（按此分支，不要凭 stdout 猜）
 
 | 码 | 含义 | 你该做什么 |

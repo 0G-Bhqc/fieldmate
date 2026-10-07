@@ -160,12 +160,13 @@ class Gap:
 
 def _classify(rate: float, genre: str, fulltext_ratio: float, n: int) -> str:
     """信号强度分级。宁可低估，不可高估。"""
-    if fulltext_ratio >= 0.8:
-        return "STRONG"                       # 全文支撑
-    if genre == "high":
-        return "STRONG"
+    # 样本守卫必须排在全文率检查**之前**：早先版本 fulltext_ratio >= 0.8
+    # 直接 STRONG，于是「12 篇里缺 3 篇、缺的恰好都有全文」这种小样本高全文率
+    # 也会被判 STRONG —— 与本函数「宁可低估」的约定相反。
     if n < 5:
         return "WEAK"                         # 样本太少
+    if fulltext_ratio >= 0.8:
+        return "STRONG"                       # 全文支撑
     if genre == "medium" and rate >= 0.7:
         return "MEDIUM"
     if genre == "low":

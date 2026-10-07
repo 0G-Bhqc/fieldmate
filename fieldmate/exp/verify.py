@@ -98,6 +98,24 @@ def _cmp(a: float, b: float, expected: str) -> bool:
     return False
 
 
+def _parse_iso(s: str):
+    from datetime import datetime
+    try:
+        return datetime.fromisoformat(str(s).replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return None
+
+
+def _is_before(a: str, b: str) -> bool:
+    """时间先后判定：能解析成 ISO 就按时间比（容忍时区偏移/精度差异），
+    解析不了才退回字符串比较。早先版本裸字符串比较，结果文件若带
+    `+00:00` 时区后缀会误判事后补注册。"""
+    da, db = _parse_iso(a), _parse_iso(b)
+    if da is not None and db is not None:
+        return da < db
+    return str(a) < str(b)
+
+
 def verify(prereg: Prereg | dict[str, Any], results: list[dict[str, Any]],
            meta: dict[str, Any] | None = None) -> Verdict:
     """把结果对回预注册。
@@ -112,7 +130,7 @@ def verify(prereg: Prereg | dict[str, Any], results: list[dict[str, Any]],
     # 事后补注册检测：结果时间早于预注册时间 -> 不可信
     rc = meta.get("created")
     if rc and d.get("created"):
-        v.backfilled = str(rc) < str(d["created"])
+        v.backfilled = _is_before(str(rc), str(d["created"]))
         if v.backfilled:
             v.notes.append(
                 f"⚠ 结果时间 `{rc}` **早于**预注册时间 `{d['created']}` —— "
@@ -121,13 +139,53 @@ def verify(prereg: Prereg | dict[str, Any], results: list[dict[str, Any]],
     res_floor = meta.get("res_floor")
     if res_floor is None:
         for r in results:
-            if r.get("res_floor") is not None:
+            if isinstance(r, dict) and r.get("res_floor") is not None:
                 res_floor = r["res_floor"]
                 break
+
+    # 「必要对照是否在场」的全局检查（verify 自包含，不依赖先跑 prereg --results）
+    has_identity = any(isinstance(r, dict)
+                       and str(r.get("solver", "")).lower() in ("none", "identity", "no-op")
+                       for r in results)
+    noise_declared = bool(meta.get("noise") or meta.get("noise_model"))
 
     for h in d.get("hypotheses", []):
         hv = HypothesisVerdict(id=h.get("id", "?"), statement=h.get("statement", ""),
                                metric=h.get("metric", ""))
+
+        # 「存在反例」型假设：判定材料是结果 meta 里显式给出的反例清单，
+        # 不是 A vs B 两个数的比较。早先版本落进通用比较路径，_cmp 对它
+        # 返回 False —— 这类假设不看数据必被判 REFUTED（validate 认、
+        # verify 判死，两模块契约脱节）。按本模块原则「缺证据不是否定证据」：
+        # 没有反例清单时判 UNTESTED，并说清怎么提供。
+        if h.get("expected") == "exists_counterexample":
+            ces = meta.get("counterexamples") or []
+            hv.observed = f"counterexamples: {len(ces)} 条"
+            if ces:
+                # 条目形状宽容：dict 取字段，其他类型原样展示（垃圾进不出 crash）
+                detail = []
+                for c in ces[:5]:
+                    if isinstance(c, dict):
+                        detail.append(f"{c.get('solver', '?')}/{c.get('metric', '?')}"
+                                      f"={c.get('value', '?')}")
+                    else:
+                        detail.append(str(c))
+                hv.observed += "；" + "; ".join(detail)
+                hv.verdict = "SUPPORTED"
+                hv.reason = "结果提供了显式反例清单，「存在反例」主张成立"
+                hv.recommended_action = ("把反例逐条写进论文（带可复核出处），"
+                                         "不要只报一个计数")
+            else:
+                hv.verdict = "UNTESTED"
+                hv.reason = ("结果里没有 `counterexamples` 清单，无法判定「存在反例」"
+                             "（缺证据不是否定证据）。请在结果 meta 提供 "
+                             "counterexamples: [{solver, metric, value, note}, ...]")
+                hv.recommended_action = ("补充反例清单后重新核验；"
+                                         "若确认不存在反例，请把假设改写为 "
+                                         "pf_smaller / pf_larger / equal 之一")
+            v.hypotheses.append(hv)
+            continue
+
         pair = _split_compare(h.get("compare", ""))
         metric = h.get("metric", "")
         if pair is None or not metric:
@@ -142,7 +200,16 @@ def verify(prereg: Prereg | dict[str, Any], results: list[dict[str, Any]],
                          f"无法判定（缺结果不是否定证据）")
             v.hypotheses.append(hv)
             continue
-        a, b = float(ra[metric]), float(rb[metric])
+        try:
+            a, b = float(ra[metric]), float(rb[metric])
+        except (TypeError, ValueError):
+            # 极端输入防御：指标值是字符串/None/嵌套结构时给出可读的
+            # UNTESTED，而不是让 float() 的 traceback 直接炸穿 CLI
+            hv.verdict = "UNTESTED"
+            hv.reason = (f"`{metric}` 的实测值不是数值"
+                         f"（{pair[0]}={ra[metric]!r} / {pair[1]}={rb[metric]!r}），无法判定")
+            v.hypotheses.append(hv)
+            continue
         # 假设常写成 |x| < |y|，但指标给的是带符号的值。
         # 不显式取绝对值就会拿 +0.05 和 -0.03 比大小 —— 结论直接反掉。
         # 预注册可用 "abs": true 显式声明；声明了但语句里没有 | 也照取绝对值。
@@ -155,14 +222,17 @@ def verify(prereg: Prereg | dict[str, Any], results: list[dict[str, Any]],
         ok = _cmp(ca, cb, h.get("expected", ""))
 
         # 混淆因素闸门：即使方向成立，若误差量级被分辨率支配，也只能算 INCONCLUSIVE
+        # 注意 res_floor 用 is not None 判断：0.0 是合法的「无量化下限」退化值，
+        # 真值判断会把它当成「没提供」而绕过闸门。
         floor_blocked = False
         floor_ratio = None
-        if res_floor:
+        if res_floor is not None and res_floor > 0:
             denom = max(abs(ca), abs(cb))
             if denom:
                 floor_ratio = denom / res_floor
+        missing_guards = []
         for req in (h.get("support_required") or []):
-            if req == "res_floor" and res_floor:
+            if req == "res_floor" and res_floor is not None and res_floor > 0:
                 if floor_ratio is not None and floor_ratio <= 1.5:
                     floor_blocked = True
                     hv.confound = (f"res_floor={res_floor:.4g}，两侧误差都在其 1.5 倍以内"
@@ -170,6 +240,17 @@ def verify(prereg: Prereg | dict[str, Any], results: list[dict[str, Any]],
                 elif use_abs and abs(a) <= 1.5 * res_floor:
                     floor_blocked = True
                     hv.confound = f"res_floor={res_floor:.4g}，本方法误差 {a:.4g} 已在其量级内"
+            elif req == "res_floor" and res_floor is None:
+                # 提供了 0.0 视为「显式声明无量化下限」，对照算在场、只是不阻断
+                missing_guards.append(
+                    "res_floor（结果未提供该字段，无法排除「分辨率不足」混淆）")
+            elif req == "identity_baseline" and not has_identity:
+                missing_guards.append(
+                    "identity_baseline（结果里没有 none/identity 基线，"
+                    "无法排除「指标变化是数据本身的效应」）")
+            elif req == "noise_model" and not noise_declared:
+                missing_guards.append(
+                    "noise_model（结果未声明噪声模型，结论无法判断可迁移性）")
 
         if floor_blocked:
             hv.verdict = "INCONCLUSIVE"
@@ -180,6 +261,16 @@ def verify(prereg: Prereg | dict[str, Any], results: list[dict[str, Any]],
                 "2) 补一个点密度更高（使 res_floor 远小于待比较误差）的实验再判定；"
                 "3) 不要因为这一条就把方法优势改写成「精度略逊但保体积更好」——"
                 "那是换个指标说同一件事，属于事后改判。")
+        elif missing_guards:
+            # 早先版本只查 res_floor 的量级，不查「要求的对照根本不在场」——
+            # 跳过 prereg --results 直接核验时，缺对照的结果照样能拿 SUPPORTED。
+            # 缺对照不判 SUPPORTED 也不判 REFUTED：无法排除混淆就是 INCONCLUSIVE。
+            hv.verdict = "INCONCLUSIVE"
+            hv.confound = "；".join(missing_guards)
+            hv.reason = (f"预注册方向{'成立' if ok else '不成立'}，"
+                         f"但假设要求的必要对照缺失，无法排除混淆：{hv.confound}。")
+            hv.recommended_action = ("补齐缺失对照（恒等基线 / res_floor / 噪声模型声明）"
+                                     "后重新核验；不要在缺对照时下方法优劣的结论。")
         elif ok:
             hv.verdict = "SUPPORTED"
             hv.reason = "预注册方向成立，且无已知混淆因素解释"

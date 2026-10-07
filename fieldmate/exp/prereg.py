@@ -81,6 +81,12 @@ class Hypothesis:
         return asdict(self)
 
 
+# Hypothesis 的合法字段集合。预注册 JSON 里出现未知字段（未来版本加的 key、
+# 手写多写的备注）时忽略而不是 TypeError——validate 走 raw dict 不会炸，
+# load() 不该是两条解析路径里更脆的那条。
+_HYP_FIELDS = frozenset(Hypothesis.__dataclass_fields__)
+
+
 @dataclass
 class Prereg:
     id: str
@@ -99,8 +105,15 @@ class Prereg:
         return d
 
     @staticmethod
+    def _hypothesis_from_dict(h: dict[str, Any]) -> Hypothesis:
+        dropped = set(h) - _HYP_FIELDS
+        if dropped:
+            h = {k: v for k, v in h.items() if k in _HYP_FIELDS}
+        return Hypothesis(**h)
+
+    @staticmethod
     def from_dict(d: dict[str, Any]) -> Prereg:
-        hs = [Hypothesis(**h) for h in d.get("hypotheses", [])]
+        hs = [Prereg._hypothesis_from_dict(h) for h in d.get("hypotheses", [])]
         return Prereg(id=d["id"], created=d["created"], claim=d["claim"],
                       hypotheses=hs, confounds=d.get("confounds", []),
                       mechanism=d.get("mechanism", ""), backend=d.get("backend", ""),
@@ -226,12 +239,18 @@ def _check_controls(d: dict[str, Any], results: Any) -> list[str]:
 
     for h in d.get("hypotheses", []):
         for req in (h.get("support_required") or []):
-            g = CONFOUND_GUARDS[req]
+            # 早先版本 CONFOUND_GUARDS[req] 裸下标：validate 明明把未知对照项
+            # 记为 problem，这里却先一步 KeyError 崩溃 —— 违反「失败显式给建议」。
+            g = CONFOUND_GUARDS.get(req)
+            if g is None:
+                p.append(f"假设 {h.get('id')} 引用了未知对照项 `{req}`"
+                         f"（合法值：{', '.join(sorted(CONFOUND_GUARDS))}）")
+                continue
             if req == "identity_baseline" and not has_none:
                 p.append(f"假设 {h.get('id')} 要求 `{req}`，但结果里没有恒等变换基线。"
                          f"缺了它无法判断指标变化是方法的功劳还是数据本身。")
-            if req == "res_floor" and not results.get("res_floor") \
-                    and not any(isinstance(r, dict) and r.get("res_floor")
+            if req == "res_floor" and results.get("res_floor") is None \
+                    and not any(isinstance(r, dict) and r.get("res_floor") is not None
                                 for r in rows):
                 p.append(f"假设 {h.get('id')} 要求 `{req}`，但结果里没有该字段。"
                          f"{g['why']}")

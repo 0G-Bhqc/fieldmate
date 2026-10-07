@@ -630,6 +630,23 @@ def _cmd_sources(args) -> int:
     return EXIT_OK if out and not any("error" in k for k in out) else EXIT_SOURCE
 
 
+def _cmd_install_skill(args) -> int:
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    script_path = Path(__file__).resolve().parents[1] / "scripts" / "install_skill.py"
+    if not script_path.exists():
+        print(f"[install] 找不到安装脚本：{script_path}", file=sys.stderr)
+        return EXIT_VALIDATION
+
+    cmd = [sys.executable, str(script_path), "--workspace", args.workspace, "--host", args.host]
+    if getattr(args, "is_global", False):
+        cmd.append("--global")
+    res = subprocess.run(cmd)
+    return res.returncode
+
+
 def main(argv: list[str] | None = None) -> int:
     # Windows 的控制台/管道默认跟随 locale（中文系统是 GBK/cp936），而本 CLI 的
     # 输出含 ✔/✖/🟡/² 等字符 —— 宿主 harness 用 subprocess 捕获输出时，第一条
@@ -777,6 +794,14 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--path", nargs="*", default=None)
     s.add_argument("--limit", type=int, default=5)
     s.set_defaults(func=_cmd_sources)
+
+    isk = sub.add_parser("install-skill", help="一键挂载 fieldmate skill 到各种 Agent Harness 工作区")
+    isk.add_argument("--workspace", default=".", help="目标工作区目录（默认当前目录）")
+    isk.add_argument("--host", choices=["agents", "antigravity", "claude", "codex", "cursor", "zcode"],
+                     default="zcode", help="宿主 Harness 类型（默认 zcode）")
+    isk.add_argument("--global", dest="is_global", action="store_true",
+                     help="挂载到当前用户全局 Agent Harness 配置目录")
+    isk.set_defaults(func=_cmd_install_skill)
 
     args = p.parse_args(argv)
     return args.func(args)
