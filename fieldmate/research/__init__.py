@@ -15,6 +15,11 @@ from .designer import (
     design_from_idea,
     design_from_paper,
 )
+from .diagnose import (
+    DiagnosticDossier,
+    diagnose_paper,
+    dossier_markdown,
+)
 
 __all__ = [
     "Breakthrough",
@@ -23,4 +28,7 @@ __all__ = [
     "design_from_idea",
     "design_from_breakthrough",
     "design_from_paper",
+    "DiagnosticDossier",
+    "diagnose_paper",
+    "dossier_markdown",
 ]

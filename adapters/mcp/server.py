@@ -356,6 +356,165 @@ def read_card(paths: list[str], purpose: str = "beat", l2: bool = False,
     return card_markdown(cards, purpose=purpose, l2=l2)
 
 
+def discover_breakthroughs(path: str, fmt: str = "markdown") -> str:
+    """能力④：学术突破点挖掘——从目标论文逆向识别物理与数值瓶颈。
+
+    Args:
+        path: 待分析的目标论文 PDF 路径。
+        fmt: markdown | json
+    """
+    import json as _json
+    from pathlib import Path as _Path
+
+    from fieldmate.research.breakthrough import breakthrough_markdown
+    from fieldmate.research.breakthrough import discover_breakthroughs as _disc
+    from fieldmate.sources.local import parse_pdf_cached
+
+    txt, _ = parse_pdf_cached(path)
+    if not txt:
+        return _json.dumps(
+            {"ok": False, "error": f"无法读取或解析论文全文：{path}"}, ensure_ascii=False
+        )
+
+    bts = _disc(txt, paper_id=_Path(path).stem)
+    if not bts:
+        return _json.dumps(
+            {"ok": False, "error": "未检测到明显的物理/数值瓶颈模式"}, ensure_ascii=False
+        )
+
+    if fmt == "json":
+        return _json.dumps(
+            {"ok": True, "breakthroughs": [b.to_dict() for b in bts]},
+            ensure_ascii=False,
+            indent=2,
+        )
+    return breakthrough_markdown(bts, paper_desc=_Path(path).name)
+
+
+def design_experiment(idea: str | None = None, from_paper: str | None = None,
+                      breakthrough: str | None = None, exp_id: str | None = None,
+                      fmt: str = "json") -> str:
+    """能力④：假设驱动实验设计器——根据科研构想或突破点自动生成预注册方案。
+
+    Args:
+        idea: 自然语言科研设想（如：'我想用半隐式凸分裂解决CFL步长限制'）。
+        from_paper: 从指定论文自动挖掘突破点并合成实验方案。
+        breakthrough: 指定突破点原型 ID（如 BT-STABILITY-CONVEX）。
+        exp_id: 可选的预注册实验 ID。
+        fmt: json | markdown
+    """
+    import json as _json
+
+    from fieldmate.exp.prereg import prereg_markdown, validate
+    from fieldmate.research.breakthrough import BREAKTHROUGH_ARCHETYPES, Breakthrough
+    from fieldmate.research.designer import (
+        design_from_breakthrough,
+        design_from_idea,
+        design_from_paper,
+    )
+
+    prereg = None
+    if idea:
+        prereg = design_from_idea(idea, exp_id=exp_id)
+    elif from_paper:
+        try:
+            _, prereg = design_from_paper(from_paper, exp_id=exp_id)
+        except Exception as e:
+            return _json.dumps(
+                {"ok": False, "error": f"从论文设计实验失败：{e}"}, ensure_ascii=False
+            )
+    elif breakthrough:
+        target = next(
+            (a for a in BREAKTHROUGH_ARCHETYPES if a["id"].upper() == breakthrough.upper()),
+            None,
+        )
+        if not target:
+            valid_ids = [a["id"] for a in BREAKTHROUGH_ARCHETYPES]
+            return _json.dumps(
+                {"ok": False, "error": f"未知突破点 ID：{breakthrough}，可选：{valid_ids}"},
+                ensure_ascii=False,
+            )
+        bt = Breakthrough(
+            id=target["id"],
+            title=target["title"],
+            category=target["category"],
+            target_bottleneck=target["target_bottleneck"],
+            theoretical_rationale=target["theoretical_rationale"],
+            suggested_method=target["suggested_method"],
+            falsifiable_claim=target["falsifiable_claim"],
+            minimal_experiment=target["minimal_experiment"],
+            confidence="HIGH",
+        )
+        prereg = design_from_breakthrough(bt, exp_id=exp_id)
+    else:
+        return _json.dumps(
+            {"ok": False, "error": "请提供 idea, from_paper 或 breakthrough 之一"},
+            ensure_ascii=False,
+        )
+
+    d = prereg.to_dict()
+    problems = validate(d)
+    if fmt == "json":
+        return _json.dumps(
+            {"ok": not problems, "prereg": d, "validation_problems": problems},
+            ensure_ascii=False,
+            indent=2,
+        )
+    return prereg_markdown(d, problems)
+
+
+def diagnose_paper_tool(path: str, purpose: str = "beat", fmt: str = "markdown") -> str:
+    """能力⑤：论文综合体检——一键完成槽位提取、缺陷对拍、突破挖掘与实验推荐。
+
+    Args:
+        path: 目标论文 PDF 路径。
+        purpose: 阅读目的（implement / beat / cite / build-on）。
+        fmt: markdown | json
+    """
+    import json as _json
+
+    from fieldmate.research.diagnose import diagnose_paper, dossier_markdown
+
+    try:
+        dossier = diagnose_paper(path, purpose=purpose)
+    except Exception as e:
+        return _json.dumps(
+            {"ok": False, "error": f"体检失败：{e}"}, ensure_ascii=False
+        )
+
+    if fmt == "json":
+        return _json.dumps(
+            {"ok": True, "dossier": dossier.to_dict()}, ensure_ascii=False, indent=2
+        )
+    return dossier_markdown(dossier)
+
+
+def reflect_on_experiment(prereg_path: str, results_path: str, fmt: str = "markdown") -> str:
+    """能力⑥：实验自愈反思——对核验被推翻或混淆的结果反向计算损失梯度并输出自愈建议。
+
+    Args:
+        prereg_path: 预注册 JSON 路径。
+        results_path: 实测结果 JSON 路径。
+        fmt: markdown | json
+    """
+    import json as _json
+
+    from fieldmate.exp.reflect import reflect_on_results, reflection_markdown
+
+    try:
+        diag = reflect_on_results(prereg_path, results_path)
+    except Exception as e:
+        return _json.dumps(
+            {"ok": False, "error": f"反思分析失败：{e}"}, ensure_ascii=False
+        )
+
+    if fmt == "json":
+        return _json.dumps(
+            {"ok": True, "reflection": diag.to_dict()}, ensure_ascii=False, indent=2
+        )
+    return reflection_markdown(diag)
+
+
 # ---------------------------------------------------------------- MCP 接线
 def _serve() -> int:
     try:
@@ -365,7 +524,6 @@ def _serve() -> int:
         return 2
     srv = FastMCP("fieldmate")
 
-    # 三项能力都要有入口，缺一项「可挂载」就只是句空话
     srv.tool()(compare_papers)          # 能力② 横向对比
     srv.tool()(read_card)               # 能力② 五槽阅读卡
     srv.tool()(mine_gaps)               # 能力① 精进点
@@ -376,14 +534,20 @@ def _serve() -> int:
     srv.tool()(evaluate_rules)          # 规则体检
     srv.tool()(list_patterns)
     srv.tool()(check_sources)
+    srv.tool()(discover_breakthroughs)  # 能力④ 突破点挖掘
+    srv.tool()(design_experiment)       # 能力④ 实验设计
+    srv.tool()(diagnose_paper_tool)     # 能力⑤ 综合体检
+    srv.tool()(reflect_on_experiment)   # 能力⑥ 自愈反思
     srv.run()
     return 0
 
 
-#: 挂进宿主时应该能看到的工具名。测试据此断言「三项能力都有入口」。
+#: 挂进宿主时应该能看到的工具名。测试据此断言「所有核心能力都有入口」。
 TOOL_NAMES = ("compare_papers", "read_card", "mine_gaps", "verify_result",
               "prereg_init", "audit_coverage", "audit_topics",
-              "evaluate_rules", "list_patterns", "check_sources")
+              "evaluate_rules", "list_patterns", "check_sources",
+              "discover_breakthroughs", "design_experiment",
+              "diagnose_paper_tool", "reflect_on_experiment")
 
 
 if __name__ == "__main__":

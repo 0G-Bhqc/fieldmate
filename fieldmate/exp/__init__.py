@@ -13,8 +13,15 @@ from .prereg import (  # noqa: F401
                      save,
                      validate,
 )
+from .reflect import (
+    FailureGradient,
+    ReflectionDiagnosis,
+    reflect_on_results,
+    reflection_markdown,
+)
 from .verify import HypothesisVerdict, Verdict, verify, verify_file, verify_markdown  # noqa: F401
 
 __all__ = ["Prereg", "Hypothesis", "validate", "load", "save", "new_template",
            "prereg_markdown", "Verdict", "HypothesisVerdict", "verify",
-           "verify_file", "verify_markdown"]
+           "verify_file", "verify_markdown", "FailureGradient",
+           "ReflectionDiagnosis", "reflect_on_results", "reflection_markdown"]

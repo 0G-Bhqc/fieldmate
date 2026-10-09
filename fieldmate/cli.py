@@ -469,6 +469,89 @@ def _cmd_design(args) -> int:
     return EXIT_OK if not problems else EXIT_VALIDATION
 
 
+def _cmd_diagnose(args) -> int:
+    """综合学术与数值体检：一键完成槽位提取、缺陷对拍、突破挖掘与实验推荐。"""
+    import json as _json
+
+    from .research.diagnose import diagnose_paper, dossier_markdown
+
+    paper_path = args.path
+    if not paper_path:
+        print("[validate] 请指定待体检的论文路径：--path <paper.pdf>", file=sys.stderr)
+        return EXIT_ARGS
+
+    try:
+        dossier = diagnose_paper(
+            paper_path,
+            purpose=args.purpose,
+            auto_design=not args.no_design,
+            library_path=args.library,
+            rules_path=args.rules,
+        )
+    except FileNotFoundError as e:
+        print(f"[source] 文件不存在：{e}", file=sys.stderr)
+        return EXIT_SOURCE
+    except Exception as e:
+        print(f"[diagnose] 体检失败：{e}", file=sys.stderr)
+        return EXIT_SOURCE
+
+    if args.format == "json":
+        print(_json.dumps(dossier.to_dict(), ensure_ascii=False, indent=2))
+    else:
+        print(dossier_markdown(dossier))
+
+    if args.out:
+        out_p = Path(args.out)
+        out_content = (
+            _json.dumps(dossier.to_dict(), ensure_ascii=False, indent=2)
+            if out_p.suffix == ".json"
+            else dossier_markdown(dossier)
+        )
+        out_p.write_text(out_content, encoding="utf-8")
+        print(f"[out] {args.out}", file=sys.stderr)
+
+    return EXIT_OK
+
+
+def _cmd_reflect(args) -> int:
+    """自愈反思：对被推翻或混淆的实验反向计算科学损失梯度并输出自愈建议。"""
+    import json as _json
+
+    from .exp.reflect import reflect_on_results, reflection_markdown
+
+    if not args.prereg or not args.results:
+        print("[validate] 必须同时指定 --prereg <prereg.json> 和 --results <results.json>",
+              file=sys.stderr)
+        return EXIT_ARGS
+
+    try:
+        diag = reflect_on_results(args.prereg, args.results)
+    except FileNotFoundError as e:
+        print(f"[source] {e}", file=sys.stderr)
+        return EXIT_SOURCE
+    except Exception as e:
+        print(f"[reflect] 反思分析失败：{e}", file=sys.stderr)
+        return EXIT_VALIDATION
+
+    if args.format == "json":
+        print(_json.dumps(diag.to_dict(), ensure_ascii=False, indent=2))
+    else:
+        print(reflection_markdown(diag))
+
+    if args.out:
+        out_p = Path(args.out)
+        out_content = (
+            _json.dumps(diag.to_dict(), ensure_ascii=False, indent=2)
+            if out_p.suffix == ".json"
+            else reflection_markdown(diag)
+        )
+        out_p.write_text(out_content, encoding="utf-8")
+        print(f"[out] {args.out}", file=sys.stderr)
+
+    # 若有推翻项，保持语义退出码 5 提示有假说被推翻；若全过或仅混淆则返回 0
+    return EXIT_REFUTED if diag.refuted_count > 0 else EXIT_OK
+
+
 def _cmd_evaluate(args) -> int:
     """规则体检：用人工标注的 gold set 算各检测项的精确率/召回率。"""
     from .eval.prf import (
@@ -868,6 +951,28 @@ def main(argv: list[str] | None = None) -> int:
     ds.add_argument("--format", choices=["markdown", "json"], default="markdown")
     ds.add_argument("--out", help="预注册 JSON 输出路径")
     ds.set_defaults(func=_cmd_design)
+
+    dg = sub.add_parser("diagnose", help="论文综合体检：槽位提取+缺陷对拍+突破挖掘+实验设计闭环")
+    dg.add_argument("--path", required=True, help="待分析的目标论文 PDF 路径")
+    dg.add_argument(
+        "--purpose",
+        choices=["implement", "beat", "cite", "build-on"],
+        default="beat",
+        help="阅读目的",
+    )
+    dg.add_argument("--no-design", action="store_true", help="跳过自动推荐实验方案步骤")
+    dg.add_argument("--library", help="指定缺陷库路径")
+    dg.add_argument("--rules", help="指定规则库路径")
+    dg.add_argument("--format", choices=["markdown", "json"], default="markdown")
+    dg.add_argument("--out", help="将综合体检报告输出至文件")
+    dg.set_defaults(func=_cmd_diagnose)
+
+    rf = sub.add_parser("reflect", help="实验自愈反思：对核验失败结果计算科学梯度并输出补丁")
+    rf.add_argument("--prereg", required=True, help="预注册 json 路径")
+    rf.add_argument("--results", required=True, help="实测结果 json 路径")
+    rf.add_argument("--format", choices=["markdown", "json"], default="markdown")
+    rf.add_argument("--out", help="将自愈反思报告输出至文件")
+    rf.set_defaults(func=_cmd_reflect)
 
     e = sub.add_parser("evaluate", help="用人工标注 gold set 给检测规则做体检")
     e.add_argument("--gold", help="标注集 jsonl（默认 libraries/goldset.jsonl）")

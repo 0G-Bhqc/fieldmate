@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+from pathlib import Path
 
 from fieldmate.exp.prereg import validate
 from fieldmate.research.breakthrough import (
@@ -146,3 +147,79 @@ def test_cli_breakthrough_subcommand_requires_path():
     )
     assert r.returncode in (2, 3)
     assert "--path" in r.stderr or "--path" in r.stdout
+
+
+def test_reflect_on_refuted_results(tmp_path):
+    from fieldmate.exp.reflect import reflect_on_results, reflection_markdown
+
+    # 1. 构造一个体积守恒假设被推翻的场景
+    prereg_data = {
+        "id": "exp-test-reflect",
+        "created": "2026-10-09T00:00:00Z",
+        "claim": "测试体积漂移被推翻的反思反向传播",
+        "hypotheses": [
+            {
+                "id": "H1",
+                "statement": "|radius_drift(pf_ac)| < 0.01",
+                "metric": "radius_drift",
+                "expected": "pf_smaller",
+                "falsification": "若实测漂移大于等于 0.01 则被推翻",
+                "compare": "pf_ac vs laplacian",
+                "abs": True,
+            }
+        ],
+        "confounds": [],
+        "backend": "pfdenoise",
+        "status": "registered",
+    }
+    results_data = {
+        "query": "test",
+        "created": "2026-10-09T00:01:00Z",
+        "rows": [
+            {"solver": "pf_ac", "radius_drift": -0.15},
+            {"solver": "laplacian", "radius_drift": -0.005},
+        ],
+    }
+
+    prereg_file = tmp_path / "prereg.json"
+    results_file = tmp_path / "results.json"
+    prereg_file.write_text(json.dumps(prereg_data), encoding="utf-8")
+    results_file.write_text(json.dumps(results_data), encoding="utf-8")
+
+    diag = reflect_on_results(prereg_file, results_file)
+    assert diag.refuted_count == 1
+    assert len(diag.gradients) == 1
+    g = diag.gradients[0]
+    assert g.metric == "radius_drift"
+    assert "D-MOD-001" in g.related_defects
+    assert g.suggested_solver == "pf_ac_conserved"
+    assert "pf_ac_conserved" in diag.actionable_summary[0]
+
+    md = reflection_markdown(diag)
+    assert "实验负结果自愈与反向反思报告" in md
+    assert "D-MOD-001" in md
+
+
+def test_mcp_server_exposes_breakthrough_and_design():
+    import importlib.util
+
+    p = Path(__file__).resolve().parents[1] / "adapters" / "mcp" / "server.py"
+    spec = importlib.util.spec_from_file_location("mcp_server_test", p)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    for tool_name in (
+        "discover_breakthroughs",
+        "design_experiment",
+        "diagnose_paper_tool",
+        "reflect_on_experiment",
+    ):
+        assert hasattr(mod, tool_name)
+        assert callable(getattr(mod, tool_name))
+        assert tool_name in mod.TOOL_NAMES
+
+    # 直接测试 design_experiment 工具返回合法 JSON
+    res_str = mod.design_experiment(idea="用半隐式凸分裂解决CFL步长限制", fmt="json")
+    res = json.loads(res_str)
+    assert res.get("ok") is True
+    assert "prereg" in res

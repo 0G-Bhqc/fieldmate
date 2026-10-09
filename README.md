@@ -8,12 +8,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
 [![Core Dependencies: None](https://img.shields.io/badge/Core%20Dependencies-None%20(stdlib)-brightgreen.svg)](pyproject.toml)
-[![Tests: 198 Passed](https://img.shields.io/badge/Tests-198%20Passed-success.svg)](tests/)
+[![Tests: 200 Passed](https://img.shields.io/badge/Tests-200%20Passed-success.svg)](tests/)
 [![Harness Ready](https://img.shields.io/badge/Harness-Antigravity%20%7C%20Claude%20%7C%20Codex%20%7C%20Cursor-purple.svg)](#-一键挂载到主流-agent-harness)
 
 **“不只总结论文，更拦截代码里的物理硬伤；不靠直觉改指标，让每一个科研主张真实可证伪。”**
 
-[痛点直击](#-为什么需要-fieldmate) • [60 秒极速上手](#-60-秒极速上手) • [五大核心支柱](#-五大核心支柱) • [突破点与实验设计](#支柱--学术突破点逆向挖掘与假设驱动实验设计器-breakthrough--design) • [Agent Harness 挂载](#-一键挂载到主流-agent-harness) • [设计契约](#-面向-harness-的工业级集成契约-h1h6)
+[痛点直击](#-为什么需要-fieldmate) • [60 秒极速上手](#-60-秒极速上手) • [核心技术支柱](#-核心技术支柱) • [突破点与实验设计](#支柱--学术突破点逆向挖掘与假设驱动实验设计器-breakthrough--design) • [综合学术体检与反思自愈](#支柱--论文综合体检与实验负结果物理反思-diagnose--reflect) • [Agent Harness 挂载](#-一键挂载到主流-agent-harness) • [设计契约](#-面向-harness-的工业级集成契约-h1h6)
 
 </div>
 
@@ -255,6 +255,43 @@ python -m fieldmate design --breakthrough BT-VOLUME-CONSERVED --out prereg.json
 
 ---
 
+### 支柱 ⑥：论文综合体检与跨模态学术档案 (`diagnose`)
+
+吸收 PaperQA 与 SWE-agent 诊断闭环架构，一键串联“全文五槽提取 $\rightarrow$ 19 项物理缺陷对拍 $\rightarrow$ 5 大突破原型挖掘 $\rightarrow$ 可证伪预注册方案推荐”全流程：
+
+```bash
+# 对指定文献进行端到端学术体检，生成结构化 Markdown 档案
+python -m fieldmate diagnose --path path/to/paper.pdf --format markdown --out dossier.md
+```
+
+- **四大集成模块**：
+  1. **槽位全景**：自动抽取 Claim、Mechanism、Protocol、Assumption、Gap；
+  2. **物理硬伤审计**：基于 19 项真实缺陷库（`D-REP-*`, `D-MOD-*`, `D-RES-*`, `D-EVA-*`）排查潜在隐患；
+  3. **突破点挖掘**：识别 CFL 步长受限、毛细收缩、各向同性过度平滑等突破口；
+  4. **预注册实验推荐**：直接给出经过 H1-H6 契约质检的下一阶段严谨可证伪验证方案。
+
+---
+
+### 支柱 ⑦：实验负结果物理反思与自愈补丁 (`reflect`)
+
+吸收 Stanford TextGrad 与 AutoSaddler 自然语言损失反向修补思想，当实验被推翻（`REFUTED`）或混淆（`INCONCLUSIVE`）时，系统绝不鼓励“改动指标粉饰太平”，而是**反向计算物理损失梯度**，定位真实根因并合成求解器自愈补丁：
+
+```bash
+# 针对核验未通过的实验结果反向反思，输出物理诊断与参数补丁
+python -m fieldmate reflect --prereg experiments/exp-001.json \
+                           --results results/run-01.json \
+                           --format markdown \
+                           --patch-out patch.json
+```
+
+- **物理根因追溯机制**：
+  - **半径收缩漂移 ($rDrift < -5\%$)** $\rightarrow$ 溯源至 `D-MOD-001`（纯 AC 毛细收缩），建议切换至拉格朗日体积守恒求解器 `pf_ac_conserved` 或增大保真项 $\lambda$；
+  - **Chamfer 距离无增益 / 倒退** $\rightarrow$ 溯源至 `D-EVA-002` 与 `D-RES-001`，提示体素网格分辨率下限 $h/2$ 量化瓶颈，建议减小网格步长 $h$ 或启用高阶零等值面投影；
+  - **法向误差恶化 ($nErr > 0.35$)** $\rightarrow$ 溯源至 `D-FEA-001`（各向同性过度平滑），建议激活各向异性扩散张量 `pf_ac_aniso`；
+  - **数值溢出 (NaN/Inf)** $\rightarrow$ 溯源至 `D-RES-002`（显式高阶刚性失稳），强制降级至无条件稳定半隐式凸分裂求解器 `pf_ac_convex`。
+
+---
+
 ## 🔌 一键挂载到主流 Agent Harness
 
 FieldMate 采用纯无状态设计（H1 契约），天然兼容各类自主智能体框架：
@@ -275,7 +312,11 @@ FieldMate 采用纯无状态设计（H1 契约），天然兼容各类自主智�
 pip install -e ".[mcp]"
 python -m fieldmate.adapters.mcp.server
 ```
-提供 `compare_literature`、`mine_gaps`、`verify_experiment` 等 10 项标准化 MCP 工具。
+提供 14 项全功能标准化 FastMCP 工具，支持直接挂载到 Cursor、Claude Desktop 或任何 MCP 兼容客户端：
+- **文献与知识库**：`compare_literature`, `mine_gaps`, `query_corpus_topics`, `check_corpus_coverage`, `list_defect_patterns`
+- **学术体检与阅读**：`read_paper_card`, `diagnose_paper_tool`, `discover_breakthroughs`
+- **严谨实验闭环**：`design_experiment`, `init_preregistration`, `inspect_preregistration`, `verify_experiment`, `reflect_on_experiment`
+- **系统自检**：`system_doctor`
 
 ---
 
